@@ -15,7 +15,7 @@
     <artifactId>common-boot-starter</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>common</name>
+    <name>common-boot-starter</name>
     <description>公共配置包</description>
     <!--  版本号 -->
     <properties>
