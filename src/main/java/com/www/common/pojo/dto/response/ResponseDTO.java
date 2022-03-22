@@ -1,5 +1,6 @@
 package com.www.common.pojo.dto.response;
 
+import com.www.common.pojo.enums.ResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,7 @@ public class ResponseDTO<T> implements Serializable {
      * @param code 响应码
      * @param data 数据
      */
-    public ResponseDTO(RespEnum code, T data) {
+    public ResponseDTO(ResponseEnum code, T data) {
         this.code = code.getCode();
         this.msg = code.getMsg();
         this.data = data;
@@ -52,7 +53,7 @@ public class ResponseDTO<T> implements Serializable {
      * <p>@Date 2021/8/1 21:22 </p>
      * @param code 响应码
      */
-    public ResponseDTO(RespEnum code) {
+    public ResponseDTO(ResponseEnum code) {
         this.code = code.getCode();
         this.msg = code.getMsg();
     }
@@ -64,7 +65,7 @@ public class ResponseDTO<T> implements Serializable {
      * @param data 响应信息
      * @return void
      */
-    public void setResponse(RespEnum code, T data){
+    public void setResponse(ResponseEnum code, T data){
         this.setResponse(code,code.getMsg(),data);
     }
     /**
@@ -75,7 +76,7 @@ public class ResponseDTO<T> implements Serializable {
      * @return void
      */
     public void setResponse(T data){
-        this.setResponse(RespEnum.SUCCESS,RespEnum.SUCCESS.getMsg(),data);
+        this.setResponse(ResponseEnum.SUCCESS,ResponseEnum.SUCCESS.getMsg(),data);
     }
     /**
      * <p>@Description 设置成功响应信息 </p>
@@ -86,7 +87,7 @@ public class ResponseDTO<T> implements Serializable {
      * @param data 响应信息
      * @return void
      */
-    public void setResponse(RespEnum code, String msg, T data){
+    public void setResponse(ResponseEnum code, String msg, T data){
         this.code = code.getCode();
         this.msg = msg == null ? code.getMsg() : msg;
         this.data = data;
@@ -102,51 +103,6 @@ public class ResponseDTO<T> implements Serializable {
         if(response == null){
             return null;
         }
-        return RespEnum.SUCCESS.getCode().equals(response.code) ? response.data : null;
-    }
-    /**
-     * <p>@Description 响应码枚举值 </p>
-     * <p>@Version 1.0 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2021/8/1 21:22 </p>
-     */
-    public enum RespEnum{
-        /** 成功 **/
-        SUCCESS(200, "请求成功"),
-        /** 未找到 **/
-        NOT_FOUND(404, "未找到资源"),
-        /** 禁止访问 **/
-        FORBIDDEN(403, "无权访问"),
-        /** 失败 **/
-        FAIL(500, "请求失败"),
-        /** 未经授权 **/
-        UNAUTHORIZED(401, "未经授权"),
-        /**  未知异常 **/
-        UNDEFINE(-1, "未知异常");
-        /** 响应码 **/
-        private Integer code;
-        /** 响应信息 **/
-        private String msg;
-
-        RespEnum(Integer code, String msg) {
-            this.code = code;
-            this.msg = msg;
-        }
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public void setCode(Integer code) {
-            this.code = code;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
+        return ResponseEnum.SUCCESS.getCode().equals(response.code) ? response.data : null;
     }
 }

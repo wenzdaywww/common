@@ -3,6 +3,7 @@ package com.www.common.config.security.handler;
 import com.alibaba.fastjson.JSON;
 import com.www.common.pojo.constant.CharConstant;
 import com.www.common.pojo.dto.response.ResponseDTO;
+import com.www.common.pojo.enums.ResponseEnum;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -76,7 +77,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //将token保存到redis中
         securityRedisHandler.saveToken(user.getUsername(),tokenMap.get(TokenUtils.TOKEN),expirationTime);
         //数据返回
-        ResponseDTO<Map> responseDTO = new ResponseDTO<>(ResponseDTO.RespEnum.SUCCESS,tokenMap);
+        ResponseDTO<Map> responseDTO = new ResponseDTO<>(ResponseEnum.SUCCESS,tokenMap);
         Cookie cookie = new Cookie(COOKIE_TOKEN,tokenMap.get(TokenUtils.TOKEN));
         cookie.setMaxAge(expirationTime);
         cookie.setPath(CharConstant.LEFT_SLASH);

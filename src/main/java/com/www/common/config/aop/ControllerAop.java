@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.www.common.pojo.constant.CharConstant;
 import com.www.common.pojo.dto.response.ResponseDTO;
+import com.www.common.pojo.enums.ResponseEnum;
 import com.www.common.utils.HttpUtils;
 import com.www.common.utils.NumberUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +111,7 @@ public class ControllerAop {
             return result;
         }catch (Exception e){
             log.error("请求:{} 调用{}方法发生异常。请求报文:{}，异常信息:",request.getRequestURI(), controllerMethod,requestText,e);
-            return new ResponseDTO<>(ResponseDTO.RespEnum.UNDEFINE);
+            return new ResponseDTO<>(ResponseEnum.UNDEFINE);
         }
     }
     /**
