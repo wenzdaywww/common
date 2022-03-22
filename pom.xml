@@ -12,10 +12,10 @@
     </parent>
     <!-- 应用信息 -->
     <groupId>com.www</groupId>
-    <artifactId>common-boot-starter</artifactId>
+    <artifactId>common-spring-boot-starter</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>common-boot-starter</name>
+    <name>common-spring-boot-starter</name>
     <description>公共配置包</description>
     <!--  版本号 -->
     <properties>
