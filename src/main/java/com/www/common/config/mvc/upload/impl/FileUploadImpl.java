@@ -2,6 +2,7 @@ package com.www.common.config.mvc.upload.impl;
 
 import com.www.common.config.mvc.upload.IFileUpload;
 import com.www.common.pojo.constant.CharConstant;
+import com.www.common.pojo.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -129,7 +130,7 @@ public class FileUploadImpl implements IFileUpload {
             savePath = imgSavePath;
         }else {
             urlPath = otherUrlPath;
-            savePath = otherSavePath + DateUtils.format(DateUtils.getCurrentDateTime(), DateUtils.DateFormatEnum.YYYYMMDD);
+            savePath = otherSavePath + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD);
         }
         //添加上一级路径
         urlPath = StringUtils.isNotBlank(prevPath) ? urlPath.replace("**",prevPath + CharConstant.LEFT_SLASH) : urlPath.replace("**","");
@@ -141,7 +142,7 @@ public class FileUploadImpl implements IFileUpload {
         }
         if(StringUtils.isBlank(fileName)){
             //设置文件新名称: 当前时间+文件名称（不包含格式）
-            String date = DateUtils.format(DateUtils.getCurrentDateTime(), DateUtils.DateFormatEnum.YYYYMMDDHHMMSSSSS);
+            String date = DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDDHHMMSSSSS);
             fileName = date + "-" + orgFileName + "." + fileType;
         }else {
             fileName += "." + fileType;

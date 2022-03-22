@@ -1,5 +1,7 @@
 package com.www.common.utils;
 
+import com.www.common.pojo.enums.DateFormatEnum;
+
 import java.util.UUID;
 
 /**
@@ -21,7 +23,7 @@ public class UUIDUtils {
      * @return java.lang.String
      */
     public static String getTraceId(){
-        return DateUtils.format(DateUtils.getCurrentDateTime(), DateUtils.DateFormatEnum.YYYYMMDDHHMMSSSSS) + "-" + generateUuid8();
+        return DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDDHHMMSSSSS) + "-" + generateUuid8();
     }
     /**
      * <p>@Description 生成8位UUId </p>

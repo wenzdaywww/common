@@ -1,5 +1,6 @@
 package com.www.common.utils;
 
+import com.www.common.pojo.enums.DateFormatEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
@@ -70,11 +71,11 @@ public class DateUtils {
      * @param dateFormat
      * @return java.lang.String
      */
-    public static String format(Date date,DateFormatEnum dateFormat){
+    public static String format(Date date, DateFormatEnum dateFormat){
         if(date == null || dateFormat == null){
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat.format);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat.getFormat());
         return sdf.format(date);
     }
     /**
@@ -89,31 +90,11 @@ public class DateUtils {
         if(StringUtils.isBlank(dateStr) || dateFormat == null){
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat.format);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat.getFormat());
         try {
             return sdf.parse(dateStr);
         } catch (ParseException e) {
             return null;
-        }
-    }
-    /**
-     * <p>@Description 日期格式 </p>
-     * <p>@Version 1.0 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2021/12/4 15:22 </p>
-     */
-    public enum DateFormatEnum{
-        YYYYMMDD("yyyyMMdd"),
-        YYYY_MM_DD("yyyy-MM-dd"),
-        YYYY_MM_DD_HH_MM_SS("yyyy-MM-dd HH:mm:ss"),
-        YYYYMMDDHHMMSS("yyyyMMddHHmmss"),
-        YYYYMMDDHHMMSSSSS("yyyyMMddHHmmssSSS"),
-        ;
-        /** 格式 **/
-        private String format;
-
-        DateFormatEnum(String format){
-            this.format = format;
         }
     }
 }
