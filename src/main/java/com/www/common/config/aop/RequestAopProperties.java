@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * <p>@Description 请求响应报文AOP拦截配置信息 </p>
+ * <p>@Description 请求响应报文AOP拦截配置属性 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/3/22 18:28 </p>

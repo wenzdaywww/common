@@ -1,19 +1,16 @@
 package com.www.common.config.mvc.upload.impl;
 
+import com.www.common.config.mvc.MyMvcProperties;
 import com.www.common.config.mvc.upload.IFileUpload;
 import com.www.common.pojo.constant.CharConstant;
 import com.www.common.pojo.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,49 +22,40 @@ import java.util.Arrays;
  * <p>@Date 2021/12/5 22:38 </p>
  */
 @Slf4j
-@Service
-@ConditionalOnProperty(prefix = "com.www.common.file",name = "enable")
 public class FileUploadImpl implements IFileUpload {
     /** 图片类型  **/
     private String[] imgType = {"BMP","JPG","JPEG","PNG","GIF"};
-    /** 图片访问路径 **/
-    @Value("${com.www.common.file.imgUrlPath}")
-    private String imgUrlPath;
-    /** 图片保存的绝对路径 **/
-    @Value("${com.www.common.file.imgSavePath}")
-    private String imgSavePath;
-    /** 图片外其他文件访问路径 **/
-    @Value("${com.www.common.file.otherUrlPath}")
-    private String otherUrlPath;
-    /** 图片外其他文件保存的绝对路径 **/
-    @Value("${com.www.common.file.otherSavePath}")
-    private String otherSavePath;
+    /** ip地址 **/
+    private String ip;
     /** 端口 **/
     @Value("${server.port}")
     private String serverPort;
-    /** ip地址 **/
-    private String ip;
-    @Autowired
+    /** mvc配置信息 **/
+    private MyMvcProperties myMvcProperties;
+    /** 环境配置信息 **/
     private Environment environment;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
-     * <p>@Date 2022/1/1 18:20 </p>
+     * <p>@Date 2022/3/22 21:21 </p>
+     * @param myMvcProperties mvc配置信息
+     * @param environment
      * @return
      */
-    public FileUploadImpl(){
+    public FileUploadImpl (MyMvcProperties myMvcProperties,Environment environment){
+        this.myMvcProperties = myMvcProperties;
+        this.environment = environment;
+        this.init();
         log.info("配置文件上传");
     }
-
     /**
      * <p>@Description 初始化数据 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/30 01:20 </p>
      * @return void
      */
-    @PostConstruct
-    public void init(){
+    private void init(){
         ip = environment.getProperty("eureka.instance.ip-address"); //获取ip
     }
     /**
@@ -126,11 +114,11 @@ public class FileUploadImpl implements IFileUpload {
         String savePath = "";
         //上传的文件为图片
         if(Arrays.asList(imgType).contains(StringUtils.upperCase(fileType))){
-            urlPath = imgUrlPath;
-            savePath = imgSavePath;
+            urlPath = myMvcProperties.getImgUrlPath();;
+            savePath = myMvcProperties.getImgSavePath();;
         }else {
-            urlPath = otherUrlPath;
-            savePath = otherSavePath + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD);
+            urlPath = myMvcProperties.getOtherUrlPath();;
+            savePath = myMvcProperties.getOtherSavePath() + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD);
         }
         //添加上一级路径
         urlPath = StringUtils.isNotBlank(prevPath) ? urlPath.replace("**",prevPath + CharConstant.LEFT_SLASH) : urlPath.replace("**","");
@@ -152,7 +140,7 @@ public class FileUploadImpl implements IFileUpload {
         try {
             //将文件保存到服务器指定位置
             file.transferTo(targetFile);
-            log.info("上传成功,文件的保存路径：{},原始文件名称：{},文件类型：{},新文件名称：{}", imgSavePath,origFileFullName,fileType,fileName);
+            log.info("上传成功,文件的保存路径：{},原始文件名称：{},文件类型：{},新文件名称：{}", savePath,origFileFullName,fileType,fileName);
             //将文件在服务器的存储路径返回
         } catch (IOException e) {
             log.info("上传失败,失败信息：{}",e.getMessage());

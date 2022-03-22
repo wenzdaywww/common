@@ -1,12 +1,10 @@
 package com.www.common.config.redis;
 
+import com.www.common.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -21,21 +19,16 @@ import java.util.concurrent.TimeUnit;
  * <p>@Date 2021/8/1 21:07 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnClass(RedisTemplate.class)
 public final class RedisOperation {
     /** redisTemplate操作模板 **/
-    private static RedisTemplate<String,Object> redisTemplate;
+    private static volatile RedisTemplate<String,Object> redisTemplate = null;
 
     /**
-     * <p>@Description 构造方法 </p>
+     * <p>@Description 私有构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/1 18:11 </p>
-     * @return
      */
-    public RedisOperation(){
-        log.info("实例化redis操作类");
-    }
+    private RedisOperation(){}
     /**
      * <p>@Description 返回redisTemplate实例 </p>
      * <p>@Author www </p>
@@ -43,6 +36,11 @@ public final class RedisOperation {
      * @return org.springframework.data.redis.core.RedisTemplate<java.lang.String, java.lang.Object>
      */
     public static RedisTemplate<String,Object> getRedisTemplate(){
+        if(redisTemplate == null){
+            synchronized (RedisOperation.class){
+                redisTemplate = SpringUtils.getApplicationContext().getBean(RedisTemplate.class);
+            }
+        }
         return redisTemplate;
     }
     /**
@@ -57,7 +55,7 @@ public final class RedisOperation {
         if(StringUtils.isBlank(key)){
             return 0L;
         }
-        return redisTemplate.getExpire(key,timeUnit);
+        return getRedisTemplate().getExpire(key,timeUnit);
     }
     /**
      * <p>@Description 获取key的剩余有效时间 </p>
@@ -70,7 +68,7 @@ public final class RedisOperation {
         if(StringUtils.isBlank(key)){
             return 0L;
         }
-        return redisTemplate.getExpire(key,TimeUnit.SECONDS);
+        return getRedisTemplate().getExpire(key,TimeUnit.SECONDS);
     }
     /**
      * <p>@Description 获取所有模糊匹配的key值 </p>
@@ -83,7 +81,7 @@ public final class RedisOperation {
         if(StringUtils.isBlank(key)){
             return null;
         }
-        return redisTemplate.keys(key);
+        return getRedisTemplate().keys(key);
     }
     /**
      * <p>@Description 设置key失效时间(秒) </p>
@@ -94,7 +92,7 @@ public final class RedisOperation {
      * @return boolean true设置成功，false设置失败
      */
     public static boolean keyExpire(String key,long seconds){
-        return redisTemplate.expire(key,seconds,TimeUnit.SECONDS);
+        return getRedisTemplate().expire(key,seconds,TimeUnit.SECONDS);
     }
     /**
      * <p>@Description 设置key失效时间(秒) </p>
@@ -106,7 +104,7 @@ public final class RedisOperation {
      * @return boolean true设置成功，false设置失败
      */
     public static boolean keyExpire(String key,long timeout, TimeUnit unit){
-        return redisTemplate.expire(key,timeout,unit);
+        return getRedisTemplate().expire(key,timeout,unit);
     }
     /**
      * <p>@Description 判断key值是否存在 </p>
@@ -116,7 +114,7 @@ public final class RedisOperation {
      * @return boolean true存在，false不存在
      */
     public static boolean hasKey(String key){
-        return redisTemplate.hasKey(key);
+        return getRedisTemplate().hasKey(key);
     }
     /**
      * <p>@Description 删除key </p>
@@ -126,7 +124,7 @@ public final class RedisOperation {
      * @return boolean true删除成功，false失败
      */
     public static boolean deleteKey(String key){
-        return redisTemplate.delete(key);
+        return getRedisTemplate().delete(key);
     }
     /**
      * <p>@Description 删除模糊key名 </p>
@@ -138,7 +136,7 @@ public final class RedisOperation {
     public static boolean deleteFuzzyKey(String key){
         Set<String> keys = getAllKeys(key);
         if(CollectionUtils.isNotEmpty(keys)){
-            redisTemplate.delete(keys);
+            getRedisTemplate().delete(keys);
             return true;
         }
         return false;
@@ -152,7 +150,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static String set(String key,String value){
-        redisTemplate.opsForValue().set(key,value);
+        getRedisTemplate().opsForValue().set(key,value);
         return value;
     }
     /**
@@ -165,7 +163,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object set(String key,Object value,long seconds){
-        redisTemplate.opsForValue().set(key,value,seconds,TimeUnit.SECONDS);
+        getRedisTemplate().opsForValue().set(key,value,seconds,TimeUnit.SECONDS);
         return value;
     }
     /**
@@ -217,7 +215,7 @@ public final class RedisOperation {
      * @return boolean true键不存在，保存成功，false键存在，保存失败
      */
     public static boolean setNX(String key,String value){
-        return redisTemplate.opsForValue().setIfAbsent(key,value);
+        return getRedisTemplate().opsForValue().setIfAbsent(key,value);
     }
     /**
      * <p>@Description key不存在时保存String数据，并设置超时时间 </p>
@@ -229,7 +227,7 @@ public final class RedisOperation {
      * @return boolean true键不存在，保存成功，false键存在，保存失败
      */
     public static boolean setNX(String key,String value,long seconds){
-        return redisTemplate.opsForValue().setIfAbsent(key,value,seconds,TimeUnit.SECONDS);
+        return getRedisTemplate().opsForValue().setIfAbsent(key,value,seconds,TimeUnit.SECONDS);
     }
     /**
      * <p>@Description key不存在时保存String数据，并设置超时时间 </p>
@@ -242,7 +240,7 @@ public final class RedisOperation {
      * @return boolean true键不存在，保存成功，false键存在，保存失败
      */
     public static boolean setNX(String key,String value,long timeout,TimeUnit unit){
-        return redisTemplate.opsForValue().setIfAbsent(key,value,timeout,unit);
+        return getRedisTemplate().opsForValue().setIfAbsent(key,value,timeout,unit);
     }
     /**
      * <p>@Description 获取String数据 </p>
@@ -252,7 +250,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static String get(String key){
-        return (String) redisTemplate.opsForValue().get(key);
+        return (String) getRedisTemplate().opsForValue().get(key);
     }
     /**
      * <p>@Description 保存Hash数据 </p>
@@ -264,7 +262,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object hashSet(String key, String okey, Object value){
-        redisTemplate.opsForHash().put(key,okey,value);
+        getRedisTemplate().opsForHash().put(key,okey,value);
         return value;
     }
     /**
@@ -349,7 +347,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object hashGet(String key, String okey){
-        return redisTemplate.opsForHash().get(key,okey);
+        return getRedisTemplate().opsForHash().get(key,okey);
     }
     /**
      * <p>@Description 获取在哈希表中指定 key 的所有字段和值 </p>
@@ -359,7 +357,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object hashGet(String key){
-        return redisTemplate.opsForHash().entries(key);
+        return getRedisTemplate().opsForHash().entries(key);
     }
     /**
      * <p>@Description 获取在哈希表中指定key的所有字段和值并转为Class<T>类对象  </p>
@@ -436,7 +434,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object hashIncrement(String key, String okey, long value){
-        redisTemplate.opsForHash().increment(key,okey,value);
+        getRedisTemplate().opsForHash().increment(key,okey,value);
         return value;
     }
     /**
@@ -448,7 +446,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object listSet(String key, Object value){
-        redisTemplate.opsForList().leftPush(key,value);
+        getRedisTemplate().opsForList().leftPush(key,value);
         return value;
     }
     /**
@@ -459,7 +457,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object listGet(String key){
-        return redisTemplate.opsForList().range(key,0,-1);
+        return getRedisTemplate().opsForList().range(key,0,-1);
     }
     /**
      * <p>@Description 保存Set数据 </p>
@@ -470,7 +468,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object setSet(String key, Object value){
-        redisTemplate.opsForSet().add(key,value);
+        getRedisTemplate().opsForSet().add(key,value);
         return value;
     }
     /**
@@ -481,7 +479,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object setGet(String key){
-        return redisTemplate.opsForSet().members(key);
+        return getRedisTemplate().opsForSet().members(key);
     }
     /**
      * <p>@Description 保存ZSet数据 </p>
@@ -493,7 +491,7 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object zsetSet(String key, Object value, double score){
-        redisTemplate.opsForZSet().add(key,value,score);
+        getRedisTemplate().opsForZSet().add(key,value,score);
         return value;
     }
     /**
@@ -504,11 +502,6 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object zsetGet(String key){
-        return redisTemplate.opsForZSet().range(key,0,-1);
-    }
-
-    @Autowired
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        RedisOperation.redisTemplate = redisTemplate;
+        return getRedisTemplate().opsForZSet().range(key,0,-1);
     }
 }

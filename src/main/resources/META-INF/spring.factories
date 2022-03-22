@@ -1,3 +1,14 @@
 #-------starter自动装配,解决 Spring Boot 中不能被默认路径扫描的配置类的方式---------
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.www.common.config.aop.RequestAopAutoConfiguration
+  com.www.common.config.aop.RequestAopAutoConfiguration,\
+  com.www.common.config.code.CodeAutoConfiguration,\
+  com.www.common.config.datasource.DataSourceAutoConfiguration,\
+  com.www.common.config.datasource.DruidMonitorAutoConfiguration,\
+  com.www.common.config.feign.RestFeignAutoConfiguration,\
+  com.www.common.config.filter.TraceIdAutoConfiguration,\
+  com.www.common.config.mvc.MyMvcAutoConfiguration,\
+  com.www.common.config.mybatis.MyBatisCustomAutoConfiguration,\
+  com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration,\
+  com.www.common.config.oauth2.resource.Oauth2ResourceSecurityAutoConfiguration,\
+  com.www.common.config.oauth2.resource.Oauth2ResourceServerAutoConfiguration,\
+  com.www.common.config.redis.RedisAutoConfiguration,

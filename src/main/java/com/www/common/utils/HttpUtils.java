@@ -1,13 +1,11 @@
 package com.www.common.utils;
 
-import com.www.common.config.filter.TraceIdFilter;
+import com.www.common.config.filter.core.TraceIdFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.UNKNOWN;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
 
 /**
  * <p>@Description http工具类 </p>

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
-import com.www.common.config.datasource.interfaces.IReadDataSoure;
-import com.www.common.config.datasource.interfaces.IWriteDataSoure;
+import com.www.common.config.datasource.sources.IReadDataSoure;
+import com.www.common.config.datasource.sources.IWriteDataSoure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -17,13 +17,10 @@ import org.aspectj.util.SoftHashMap;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -36,10 +33,6 @@ import java.util.Map;
  * <p>@Date 2021/8/1 20:47 </p>
  */
 @Slf4j
-@Configuration
-@EnableTransactionManagement
-//com.www.common.datasource.enable=true才开启多数据源配置
-@ConditionalOnProperty(prefix = "com.www.common.datasource",name = "enable")
 public class MultiDataSourceConfig extends MybatisPlusAutoConfiguration {
     /** 写权限数据源前缀 **/
     public static final String WRITE_DATA_SOURCE_PREFIX = "writeDataSource_";
@@ -79,7 +72,7 @@ public class MultiDataSourceConfig extends MybatisPlusAutoConfiguration {
      */
     @Bean(name = "routingDataSource")
     public AbstractRoutingDataSource routingDataSource(){
-        ReadWriteDataSource proxy = new ReadWriteDataSource();
+        ReadWriteDataSourceProxy proxy = new ReadWriteDataSourceProxy();
         SoftHashMap targetDataSource = new SoftHashMap<>();
         //加载写权限的数据源
         Map<String,IWriteDataSoure> writeMap = applicationContext.getBeansOfType(IWriteDataSoure.class); //写权限数据源集合
