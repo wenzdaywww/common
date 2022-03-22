@@ -1,0 +1,3 @@
+#-------starter自动装配,解决 Spring Boot 中不能被默认路径扫描的配置类的方式---------
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.www.common.config.aop.RequestAopAutoConfiguration

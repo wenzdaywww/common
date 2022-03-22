@@ -17,14 +17,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -32,46 +27,47 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>@Description Controller层的AOP配置 </p>
+ * <p>@Description 请求响应报文AOP拦截配置 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/12/8 20:08 </p>
  */
 @Slf4j
 @Aspect
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.ctl-aop",name = "enable")
-public class ControllerAop {
-    /** 替换的字符串在application.yml的key **/
-    public static final String YML_REPLCACE_CONTENT = "com.www.common.ctl-aop.content";
-    /** 是否开启字符串替换在application.yml的key **/
-    public static final String YML_REPLCACE_ENABLE = "com.www.common.ctl-aop.replace";
-    /** 字符串长度限制在application.yml的key **/
-    public static final String YML_REPLCACE_LENGTH = "com.www.common.ctl-aop.length";
+public class RequestAopConfig {
     /** 请求或返回数据中存在大数据字段时替换的字符串 **/
     private String replaceContent = "<longText>";
     /** 是否超长字符串由 **/
     private boolean isReplace = true;
     /** 是否超长字符串由 **/
     private int length = 256;
-    @Autowired
-    private Environment environment;
+    /** 请求响应报文AOP拦截配置 **/
+    private RequestAopProperties aopProperties;
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/22 19:50 </p>
+     * @param aopProperties 请求响应报文AOP拦截配置
+     */
+    public RequestAopConfig(RequestAopProperties aopProperties){
+        this.aopProperties = aopProperties;
+        log.info("开启controller层的AOP日志拦截");
+        init();
+    }
     /**
      * <p>@Description 初始化方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/1 17:59 </p>
      * @return
      */
-    @PostConstruct
     public void init(){
         //获取application.yml配置的参数信息
-        String contentPro = environment.getProperty(YML_REPLCACE_CONTENT); //替换的字符串
-        Boolean isReplacePro = environment.getProperty(YML_REPLCACE_ENABLE,Boolean.class); //是否开启字符串替换
-        Integer lengthPro = environment.getProperty(YML_REPLCACE_LENGTH,Integer.class); //字符串长度限制
+        String contentPro = aopProperties.getContent(); //替换的字符串
+        Boolean isReplacePro = aopProperties.getReplace(); //是否开启字符串替换
+        Integer lengthPro = aopProperties.getLength(); //字符串长度限制
         replaceContent = StringUtils.isNotBlank(contentPro) ? contentPro : replaceContent;
         isReplace = isReplacePro != null ? isReplacePro : isReplace;
         length = lengthPro != null ? lengthPro : length;
-        log.info("开启controller层的AOP日志拦截");
     }
     /**
      * <p>@Description 设置controller切入点 </p>

@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "com.www.common.request",
+      "type": "com.www.common.config.aop.RequestAopAutoConfiguration",
+      "description": "请求响应报文AOP拦截自动配置类.",
+      "sourceType": "com.www.common.config.aop.RequestAopProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "com.www.common.request.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启请求响应报文AOP拦截"
+    },
+    {
+      "name": "com.www.common.request.content",
+      "type": "java.lang.String",
+      "defaultValue": "<longText>",
+      "description": "请求响应字段过长替换的字符串"
+    },
+    {
+      "name": "com.www.common.request.replace",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "请求响应字段过长时是否开启字符串替换"
+    },
+    {
+      "name": "com.www.common.request.length",
+      "type": "java.lang.Integer",
+      "defaultValue": 256,
+      "description": "请求响应字段过长时字符串长度限制"
+    }
+  ],
+  "hints": []
+}
