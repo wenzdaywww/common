@@ -43,23 +43,21 @@ public class CodeAutoConfiguration {
      * <p>@Description 注册数据字典加载对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 20:51 </p>
-     * @param codeRedisHandler 据字典redis操作类对象
      * @return com.www.common.config.code.init.CodeDictRunner
      */
     @Bean
-    public CodeDictRunnerImpl codeDictRunner(@Qualifier("codeRedisHandler") CodeRedisHandler codeRedisHandler){
-        return new CodeDictRunnerImpl(codeRedisHandler);
+    public CodeDictRunnerImpl codeDictRunner(){
+        return new CodeDictRunnerImpl();
     }
     /**
      * <p>@Description 注册定时加载字典对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 20:51 </p>
-     * @param codeDictRunner 数据字典加载对象
      * @return com.www.common.config.code.task.CodeDataTask
      */
     @Bean
-    public CodeDataTask codeDataTask(@Qualifier("codeDictRunner") CodeDictRunnerImpl codeDictRunner){
-        return new CodeDataTask(codeDictRunner);
+    public CodeDataTask codeDataTask(){
+        return new CodeDataTask();
     }
 
 }

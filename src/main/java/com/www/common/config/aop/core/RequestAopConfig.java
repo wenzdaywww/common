@@ -18,9 +18,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -43,17 +45,15 @@ public class RequestAopConfig {
     /** 是否超长字符串由 **/
     private int length = 256;
     /** 请求响应报文AOP拦截配置 **/
-    private RequestAopProperties aopProperties;
+    @Autowired
+    private RequestAopProperties requestAopProperties;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 19:50 </p>
-     * @param aopProperties 请求响应报文AOP拦截配置
      */
-    public RequestAopConfig(RequestAopProperties aopProperties){
-        this.aopProperties = aopProperties;
+    public RequestAopConfig(){
         log.info("开启controller层的AOP日志拦截");
-        init();
     }
     /**
      * <p>@Description 初始化方法 </p>
@@ -61,11 +61,12 @@ public class RequestAopConfig {
      * <p>@Date 2022/1/1 17:59 </p>
      * @return
      */
+    @PostConstruct
     public void init(){
         //获取application.yml配置的参数信息
-        String contentPro = aopProperties.getContent(); //替换的字符串
-        Boolean isReplacePro = aopProperties.getReplace(); //是否开启字符串替换
-        Integer lengthPro = aopProperties.getLength(); //字符串长度限制
+        String contentPro = requestAopProperties.getContent(); //替换的字符串
+        Boolean isReplacePro = requestAopProperties.getReplace(); //是否开启字符串替换
+        Integer lengthPro = requestAopProperties.getLength(); //字符串长度限制
         replaceContent = StringUtils.isNotBlank(contentPro) ? contentPro : replaceContent;
         isReplace = isReplacePro != null ? isReplacePro : isReplace;
         length = lengthPro != null ? lengthPro : length;

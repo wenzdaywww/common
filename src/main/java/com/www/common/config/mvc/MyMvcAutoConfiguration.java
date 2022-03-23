@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,8 +24,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyMvcAutoConfiguration implements WebMvcConfigurer {
     @Autowired
     private MyMvcProperties myMvcProperties;
-    @Autowired
-    private Environment environment;
     /** 资源映射前缀 **/
     private static final String FILE = "file:";
     /**
@@ -60,6 +57,6 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public IFileUpload fileUploadImpl(){
-        return new FileUploadImpl(myMvcProperties,environment);
+        return new FileUploadImpl();
     }
 }

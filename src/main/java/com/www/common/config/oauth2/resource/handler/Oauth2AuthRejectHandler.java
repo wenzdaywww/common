@@ -6,6 +6,7 @@ import com.www.common.pojo.dto.response.ResponseDTO;
 import com.www.common.pojo.dto.token.TokenInfoDTO;
 import com.www.common.pojo.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -22,17 +23,16 @@ import java.io.IOException;
  */
 @Slf4j
 public class Oauth2AuthRejectHandler implements AuthenticationEntryPoint {
+    @Autowired
     private JwtTokenConverter jwtTokenConverter;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:44 </p>
-     * @param jwtTokenConverter 自定义jwt的token转换器
      * @return
      */
-    public Oauth2AuthRejectHandler(JwtTokenConverter jwtTokenConverter){
-        this.jwtTokenConverter = jwtTokenConverter;
+    public Oauth2AuthRejectHandler(){
         log.info("注册资源服务器配置认证失败时的异常处理");
     }
     /**

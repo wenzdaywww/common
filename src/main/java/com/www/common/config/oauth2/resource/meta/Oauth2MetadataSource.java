@@ -5,6 +5,7 @@ import com.www.common.pojo.dto.security.ScopeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Slf4j
 public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSource {
+    @Autowired
     private IOauth2Service oauth2Service;
     /** 路径匹配器 **/
     AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -32,11 +34,8 @@ public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSou
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:44 </p>
-     * @param oauth2Service 需要自定义实现的oauth2接口
-     * @return
      */
-    public Oauth2MetadataSource(IOauth2Service oauth2Service){
-        this.oauth2Service = oauth2Service;
+    public Oauth2MetadataSource(){
         log.info("注册资源服务器配置安全元数据源");
     }
     /**

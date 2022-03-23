@@ -2,7 +2,6 @@ package com.www.common.config.aop;
 
 import com.www.common.config.aop.core.RequestAopConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(value = RequestAopProperties.class)
 @ConditionalOnProperty( prefix = "com.www.common.request", name = "enable", havingValue = "true")
 public class RequestAopAutoConfiguration {
-    @Autowired
-    private RequestAopProperties requestAopProperties;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
@@ -37,6 +34,6 @@ public class RequestAopAutoConfiguration {
      */
     @Bean
     public RequestAopConfig requestAopConfig(){
-        return new RequestAopConfig(requestAopProperties);
+        return new RequestAopConfig();
     }
 }

@@ -6,6 +6,7 @@ import com.www.common.pojo.dto.response.ResponseDTO;
 import com.www.common.pojo.dto.token.TokenInfoDTO;
 import com.www.common.pojo.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -22,17 +23,15 @@ import java.io.IOException;
  */
 @Slf4j
 public class Oauth2UnauthHandler implements AccessDeniedHandler {
+    @Autowired
     private JwtTokenConverter jwtTokenConverter;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:44 </p>
-     * @param jwtTokenConverter 自定义jwt的token转换器
-     * @return
      */
-    public Oauth2UnauthHandler(JwtTokenConverter jwtTokenConverter){
-        this.jwtTokenConverter = jwtTokenConverter;
+    public Oauth2UnauthHandler(){
         log.info("注册资源服务器配置拒绝访问异常处理");
     }
     /**

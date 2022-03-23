@@ -1,6 +1,7 @@
 package com.www.common.config.code.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -36,16 +37,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Slf4j
 @EnableScheduling //开启定时任务
 public class CodeDataTask {
+    @Autowired
     private CodeDictRunnerImpl codeDictRunner;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 20:46 </p>
-     * @param codeDictRunner 数据字典加载
      */
-    public CodeDataTask(CodeDictRunnerImpl codeDictRunner){
-        this.codeDictRunner = codeDictRunner;
+    public CodeDataTask(){
         log.info("启动定时加载code_data任务");
     }
     /**

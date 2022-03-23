@@ -7,10 +7,12 @@ import com.www.common.pojo.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,22 +33,18 @@ public class FileUploadImpl implements IFileUpload {
     @Value("${server.port}")
     private String serverPort;
     /** mvc配置信息 **/
+    @Autowired
     private MyMvcProperties myMvcProperties;
     /** 环境配置信息 **/
+    @Autowired
     private Environment environment;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 21:21 </p>
-     * @param myMvcProperties mvc配置信息
-     * @param environment
-     * @return
      */
-    public FileUploadImpl (MyMvcProperties myMvcProperties,Environment environment){
-        this.myMvcProperties = myMvcProperties;
-        this.environment = environment;
-        this.init();
+    public FileUploadImpl (){
         log.info("配置文件上传");
     }
     /**
@@ -55,6 +53,7 @@ public class FileUploadImpl implements IFileUpload {
      * <p>@Date 2022/1/30 01:20 </p>
      * @return void
      */
+    @PostConstruct
     private void init(){
         ip = environment.getProperty("eureka.instance.ip-address"); //获取ip
     }

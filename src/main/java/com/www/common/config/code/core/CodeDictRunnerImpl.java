@@ -4,6 +4,7 @@ import com.www.common.config.code.CodeDict;
 import com.www.common.pojo.dto.code.CodeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
@@ -17,15 +18,15 @@ import java.util.Map;
  */
 @Slf4j
 public class CodeDictRunnerImpl implements ApplicationRunner {
+    @Autowired
     private CodeRedisHandler codeRedisHandler;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 20:46 </p>
-     * @param codeRedisHandler 数据字典redis操作类
      */
-    public CodeDictRunnerImpl(CodeRedisHandler codeRedisHandler){
-        this.codeRedisHandler = codeRedisHandler;
+    public CodeDictRunnerImpl(){
+        log.info("启动自加载数据字典数据");
     }
     /**
      * <p>@Description 启动自加载数据字典数据 </p>
