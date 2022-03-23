@@ -29,7 +29,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -181,6 +183,19 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
     @Override
     public SqlSessionFactory sqlSessionFactory(@Qualifier("routingDataSource") DataSource dataSource) throws Exception {
         return super.sqlSessionFactory(dataSource);
+    }
+    /**
+     * <p>@Description 注册事务管理器 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 21:14 </p>
+     * @param dataSource
+     * @return org.springframework.transaction.TransactionManager
+     */
+    @Bean
+    public TransactionManager transactionManager(@Qualifier("routingDataSource") DataSource dataSource) {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource);
+        return transactionManager;
     }
     /**
      * <p>@Description 获取写权限数据源个数 </p>
