@@ -33,7 +33,7 @@ public class Oauth2UnauthHandler implements AccessDeniedHandler {
      */
     public Oauth2UnauthHandler(JwtTokenConverter jwtTokenConverter){
         this.jwtTokenConverter = jwtTokenConverter;
-        log.info("资源服务器配置拒绝访问异常处理");
+        log.info("注册资源服务器配置拒绝访问异常处理");
     }
     /**
      * <p>@Description 拒绝访问异常处理  </p>

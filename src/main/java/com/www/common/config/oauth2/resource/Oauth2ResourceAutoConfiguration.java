@@ -23,12 +23,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(value = Oauth2Properties.class)
 @ConditionalOnProperty(prefix = "com.www.common.oauth2",name = "enable") //是否开启oauth2资源服务配置
 public class Oauth2ResourceAutoConfiguration extends Oauth2TokenConfig {
     @Autowired
     private IOauth2Service oauth2Service;
-
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:47 </p>
+     */
+    public Oauth2ResourceAutoConfiguration(){
+        log.info("加载 -> oauth2资源服务配置自动配置类");
+    }
     /**
      * <p>@Description 注册资源服务器访问决策管理器对象 </p>
      * <p>@Author www </p>

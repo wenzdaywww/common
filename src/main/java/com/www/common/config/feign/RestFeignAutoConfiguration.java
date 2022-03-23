@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -31,13 +33,21 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass(RestTemplate.class)
+@EnableConfigurationProperties(value = RestFeignProperties.class)
+@ConditionalOnProperty( prefix = "com.www.common.feign", name = "enable", havingValue = "true")
 public class RestFeignAutoConfiguration {
     /** feign转发的cookie的key值 **/
     private static final String COOKIE = "cookie";
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
-
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:42 </p>
+     */
+    public RestFeignAutoConfiguration(){
+        log.info("加载 -> Rest及feign自动配置类");
+    }
     /**
      * <p>@Description 注入RestTemplate </p>
      * <p>@Author www </p>
@@ -81,6 +91,7 @@ public class RestFeignAutoConfiguration {
      * @return feign.RequestInterceptor
      */
     @Bean
+    @ConditionalOnClass(RequestInterceptor.class)
     public RequestInterceptor requestInterceptor(){
         log.info("配置Feign请求头转发");
         return new RequestInterceptor(){

@@ -14,9 +14,15 @@
     },
     {
       "name": "com.www.common.datasource",
-      "type": "com.www.common.config.datasource.DataSourceAutoConfiguration",
+      "type": "com.www.common.config.datasource.MultiDataSourceAutoConfiguration",
       "description": "多数据源自动配置类.",
       "sourceType": "com.www.common.config.code.CodeProperties"
+    },
+    {
+      "name": "com.www.common.feign",
+      "type": "com.www.common.config.feign.RestFeignAutoConfiguration",
+      "description": "Rest及feign自动配置类.",
+      "sourceType": "com.www.common.config.feign.RestFeignProperties"
     },
     {
       "name": "com.www.common.file",
@@ -29,6 +35,12 @@
       "type": "com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration",
       "description": "oauth2资源服务配置自动配置类.",
       "sourceType": "com.www.common.config.oauth2.resource.Oauth2Properties"
+    },
+    {
+      "name": "com.www.common.securuty",
+      "type": "com.www.common.config.security.MySecurityAutoConfiguration",
+      "description": "Security认证自动配置类.",
+      "sourceType": "com.www.common.config.security.MySecurityProperties"
     }
   ],
   "properties": [
@@ -64,7 +76,7 @@
       "description": "是否开启数据字典加载"
     },
     {
-      "name": "com.www.common.code.reloadTime",
+      "name": "com.www.common.code.reload-time",
       "type": "java.lang.String",
       "defaultValue": "0 0 * * * ?",
       "description": "定时重新加载字典的时间格式"
@@ -84,31 +96,38 @@
     },
 
     {
+      "name": "com.www.common.feign.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启Rest及feign配置"
+    },
+
+    {
       "name": "com.www.common.file.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
       "description": "是否开启文件上传"
     },
     {
-      "name": "com.www.common.file.imgUrlPath",
+      "name": "com.www.common.file.img-url-path",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "图片访问路径"
     },
     {
-      "name": "com.www.common.file.imgSavePath",
+      "name": "com.www.common.file.img-save-path",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "图片保存的绝对路径"
     },
     {
-      "name": "com.www.common.file.otherUrlPath",
+      "name": "com.www.common.file.other-url-path",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "图片外其他文件访问路径"
     },
     {
-      "name": "com.www.common.file.otherSavePath",
+      "name": "com.www.common.file.other-save-path",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "图片外其他文件保存的绝对路径"
@@ -121,10 +140,41 @@
       "description": "是否开启oauth2资源方认证配置"
     },
     {
-      "name": "com.www.common.oauth2.signingKey",
+      "name": "com.www.common.oauth2.signing-key",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "jwt令牌签名"
+    },
+
+    {
+      "name": "com.www.common.securuty.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启Security认证"
+    },
+    {
+      "name": "com.www.common.securuty.secret-key",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "jwt令牌签名"
+    },
+    {
+      "name": "com.www.common.securuty.expire-time-second",
+      "type": "java.lang.Integer",
+      "defaultValue": 0,
+      "description": "过期时间（秒）"
+    },
+    {
+      "name": "com.www.common.securuty.cookie-day",
+      "type": "java.lang.Integer",
+      "defaultValue": 3,
+      "description": "cookie免登录有效天数"
+    },
+    {
+      "name": "com.www.common.securuty.user-prefix",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "使用redis保存用户的token的key前缀"
     }
   ],
   "hints": []

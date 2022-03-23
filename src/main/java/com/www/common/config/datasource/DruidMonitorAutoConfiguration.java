@@ -15,19 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>@Description druid监控平台配置类 </p>
+ * <p>@Description druid监控平台自动配置类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/8/1 20:44 </p>
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(value = DataSourceProperties.class)
-//com.www.common.datasource.monitor.enable=true才开启druid监控平台
+@EnableConfigurationProperties(value = MultiDataSourceProperties.class)
 @ConditionalOnProperty( prefix = "com.www.common.datasource", name = "monitor", havingValue = "true")
 public class DruidMonitorAutoConfiguration {
     @Autowired
-    private DataSourceProperties dataSourceProperties;
+    private MultiDataSourceProperties dataSourceProperties;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
@@ -35,7 +34,7 @@ public class DruidMonitorAutoConfiguration {
      * @return
      */
     public DruidMonitorAutoConfiguration(){
-        log.info("开启druid数据源监控平台");
+        log.info("加载 -> druid监控平台自动配置类");
     }
     /**
      * <p>@Description 设置druid后台监控功能

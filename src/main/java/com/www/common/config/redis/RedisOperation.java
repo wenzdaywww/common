@@ -1,10 +1,12 @@
 package com.www.common.config.redis;
 
-import com.www.common.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -19,16 +21,18 @@ import java.util.concurrent.TimeUnit;
  * <p>@Date 2021/8/1 21:07 </p>
  */
 @Slf4j
+@Component
+@ConditionalOnClass(RedisTemplate.class)
 public final class RedisOperation {
     /** redisTemplate操作模板 **/
-    private static volatile RedisTemplate<String,Object> redisTemplate = null;
+    private static volatile RedisTemplate<String,Object> redisTemplate;
 
     /**
      * <p>@Description 私有构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/1 18:11 </p>
      */
-    private RedisOperation(){}
+    public RedisOperation(){}
     /**
      * <p>@Description 返回redisTemplate实例 </p>
      * <p>@Author www </p>
@@ -36,11 +40,11 @@ public final class RedisOperation {
      * @return org.springframework.data.redis.core.RedisTemplate<java.lang.String, java.lang.Object>
      */
     public static RedisTemplate<String,Object> getRedisTemplate(){
-        if(redisTemplate == null){
-            synchronized (RedisOperation.class){
-                redisTemplate = SpringUtils.getApplicationContext().getBean(RedisTemplate.class);
-            }
-        }
+//        if(redisTemplate == null){
+//            synchronized (RedisOperation.class){
+//                redisTemplate = SpringUtils.getApplicationContext().getBean(RedisTemplate.class);
+//            }
+//        }
         return redisTemplate;
     }
     /**
@@ -503,5 +507,10 @@ public final class RedisOperation {
      */
     public static Object zsetGet(String key){
         return getRedisTemplate().opsForZSet().range(key,0,-1);
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        RedisOperation.redisTemplate = redisTemplate;
     }
 }

@@ -33,7 +33,7 @@ public class Oauth2AuthRejectHandler implements AuthenticationEntryPoint {
      */
     public Oauth2AuthRejectHandler(JwtTokenConverter jwtTokenConverter){
         this.jwtTokenConverter = jwtTokenConverter;
-        log.info("资源服务器配置认证失败时的异常处理");
+        log.info("注册资源服务器配置认证失败时的异常处理");
     }
     /**
      * <p>@Description 认证失败时的异常处理 </p>

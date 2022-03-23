@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.www.common.pojo.dto.response.ResponseDTO;
 import com.www.common.pojo.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,6 @@ import java.io.IOException;
  * <p>@Date 2021/8/1 21:11 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class LoginFailureHandler implements AuthenticationFailureHandler  {
 
     /**
@@ -33,7 +33,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler  {
      * @return
      */
     public LoginFailureHandler(){
-        log.info("security配置登录认证失败处理");
+        log.info("注册security配置登录认证失败处理");
     }
     /**
      * <p>@Description 登录失败处理事件 </p>

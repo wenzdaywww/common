@@ -1,10 +1,10 @@
 package com.www.common.config.security.handler;
 
 import com.www.common.config.redis.RedisOperation;
+import com.www.common.config.security.MySecurityProperties;
 import com.www.common.pojo.constant.CharConstant;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>@Description Security的redis操作类 </p>
@@ -12,13 +12,18 @@ import org.springframework.stereotype.Component;
  * <p>@Author www </p>
  * <p>@Date 2022/2/4 12:55 </p>
  */
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
+@Slf4j
 public class SecurityRedisHandler {
-    /** 使用redis保存用户的token的key前缀 **/
-    @Value("${com.www.common.securuty.user-prefix}")
-    private String redisUserPrefix;
-
+    @Autowired
+    private MySecurityProperties mySecurityProperties;
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:56 </p>
+     */
+    public SecurityRedisHandler(){
+        log.info("注册Security的redis操作类");
+    }
     /**
      * <p>@Description 判断redis中是否已经保存token </p>
      * <p>@Author www </p>
@@ -27,7 +32,7 @@ public class SecurityRedisHandler {
      * @return boolean true存在，false不存在
      */
     public boolean hasToken(String userId){
-        String tokenKey = redisUserPrefix + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
         return RedisOperation.hasKey(tokenKey);
     }
     /**
@@ -38,7 +43,7 @@ public class SecurityRedisHandler {
      * @return java.lang.String token
      */
     public String getToken(String userId){
-        String tokenKey = redisUserPrefix + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
         return RedisOperation.get(tokenKey);
     }
     /**
@@ -49,7 +54,7 @@ public class SecurityRedisHandler {
      * @return java.lang.String token
      */
     public boolean deleteToken(String userId){
-        String tokenKey = redisUserPrefix + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
         return RedisOperation.deleteKey(tokenKey);
     }
     /**
@@ -63,7 +68,7 @@ public class SecurityRedisHandler {
      */
     public boolean saveToken(String userId,String token,int expirationTime){
         //将token添加到redis中
-        RedisOperation.set(redisUserPrefix + CharConstant.COLON + userId,token, expirationTime);
+        RedisOperation.set(mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId,token, expirationTime);
         return true;
     }
 }

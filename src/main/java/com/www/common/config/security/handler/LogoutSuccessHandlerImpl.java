@@ -6,10 +6,8 @@ import com.www.common.pojo.enums.ResponseEnum;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletException;
@@ -26,8 +24,6 @@ import java.util.Map;
  * <p>@Date 2021/11/15 20:51 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Autowired
     private SecurityRedisHandler securityRedisHandler;
@@ -40,7 +36,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
      * @return
      */
     public LogoutSuccessHandlerImpl(){
-        log.info("security配置退出成功的处理");
+        log.info("注册security配置退出成功的处理");
     }
     /**
      * <p>@Description 退出成功处理 </p>

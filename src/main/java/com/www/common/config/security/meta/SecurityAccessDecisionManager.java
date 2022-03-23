@@ -1,14 +1,12 @@
-package com.www.common.config.security.filter;
+package com.www.common.config.security.meta;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,8 +18,6 @@ import java.util.Iterator;
  * <p>@Date 2021/11/24 19:22 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class SecurityAccessDecisionManager implements AccessDecisionManager {
 
     /**
@@ -31,7 +27,7 @@ public class SecurityAccessDecisionManager implements AccessDecisionManager {
      * @return
      */
     public SecurityAccessDecisionManager(){
-        log.info("security配置访问决策管理器");
+        log.info("注册security配置访问决策管理器");
     }
     /**
      * <p>@Description url访问校验 </p>

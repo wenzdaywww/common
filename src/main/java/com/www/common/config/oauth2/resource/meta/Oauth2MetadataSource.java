@@ -37,7 +37,7 @@ public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSou
      */
     public Oauth2MetadataSource(IOauth2Service oauth2Service){
         this.oauth2Service = oauth2Service;
-        log.info("资源服务器配置安全元数据源");
+        log.info("注册资源服务器配置安全元数据源");
     }
     /**
      * <p>@Description 访问权限角色配置 </p>

@@ -3,6 +3,8 @@ package com.www.common.config.datasource.sources.impl;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.www.common.config.datasource.sources.IWriteDataSoure;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Primary;
 
 /**
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Primary;
  */
 @Slf4j
 @Primary//优先使用master
+@ConfigurationProperties(prefix = "com.www.common.datasource.write")
 public class WriteDataSource extends DruidDataSource implements IWriteDataSoure {
     /**
      * <p>@Description 构造方法 </p>

@@ -1,5 +1,6 @@
-package com.www.common.config.security.filter;
+package com.www.common.config.security.meta;
 
+import com.www.common.config.security.MySecurityProperties;
 import com.www.common.config.security.handler.LoginSuccessHandler;
 import com.www.common.config.security.handler.SecurityRedisHandler;
 import com.www.common.config.security.impl.UserDetailsServiceImpl;
@@ -7,12 +8,9 @@ import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -32,24 +30,14 @@ import java.util.Map;
  * <p>@Date 2021/11/16 21:06 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private SecurityRedisHandler securityRedisHandler;
-    /** jwt令牌签名 */
-    @Value("${com.www.common.securuty.secret-key}")
-    private String SECRET_KEY ;
-    /**  过期时间（秒） */
-    @Value("${com.www.common.securuty.expire-time-second}")
-    private int EXPIRE_TIME;
-    /** 设置token过期时间和密钥 **/
-    @PostConstruct
-    public void setSecretAndExpireTime(){
-        TokenUtils.setSecretAndExpireTime(EXPIRE_TIME,SECRET_KEY);
-    }
+    @Autowired
+    private MySecurityProperties mySecurityProperties;
+
 
     /**
      * <p>@Description 构造方法 </p>
@@ -58,7 +46,17 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
      * @return
      */
     public JwtAuthorizationTokenFilter(){
-        log.info("security配置token验证拦截器");
+        log.info("注册security配置token验证拦截器");
+    }
+    /**
+     * <p>@Description 设置token过期时间和密钥 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:57 </p>
+     * @return void
+     */
+    @PostConstruct
+    public void setSecretAndExpireTime(){
+        TokenUtils.setSecretAndExpireTime(mySecurityProperties.getExpireTimeSecond(),mySecurityProperties.getSecretKey());
     }
     /**
      * <p>@Description token验证 </p>

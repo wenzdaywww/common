@@ -1,4 +1,4 @@
-package com.www.common.config.security;
+package com.www.common.config.security.inf;
 
 import com.www.common.pojo.dto.security.AuthorityDTO;
 import com.www.common.pojo.dto.security.UserDetailDTO;

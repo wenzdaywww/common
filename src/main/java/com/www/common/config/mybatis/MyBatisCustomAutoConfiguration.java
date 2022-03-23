@@ -19,6 +19,14 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(MybatisPlusInterceptor.class)
 public class MyBatisCustomAutoConfiguration {
     /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:46 </p>
+     */
+    public MyBatisCustomAutoConfiguration(){
+        log.info("加载 -> Mybatis配置");
+    }
+    /**
      * <p>@Description 新的分页插件,一缓和二缓遵循mybatis的规则,
      *    需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题
      * </p>

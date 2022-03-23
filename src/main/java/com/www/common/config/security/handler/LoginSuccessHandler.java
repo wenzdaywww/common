@@ -1,6 +1,7 @@
 package com.www.common.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.www.common.config.security.MySecurityProperties;
 import com.www.common.pojo.constant.CharConstant;
 import com.www.common.pojo.dto.response.ResponseDTO;
 import com.www.common.pojo.enums.ResponseEnum;
@@ -8,12 +9,9 @@ import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -30,8 +28,6 @@ import java.util.Map;
  * <p>@Date 2021/8/1 21:12 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private SecurityRedisHandler securityRedisHandler;
@@ -39,9 +35,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public static final String COOKIE_TOKEN = "token";
     /** 是否免登录 **/
     private static final String IS_REMENMBER_ME = "1";
-    /** cookie免登录有效天数 **/
-    @Value("${com.www.common.securuty.cookie-day}")
-    private int COOKIE_AGE;
+    /** Security认证配置属性 **/
+    @Autowired
+    private MySecurityProperties mySecurityProperties;
 
     /**
      * <p>@Description 构造方法 </p>
@@ -50,7 +46,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      * @return
      */
     public LoginSuccessHandler(){
-        log.info("security配置登录认证成功处理");
+        log.info("注册security配置登录认证成功处理");
     }
     /**
      * <p>@Description security登录认证成功处理 </p>
@@ -70,7 +66,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         chaims.put(TokenUtils.USERID,user.getUsername());
         //设置token过期时间
         int expirationTime = StringUtils.equals(IS_REMENMBER_ME,request.getParameter("rmb"))
-                ? 60*60*24*COOKIE_AGE //天数
+                ? 60*60*24* mySecurityProperties.getCookieDay() //天数
                 : TokenUtils.getExpirationTime(); //秒
         //生成token
         Map<String,String> tokenMap = TokenUtils.generateToken(chaims);

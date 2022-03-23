@@ -51,6 +51,14 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
     private Oauth2TokenExtractor oauth2TokenExtractor;
 
     /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:48 </p>
+     */
+    public Oauth2ResourceServerAutoConfiguration(){
+        log.info("加载 -> 资源服务方的认证配置类");
+    }
+    /**
      * <p>@Description 配置资源服务方验证方式 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/19 16:25 </p>

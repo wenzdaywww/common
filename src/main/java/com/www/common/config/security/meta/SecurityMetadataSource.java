@@ -1,16 +1,14 @@
-package com.www.common.config.security.filter;
+package com.www.common.config.security.meta;
 
-import com.www.common.config.security.ISecurityServie;
+import com.www.common.config.security.inf.ISecurityServie;
 import com.www.common.pojo.dto.security.AuthorityDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.Resource;
@@ -25,8 +23,6 @@ import java.util.List;
  * <p>@Date 2021/11/24 18:22 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class SecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     @Resource
     private ISecurityServie securityUserServie;
@@ -40,7 +36,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
      * @return
      */
     public SecurityMetadataSource(){
-        log.info("security配置安全元数据源");
+        log.info("注册security配置安全元数据源");
     }
     /**
      * <p>@Description 访问权限角色配置 </p>

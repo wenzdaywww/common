@@ -40,7 +40,7 @@ public class Oauth2TokenExtractor extends BearerTokenExtractor {
      * @return
      */
     public Oauth2TokenExtractor(){
-        log.info("配置token提取器");
+        log.info("注册自定义token提取器");
     }
     /**
      * <p>@Description 设置token获取方法 </p>

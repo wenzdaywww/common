@@ -2,7 +2,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.aop.RequestAopAutoConfiguration,\
   com.www.common.config.code.CodeAutoConfiguration,\
-  com.www.common.config.datasource.DataSourceAutoConfiguration,\
+  com.www.common.config.datasource.MultiDataSourceAutoConfiguration,\
   com.www.common.config.datasource.DruidMonitorAutoConfiguration,\
   com.www.common.config.feign.RestFeignAutoConfiguration,\
   com.www.common.config.filter.TraceIdAutoConfiguration,\
@@ -11,4 +11,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration,\
   com.www.common.config.oauth2.resource.Oauth2ResourceSecurityAutoConfiguration,\
   com.www.common.config.oauth2.resource.Oauth2ResourceServerAutoConfiguration,\
-  com.www.common.config.redis.RedisAutoConfiguration,
+  com.www.common.config.redis.RedisAutoConfiguration,\
+  com.www.common.config.redis.RedisOperation,\
+  com.www.common.config.security.MySecurityAutoConfiguration,\
+  com.www.common.config.security.config.SecurityConfig,\
+  com.www.common.utils.SpringUtils

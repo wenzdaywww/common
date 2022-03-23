@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.www.common.pojo.dto.response.ResponseDTO;
 import com.www.common.pojo.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +18,6 @@ import java.io.IOException;
  * <p>@Date 2021/11/18 21:05 </p>
  */
 @Slf4j
-@Component
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class SessionExpiredHandler implements SessionInformationExpiredStrategy {
 
     /**
@@ -31,7 +27,7 @@ public class SessionExpiredHandler implements SessionInformationExpiredStrategy 
      * @return
      */
     public SessionExpiredHandler(){
-        log.info("security配置会话过期处理");
+        log.info("注册security配置会话过期处理");
     }
     /**
      * <p>@Description 单点登录会话过期处理 </p>

@@ -1,5 +1,6 @@
 package com.www.common.config.datasource.core;
 
+import com.www.common.config.datasource.MultiDataSourceAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -51,7 +52,7 @@ public class ReadWriteInterceptor implements Ordered {
         }catch (Exception e){
             log.error("连接slave数据源Exception异常：{}",e.getMessage());
             //有配置从数据库出现异常再从主数据库查询
-            if(MultiDataSourceConfig.getReadNum() != 0){
+            if(MultiDataSourceAutoConfiguration.getReadNum() != 0){
                 result = insert(proceedingJoinPoint);
             }
         } catch (Throwable throwable) {

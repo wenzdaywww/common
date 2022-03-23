@@ -2,7 +2,9 @@ package com.www.common.config.oauth2.token;
 
 import com.www.common.config.oauth2.resource.Oauth2Properties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -14,8 +16,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  * <p>@Date 2021/12/18 12:21 </p>
  */
 @Slf4j
+@EnableConfigurationProperties(value = Oauth2Properties.class)
 public class Oauth2TokenConfig {
     /** oauth2资源方认证配置属性 **/
+    @Autowired
     private Oauth2Properties oauth2Properties;
     /**
      * <p>@Description 构造方法 </p>
@@ -24,7 +28,7 @@ public class Oauth2TokenConfig {
      * @return
      */
     public Oauth2TokenConfig(){
-        log.info("配置token存储方式");
+        log.info("注册配置token存储方式");
     }
     /**
      * <p>@Description 注册jwt对象 </p>

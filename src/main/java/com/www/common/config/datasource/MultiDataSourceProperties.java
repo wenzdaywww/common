@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.datasource")
-public class DataSourceProperties {
+public class MultiDataSourceProperties {
     /**  是否开启多数据源配置 **/
     private Boolean enable;
     /**  是否开启druid监控平台 **/

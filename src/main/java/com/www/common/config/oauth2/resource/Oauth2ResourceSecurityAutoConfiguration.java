@@ -23,6 +23,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true) //配置基于方法的安全认证,必要
 public class Oauth2ResourceSecurityAutoConfiguration extends WebSecurityConfigurerAdapter {
     /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:48 </p>
+     */
+    public Oauth2ResourceSecurityAutoConfiguration(){
+        log.info("加载 -> 资源服务方的Security配置类");
+    }
+    /**
      * <p>@Description 配置资源的安全拦截策略 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/18 13:04 </p>

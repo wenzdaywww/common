@@ -3,6 +3,7 @@ package com.www.common.config.oauth2.token;
 import com.alibaba.fastjson.JSON;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
 import com.www.common.pojo.dto.token.TokenInfoDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -18,6 +19,7 @@ import java.util.Map;
  * <p>@Author www </p>
  * <p>@Date 2021/12/24 21:00 </p>
  */
+@Slf4j
 public class JwtTokenConverter extends JwtAccessTokenConverter {
     /** 令牌参数key **/
     public static String TOKEN_KEY = "Authorization";
@@ -26,6 +28,14 @@ public class JwtTokenConverter extends JwtAccessTokenConverter {
     @Autowired
     private Oauth2TokenExtractor oauth2TokenExtractor;
 
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:50 </p>
+     */
+    public JwtTokenConverter(){
+        log.info("注册自定义jwt的token转换器");
+    }
     /**
      * <p>@Description token解析 </p>
      * <p>@Author www </p>

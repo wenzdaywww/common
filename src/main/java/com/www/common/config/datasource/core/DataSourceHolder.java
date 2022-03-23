@@ -1,5 +1,6 @@
 package com.www.common.config.datasource.core;
 
+import com.www.common.config.datasource.MultiDataSourceAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Random;
@@ -28,9 +29,9 @@ public class DataSourceHolder {
      */
     public synchronized static void setWriteDataSourceType(){
         //随机获取其中一个写权限的数据源
-        if(MultiDataSourceConfig.getWriteNum() != 0){
-            int index = random.nextInt(MultiDataSourceConfig.getWriteNum());
-            contextHolder.set(MultiDataSourceConfig.WRITE_DATA_SOURCE_PREFIX + index);
+        if(MultiDataSourceAutoConfiguration.getWriteNum() != 0){
+            int index = random.nextInt(MultiDataSourceAutoConfiguration.getWriteNum());
+            contextHolder.set(MultiDataSourceAutoConfiguration.WRITE_DATA_SOURCE_PREFIX + index);
         }
     }
     /**
@@ -41,10 +42,10 @@ public class DataSourceHolder {
      */
     public synchronized static void setReadDataSourceType(){
         //有配置读权限数据源则从中随机获取
-        if(MultiDataSourceConfig.getReadNum() != 0){
+        if(MultiDataSourceAutoConfiguration.getReadNum() != 0){
             //随机获取其中一个读权限的数据源
-            int index = random.nextInt(MultiDataSourceConfig.getReadNum());
-            contextHolder.set(MultiDataSourceConfig.READ_DATA_SOURCE_PREFIX + index);
+            int index = random.nextInt(MultiDataSourceAutoConfiguration.getReadNum());
+            contextHolder.set(MultiDataSourceAutoConfiguration.READ_DATA_SOURCE_PREFIX + index);
         }
     }
     /**
@@ -54,7 +55,7 @@ public class DataSourceHolder {
      * @return com.www.demo.druid.config.DataBaseContextHolder.DataBaseType
      */
     public synchronized static String getDataSourceType(){
-       return contextHolder.get() == null ? MultiDataSourceConfig.READ_DATA_SOURCE_PREFIX + 0 : contextHolder.get();
+       return contextHolder.get() == null ? MultiDataSourceAutoConfiguration.READ_DATA_SOURCE_PREFIX + 0 : contextHolder.get();
     }
     /**
      * <p>@Description 清除容器的数据源类型 </p>

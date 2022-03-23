@@ -1,10 +1,15 @@
 package com.www.common.config.security.config;
 
-import com.www.common.config.security.filter.JwtAuthorizationTokenFilter;
-import com.www.common.config.security.filter.SecurityAccessDecisionManager;
-import com.www.common.config.security.filter.SecurityMetadataSource;
-import com.www.common.config.security.handler.*;
+import com.www.common.config.security.handler.LoginFailureHandler;
+import com.www.common.config.security.handler.LoginSuccessHandler;
+import com.www.common.config.security.handler.LogoutSuccessHandlerImpl;
+import com.www.common.config.security.handler.SecurityAuthRejectHandler;
+import com.www.common.config.security.handler.SecurityUnauthHandler;
+import com.www.common.config.security.handler.SessionExpiredHandler;
 import com.www.common.config.security.impl.UserDetailsServiceImpl;
+import com.www.common.config.security.meta.JwtAuthorizationTokenFilter;
+import com.www.common.config.security.meta.SecurityAccessDecisionManager;
+import com.www.common.config.security.meta.SecurityMetadataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -49,6 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private SecurityAccessDecisionManager securityAccessDecisionManager;
     @Autowired
     private JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter;
+
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:53 </p>
+     */
+    public SecurityConfig(){
+        log.info("加载 -> Security安全配置类");
+    }
     /**
      * <p>@Description 授权,配置如何通过拦截器保护请求 </p>
      * <p>@Author www </p>

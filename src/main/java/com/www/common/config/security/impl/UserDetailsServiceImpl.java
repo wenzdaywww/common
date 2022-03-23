@@ -1,17 +1,15 @@
 package com.www.common.config.security.impl;
 
-import com.www.common.config.security.ISecurityServie;
+import com.www.common.config.security.inf.ISecurityServie;
 import com.www.common.pojo.dto.security.UserDetailDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ import java.util.List;
  * <p>@Date 2021/8/1 21:12 </p>
  */
 @Slf4j
-@Service
-@ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private ISecurityServie securityUserServie;
@@ -37,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @return
      */
     public UserDetailsServiceImpl(){
-        log.info("security配置用户详细信息服务类");
+        log.info("注册security配置用户详细信息服务类");
     }
     /**
      * <p>@Description 加载用户信息 </p>

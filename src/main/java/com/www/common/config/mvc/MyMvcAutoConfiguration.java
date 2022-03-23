@@ -30,6 +30,14 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
     /** 资源映射前缀 **/
     private static final String FILE = "file:";
     /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 10:45 </p>
+     */
+    public MyMvcAutoConfiguration(){
+        log.info("加载 -> MVC配置");
+    }
+    /**
      * <p>@Description 资源拦截配置 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/10 22:23 </p>

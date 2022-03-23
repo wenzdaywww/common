@@ -3,6 +3,7 @@ package com.www.common.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>@Description Spring工具类 </p>
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContextAware;
  * <p>@Author www </p>
  * <p>@Date 2022/3/22 21:42 </p>
  */
+@Component
 public class SpringUtils implements ApplicationContextAware {
     private static ApplicationContext applicationContext = null;
     /**
