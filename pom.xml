@@ -69,13 +69,6 @@
         </dependency>
         <!-- springcloud相关依赖 -->
         <!-- springcloud依赖 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>Hoxton.SR12</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
         <!-- security安全认证依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
