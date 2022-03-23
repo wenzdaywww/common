@@ -46,7 +46,6 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-@EnableTransactionManagement
 @EnableConfigurationProperties(value = {MultiDataSourceProperties.class,MybatisPlusProperties.class})
 @ConditionalOnProperty( prefix = "com.www.common.datasource", name = "enable", havingValue = "true")
 public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfiguration {
@@ -183,19 +182,6 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
     @Override
     public SqlSessionFactory sqlSessionFactory(@Qualifier("routingDataSource") DataSource dataSource) throws Exception {
         return super.sqlSessionFactory(dataSource);
-    }
-    /**
-     * <p>@Description 注册事务管理器 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 21:14 </p>
-     * @param dataSource
-     * @return org.springframework.transaction.TransactionManager
-     */
-    @Bean
-    public TransactionManager transactionManager(@Qualifier("routingDataSource") DataSource dataSource) {
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(dataSource);
-        return transactionManager;
     }
     /**
      * <p>@Description 获取写权限数据源个数 </p>

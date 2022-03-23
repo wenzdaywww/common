@@ -6,7 +6,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.datasource.DruidMonitorAutoConfiguration,\
   com.www.common.config.feign.MyFeignAutoConfiguration,\
   com.www.common.config.filter.TraceIdAutoConfiguration,\
-  com.www.common.config.hystrix.HystrixStrategyHandler,\
   com.www.common.config.mvc.MyMvcAutoConfiguration,\
   com.www.common.config.mybatis.MyBatisCustomAutoConfiguration,\
   com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration,\
@@ -14,7 +13,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.oauth2.resource.Oauth2ResourceServerAutoConfiguration,\
   com.www.common.config.redis.RedisAutoConfiguration,\
   com.www.common.config.redis.RedisOperation,\
-  com.www.common.config.rest.MyRestAutoConfiguration,\
   com.www.common.config.security.MySecurityAutoConfiguration,\
   com.www.common.config.security.config.SecurityConfig,\
   com.www.common.utils.SpringUtils

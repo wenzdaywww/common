@@ -37,6 +37,7 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <version>${spring-boot-version}</version>
             <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
         <!-- springboot框架web项目起步依赖 -->
         <dependency>

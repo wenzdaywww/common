@@ -1,4 +1,4 @@
-package com.www.common.config.hystrix;
+package com.www.common.config.feign;
 
 import com.netflix.hystrix.HystrixThreadPoolKey;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
@@ -14,9 +14,7 @@ import com.netflix.hystrix.strategy.properties.HystrixProperty;
 import com.www.common.config.filter.core.TraceIdFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -26,15 +24,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>@Description hystrix策略，解决RequestContextHolder.getRequestAttributes()=null问题 </p>
+ * <p>@Description 自定义hystrix策略，解决RequestContextHolder.getRequestAttributes()=null问题 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/1/21 21:34 </p>
  */
 @Slf4j
 @Primary
-@Component
-@ConditionalOnClass(HystrixConcurrencyStrategy.class)
 public class HystrixStrategyHandler extends HystrixConcurrencyStrategy {
     /** Hystrix当前策略 **/
     private HystrixConcurrencyStrategy hystrixConcurrencyStrategy;

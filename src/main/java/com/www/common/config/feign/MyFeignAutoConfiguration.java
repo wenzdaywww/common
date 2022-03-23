@@ -1,5 +1,7 @@
 package com.www.common.config.feign;
 
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RandomRule;
 import com.www.common.config.filter.core.TraceIdFilter;
 import com.www.common.config.oauth2.token.Oauth2TokenExtractor;
 import com.www.common.pojo.constant.CharConstant;
@@ -8,9 +10,13 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +33,43 @@ import javax.servlet.http.HttpServletRequest;
 public class MyFeignAutoConfiguration {
     /** feign转发的cookie的key值 **/
     private static final String COOKIE = "cookie";
+    @Autowired
+    private RestTemplateBuilder restTemplateBuilder;
+    /**
+     * <p>@Description 注入RestTemplate </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/1 21:20 </p>
+     * @return org.springframework.web.client.RestTemplate
+     */
+    @Bean
+    @LoadBalanced //此注解开启负载均衡
+    public RestTemplate restTemplate(){
+        log.info("启动加载：自定义Rest配置类：配置RestTemplate负载均衡");
+        // 创建 RestTemplate 实例， 我这里使用的OkHttp
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        return restTemplate;
+    }
+    /**
+     * <p>@Description 添加全局负载均衡策略 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/7 15:04 </p>
+     * @return com.netflix.loadbalancer.IRule
+     */
+    @Bean
+    public IRule getRule(){
+        log.info("启动加载：自定义Rest配置类：配置全局负载均衡策略");
+        return new RandomRule();
+    }
+    /**
+     * <p>@Description 注册自定义hystrix策略 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/23 22:08 </p>
+     * @return com.www.common.config.feign.HystrixStrategyHandler
+     */
+    @Bean
+    public HystrixStrategyHandler hystrixStrategyHandler(){
+        return new HystrixStrategyHandler();
+    }
     /**
      * <p>@Description 重新配置feign请求头，解决feign调用请求头丢失问题 </p>
      * <p>@Author www </p>
