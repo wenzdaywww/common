@@ -25,6 +25,6 @@ public class WriteDataSource extends DruidDataSource implements IWriteDataSoure 
      */
     public WriteDataSource(){
         super();
-        log.info("加载写权限数据源");
+        log.info("启动加载：多数据源自动配置类：加载写权限数据源");
     }
 }

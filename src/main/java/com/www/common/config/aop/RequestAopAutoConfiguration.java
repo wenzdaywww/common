@@ -24,7 +24,7 @@ public class RequestAopAutoConfiguration {
      * <p>@Date 2022/3/23 10:13 </p>
      */
     public RequestAopAutoConfiguration(){
-        log.info("加载 -> 请求响应报文AOP拦截自动配置类");
+        log.info("启动加载：请求AOP拦截自动配置类");
     }
     /**
      * <p>@Description 注册请求响应报文AOP拦截配置对象 </p>

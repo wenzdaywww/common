@@ -27,7 +27,7 @@ public class SessionExpiredHandler implements SessionInformationExpiredStrategy 
      * @return
      */
     public SessionExpiredHandler(){
-        log.info("注册security配置会话过期处理");
+        log.info("启动加载：Security认证自动配置类：注册security配置会话过期处理");
     }
     /**
      * <p>@Description 单点登录会话过期处理 </p>

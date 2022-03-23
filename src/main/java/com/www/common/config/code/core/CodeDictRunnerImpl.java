@@ -26,7 +26,7 @@ public class CodeDictRunnerImpl implements ApplicationRunner {
      * <p>@Date 2022/3/22 20:46 </p>
      */
     public CodeDictRunnerImpl(){
-        log.info("启动自加载数据字典数据");
+        log.info("启动加载：数据字典自动配置类：自加载数据字典数据");
     }
     /**
      * <p>@Description 启动自加载数据字典数据 </p>
@@ -37,7 +37,7 @@ public class CodeDictRunnerImpl implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("启动自加载数据字典数据");
+        log.info("自加载数据字典数据");
         this.initCodeData();
     }
     /**

@@ -2,7 +2,6 @@ package com.www.common.config.code.core;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
@@ -35,7 +34,6 @@ import org.springframework.scheduling.annotation.Scheduled;
  * <p>@Date 2022/1/1 17:10 </p>
  */
 @Slf4j
-@EnableScheduling //开启定时任务
 public class CodeDataTask {
     @Autowired
     private CodeDictRunnerImpl codeDictRunner;
@@ -46,7 +44,7 @@ public class CodeDataTask {
      * <p>@Date 2022/3/22 20:46 </p>
      */
     public CodeDataTask(){
-        log.info("启动定时加载code_data任务");
+        log.info("启动加载：数据字典自动配置类：定时加载数据字典任务");
     }
     /**
      * <p>@Description 整点重新加载code数据 </p>
@@ -54,9 +52,9 @@ public class CodeDataTask {
      * <p>@Date 2022/1/1 17:20 </p>
      * @return void
      */
-    @Scheduled(cron = "${com.www.common.code.reloadTime}")
+    @Scheduled(cron = "${com.www.common.code.scheduled}")
     public void reloadCodeData() {
-        log.info("整点重新加载code_data数据字典数据");
+        log.info("定时重新加载数据字典数据");
         codeDictRunner.initCodeData();
     }
 }

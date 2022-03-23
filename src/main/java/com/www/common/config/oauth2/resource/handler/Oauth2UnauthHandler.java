@@ -32,7 +32,7 @@ public class Oauth2UnauthHandler implements AccessDeniedHandler {
      * <p>@Date 2022/3/22 22:44 </p>
      */
     public Oauth2UnauthHandler(){
-        log.info("注册资源服务器配置拒绝访问异常处理");
+        log.info("启动加载：Oauth2资源服务方自动配置类：注册资源服务器配置拒绝访问异常处理");
     }
     /**
      * <p>@Description 拒绝访问异常处理  </p>

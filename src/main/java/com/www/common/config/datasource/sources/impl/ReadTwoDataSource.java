@@ -23,6 +23,6 @@ public class ReadTwoDataSource extends DruidDataSource implements IReadDataSoure
      */
     public ReadTwoDataSource(){
         super();
-        log.info("加载读权限数据源2");
+        log.info("启动加载：多数据源自动配置类：加载读权限数据源2");
     }
 }

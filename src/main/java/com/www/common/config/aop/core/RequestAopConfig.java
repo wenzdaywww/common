@@ -53,7 +53,7 @@ public class RequestAopConfig {
      * <p>@Date 2022/3/22 19:50 </p>
      */
     public RequestAopConfig(){
-        log.info("开启controller层的AOP日志拦截");
+        log.info("启动加载：请求AOP拦截自动配置类：开启controller层的AOP日志拦截");
     }
     /**
      * <p>@Description 初始化方法 </p>

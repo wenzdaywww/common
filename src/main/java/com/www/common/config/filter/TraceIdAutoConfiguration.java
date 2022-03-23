@@ -20,7 +20,7 @@ public class TraceIdAutoConfiguration {
      * <p>@Date 2022/3/23 10:44 </p>
      */
     public TraceIdAutoConfiguration(){
-        log.info("加载 -> 日志全局跟踪号配置");
+        log.info("启动加载：日志全局跟踪号自动配置类");
     }
     /**
      * <p>@Description 配置日志全局跟踪号过滤器 </p>

@@ -29,7 +29,7 @@ public class Oauth2AccessDecisionManager implements AccessDecisionManager {
      * @return
      */
     public Oauth2AccessDecisionManager(){
-        log.info("注册资源服务器配置访问决策管理器");
+        log.info("启动加载：Oauth2资源服务方自动配置类：注册资源服务器配置访问决策管理器");
     }
     /**
      * <p>@Description url访问验证 </p>

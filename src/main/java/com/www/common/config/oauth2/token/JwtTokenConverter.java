@@ -34,7 +34,7 @@ public class JwtTokenConverter extends JwtAccessTokenConverter {
      * <p>@Date 2022/3/23 10:50 </p>
      */
     public JwtTokenConverter(){
-        log.info("注册自定义jwt的token转换器");
+        log.info("启动加载：注册自定义jwt的token转换器");
     }
     /**
      * <p>@Description token解析 </p>

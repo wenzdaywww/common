@@ -34,7 +34,7 @@ public class MySecurityAutoConfiguration {
      * <p>@Date 2022/3/23 10:52 </p>
      */
     public MySecurityAutoConfiguration(){
-        log.info("加载 -> Security认证自动配置类");
+        log.info("启动加载：Security认证自动配置类");
     }
     /**
      * <p>@Description 注册security登录认证失败处理对象 </p>

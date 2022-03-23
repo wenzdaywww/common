@@ -17,5 +17,5 @@ public class CodeProperties {
     /** 是否开启数据字典加载 **/
     private Boolean enable;
     /** 定时重新加载字典的时间格式 **/
-    private String reloadTime;
+    private String scheduled;
 }

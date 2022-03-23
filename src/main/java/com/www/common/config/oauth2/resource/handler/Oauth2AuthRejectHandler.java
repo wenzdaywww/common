@@ -33,7 +33,7 @@ public class Oauth2AuthRejectHandler implements AuthenticationEntryPoint {
      * @return
      */
     public Oauth2AuthRejectHandler(){
-        log.info("注册资源服务器配置认证失败时的异常处理");
+        log.info("启动加载：Oauth2资源服务方自动配置类：注册资源服务器配置认证失败时的异常处理");
     }
     /**
      * <p>@Description 认证失败时的异常处理 </p>

@@ -1,4 +1,4 @@
-package com.www.common.config.feign.core;
+package com.www.common.config.hystrix;
 
 import com.netflix.hystrix.HystrixThreadPoolKey;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
@@ -14,7 +14,9 @@ import com.netflix.hystrix.strategy.properties.HystrixProperty;
 import com.www.common.config.filter.core.TraceIdFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -31,7 +33,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Primary
-public class FeignHystrixStrategy extends HystrixConcurrencyStrategy {
+@Component
+@ConditionalOnClass(HystrixConcurrencyStrategy.class)
+public class HystrixStrategyHandler extends HystrixConcurrencyStrategy {
     /** Hystrix当前策略 **/
     private HystrixConcurrencyStrategy hystrixConcurrencyStrategy;
     /**
@@ -40,10 +44,10 @@ public class FeignHystrixStrategy extends HystrixConcurrencyStrategy {
      * <p>@Date 2022/1/21 21:51 </p>
      * @return
      */
-    public FeignHystrixStrategy() {
+    public HystrixStrategyHandler() {
         try {
             this.hystrixConcurrencyStrategy = HystrixPlugins.getInstance().getConcurrencyStrategy();
-            if (this.hystrixConcurrencyStrategy instanceof FeignHystrixStrategy) {
+            if (this.hystrixConcurrencyStrategy instanceof HystrixStrategyHandler) {
                 return;
             }
             HystrixCommandExecutionHook commandExecutionHook =
@@ -58,9 +62,9 @@ public class FeignHystrixStrategy extends HystrixConcurrencyStrategy {
             HystrixPlugins.getInstance().registerEventNotifier(eventNotifier);
             HystrixPlugins.getInstance().registerMetricsPublisher(metricsPublisher);
             HystrixPlugins.getInstance().registerPropertiesStrategy(propertiesStrategy);
-            log.info("注册Hystrix并发策略");
+            log.info("启动加载：自定义Hystrix并发策略");
         } catch (Exception e) {
-            log.error("无法注册Hystrix并发策略", e);
+            log.error("启动加载：自定义Hystrix并发策略失败", e);
         }
     }
 

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>@Description oauth2资源服务配置自动配置类 </p>
+ * <p>@Description oauth2资源服务自动配置类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/3/22 22:30 </p>
@@ -26,7 +26,7 @@ public class Oauth2ResourceAutoConfiguration extends Oauth2TokenConfig {
      * <p>@Date 2022/3/23 10:47 </p>
      */
     public Oauth2ResourceAutoConfiguration(){
-        log.info("加载 -> oauth2资源服务配置自动配置类");
+        log.info("启动加载：Oauth2资源服务方自动配置类");
     }
     /**
      * <p>@Description 注册资源服务器访问决策管理器对象 </p>

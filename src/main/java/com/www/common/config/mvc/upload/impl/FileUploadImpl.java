@@ -45,7 +45,7 @@ public class FileUploadImpl implements IFileUpload {
      * <p>@Date 2022/3/22 21:21 </p>
      */
     public FileUploadImpl (){
-        log.info("配置文件上传");
+        log.info("启动加载：自定义MVC配置类：配置文件上传");
     }
     /**
      * <p>@Description 初始化数据 </p>

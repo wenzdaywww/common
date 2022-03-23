@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * <p>@Date 2022/3/23 10:53 </p>
      */
     public SecurityConfig(){
-        log.info("加载 -> Security安全配置类");
+        log.info("启动加载：Security认证自动配置类：Security安全配置类");
     }
     /**
      * <p>@Description 授权,配置如何通过拦截器保护请求 </p>

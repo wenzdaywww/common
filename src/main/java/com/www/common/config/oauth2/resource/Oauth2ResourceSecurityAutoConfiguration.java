@@ -28,7 +28,7 @@ public class Oauth2ResourceSecurityAutoConfiguration extends WebSecurityConfigur
      * <p>@Date 2022/3/23 10:48 </p>
      */
     public Oauth2ResourceSecurityAutoConfiguration(){
-        log.info("加载 -> 资源服务方的Security配置类");
+        log.info("启动加载：Oauth2资源服务方的Security配置类");
     }
     /**
      * <p>@Description 配置资源的安全拦截策略 </p>
@@ -39,7 +39,7 @@ public class Oauth2ResourceSecurityAutoConfiguration extends WebSecurityConfigur
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        log.info("资源服务器配置Security安全拦截策略");
+        log.info("启动加载：Oauth2资源服务方的Security配置类：资源服务器配置Security安全拦截策略");
         http.csrf().disable();//关闭csrf跨域检查
         //此处只配置所有请求必须认证通过，哪些请求不需要认证的需要在ResourceServieConfig.configure(HttpSecurity http)中配置
         http.authorizeRequests().antMatchers("/**").authenticated();

@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>@Description 多数据源自动配置配置类 </p>
+ * <p>@Description 多数据源自动配置类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/3/22 21:53 </p>
@@ -75,7 +75,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      */
     public MultiDataSourceAutoConfiguration(MybatisPlusProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider, ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider, ResourceLoader resourceLoader, ObjectProvider<DatabaseIdProvider> databaseIdProvider, ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider, ObjectProvider<List<MybatisPlusPropertiesCustomizer>> mybatisPlusPropertiesCustomizerProvider, ApplicationContext applicationContext) {
         super(properties, interceptorsProvider, typeHandlersProvider, languageDriversProvider, resourceLoader, databaseIdProvider, configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
-        log.info("加载 -> 多数据源自动配置类");
+        log.info("启动加载：多数据源自动配置类");
     }
     /**
      * <p>@Description 注册读写分离数据源切换的拦截器-AOP注入对象 </p>
@@ -153,7 +153,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
                     DefaultDataSource = writeMap.get(key);
                 }
             }
-            log.info("加载{}个读写权限的数据源",writeNum);
+            log.info("启动加载：多数据源自动配置类：加载{}个读写权限的数据源",writeNum);
         }
         //加载读权限的数据源
         Map<String, IReadDataSoure> readMap = applicationContext.getBeansOfType(IReadDataSoure.class);//读权限数据源集合
@@ -162,7 +162,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
                 targetDataSource.put(READ_DATA_SOURCE_PREFIX + readNum, readMap.get(key));
                 readNum ++;
             }
-            log.info("加载{}个只读权限的数据源",readNum);
+            log.info("启动加载：多数据源自动配置类：加载{}个只读权限的数据源",readNum);
         }
         //默认数据源
         proxy.setDefaultTargetDataSource(DefaultDataSource);

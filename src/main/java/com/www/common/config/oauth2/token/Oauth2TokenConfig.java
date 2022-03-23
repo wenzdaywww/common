@@ -28,7 +28,7 @@ public class Oauth2TokenConfig {
      * @return
      */
     public Oauth2TokenConfig(){
-        log.info("注册配置token存储方式");
+        log.info("启动加载：注册配置token存储方式");
     }
     /**
      * <p>@Description 注册jwt对象 </p>

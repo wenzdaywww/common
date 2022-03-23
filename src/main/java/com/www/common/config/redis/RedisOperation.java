@@ -40,11 +40,6 @@ public final class RedisOperation {
      * @return org.springframework.data.redis.core.RedisTemplate<java.lang.String, java.lang.Object>
      */
     public static RedisTemplate<String,Object> getRedisTemplate(){
-//        if(redisTemplate == null){
-//            synchronized (RedisOperation.class){
-//                redisTemplate = SpringUtils.getApplicationContext().getBean(RedisTemplate.class);
-//            }
-//        }
         return redisTemplate;
     }
     /**

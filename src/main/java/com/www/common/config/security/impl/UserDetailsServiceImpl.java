@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @return
      */
     public UserDetailsServiceImpl(){
-        log.info("注册security配置用户详细信息服务类");
+        log.info("启动加载：Security认证自动配置类：注册security配置用户详细信息服务类");
     }
     /**
      * <p>@Description 加载用户信息 </p>

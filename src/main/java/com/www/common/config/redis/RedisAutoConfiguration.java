@@ -28,7 +28,7 @@ public class RedisAutoConfiguration {
      * <p>@Date 2022/3/23 10:51 </p>
      */
     public RedisAutoConfiguration(){
-        log.info("加载 -> redis配置类");
+        log.info("启动加载：自定义Redis配置类");
     }
     /**
      * <p>@Description 自定义redisTemplate </p>
@@ -39,7 +39,7 @@ public class RedisAutoConfiguration {
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        log.info("配置redisTemplate序列信息");
+        log.info("启动加载：自定义Redis配置类：配置RedisTemplate序列信息");
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
         //json序列化配置

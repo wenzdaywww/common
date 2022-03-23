@@ -32,7 +32,7 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
      * <p>@Date 2022/3/23 10:45 </p>
      */
     public MyMvcAutoConfiguration(){
-        log.info("加载 -> MVC配置");
+        log.info("启动加载：自定义MVC配置类");
     }
     /**
      * <p>@Description 资源拦截配置 </p>

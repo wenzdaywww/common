@@ -22,7 +22,7 @@ public class SecurityRedisHandler {
      * <p>@Date 2022/3/23 10:56 </p>
      */
     public SecurityRedisHandler(){
-        log.info("注册Security的redis操作类");
+        log.info("启动加载：Security认证自动配置类：注册Security的redis操作类");
     }
     /**
      * <p>@Description 判断redis中是否已经保存token </p>

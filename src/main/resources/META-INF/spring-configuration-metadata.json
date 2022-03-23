@@ -19,12 +19,6 @@
       "sourceType": "com.www.common.config.code.CodeProperties"
     },
     {
-      "name": "com.www.common.feign",
-      "type": "com.www.common.config.feign.RestFeignAutoConfiguration",
-      "description": "Rest及feign自动配置类.",
-      "sourceType": "com.www.common.config.feign.RestFeignProperties"
-    },
-    {
       "name": "com.www.common.file",
       "type": "com.www.common.config.mvc.MyMvcAutoConfiguration",
       "description": "文件上传自动配置类.",
@@ -76,7 +70,7 @@
       "description": "是否开启数据字典加载"
     },
     {
-      "name": "com.www.common.code.reload-time",
+      "name": "com.www.common.code.scheduled",
       "type": "java.lang.String",
       "defaultValue": "0 0 * * * ?",
       "description": "定时重新加载字典的时间格式"
@@ -93,13 +87,6 @@
       "type": "java.lang.Boolean",
       "defaultValue": false,
       "description": "是否开启druid监控平台"
-    },
-
-    {
-      "name": "com.www.common.feign.enable",
-      "type": "java.lang.Boolean",
-      "defaultValue": false,
-      "description": "是否开启Rest及feign配置"
     },
 
     {

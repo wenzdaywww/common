@@ -27,7 +27,7 @@ public class CodeAutoConfiguration {
      * <p>@Date 2022/3/23 10:13 </p>
      */
     public CodeAutoConfiguration(){
-        log.info("加载 -> 数据字典自动配置类");
+        log.info("启动加载：数据字典自动配置类");
     }
     /**
      * <p>@Description 注册数据字典redis操作类对象 </p>
@@ -56,6 +56,7 @@ public class CodeAutoConfiguration {
      * @return com.www.common.config.code.task.CodeDataTask
      */
     @Bean
+    @ConditionalOnProperty(prefix = "com.www.common.code",name = {"scheduled"})
     public CodeDataTask codeDataTask(){
         return new CodeDataTask();
     }

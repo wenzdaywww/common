@@ -34,7 +34,7 @@ public class DruidMonitorAutoConfiguration {
      * @return
      */
     public DruidMonitorAutoConfiguration(){
-        log.info("加载 -> druid监控平台自动配置类");
+        log.info("启动加载：Druid监控平台自动配置类");
     }
     /**
      * <p>@Description 设置druid后台监控功能
@@ -58,7 +58,7 @@ public class DruidMonitorAutoConfiguration {
 //        initParam.put("www","192.168.1.105");
         //设置初始化参数
         bean.setInitParameters(initParam);
-        log.info("配置druid后台监控信息");
+        log.info("启动加载：Druid监控平台自动配置类：配置Druid后台监控信息");
         return  bean;
     }
     /**
@@ -75,7 +75,7 @@ public class DruidMonitorAutoConfiguration {
         //设置不统计的过滤器
         initParam.put("exclusions","*.js,*.css,/druid/*");
         bean.setInitParameters(initParam);
-        log.info("配置druid监控过滤器");
+        log.info("启动加载：Druid监控平台自动配置类：配置Druid监控过滤器");
         return bean;
     }
 }

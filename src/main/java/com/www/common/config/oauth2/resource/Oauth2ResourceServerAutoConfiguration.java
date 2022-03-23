@@ -56,7 +56,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
      * <p>@Date 2022/3/23 10:48 </p>
      */
     public Oauth2ResourceServerAutoConfiguration(){
-        log.info("加载 -> 资源服务方的认证配置类");
+        log.info("启动加载：Oauth2资源服务方的认证配置类");
     }
     /**
      * <p>@Description 配置资源服务方验证方式 </p>
@@ -67,7 +67,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
      */
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        log.info("资源服务器配置验证方式");
+        log.info("启动加载：Oauth2资源服务方的认证配置类：资源服务器配置验证方式");
         resources.resourceId(resourceId) //资源ID
                 // .tokenServices(tokenServices()) //远程校验token时需要
                 .tokenStore(tokenStore) //jwt校验token
@@ -86,7 +86,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        log.info("资源服务器配置安全拦截策略");
+        log.info("启动加载：Oauth2资源服务方的认证配置类：资源服务器配置安全拦截策略");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//关闭session策略
         //固定写法的配置scope范围
