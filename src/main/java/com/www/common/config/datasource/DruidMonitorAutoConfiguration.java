@@ -3,6 +3,7 @@ package com.www.common.config.datasource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -46,9 +47,10 @@ public class DruidMonitorAutoConfiguration {
      */
     @Bean
     public ServletRegistrationBean statViewServlet(){
-        //TODO 2021/12/30 21:42 /druid/*路径会被拦截，待处理
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
         Map<String,String> initParam = new HashMap<>();
+        String name = StringUtils.isBlank(dataSourceProperties.getMonitorName()) ? "admin" : dataSourceProperties.getMonitorName();
+        String pwd = StringUtils.isBlank(dataSourceProperties.getMonitorPwd()) ? "www362412" : dataSourceProperties.getMonitorPwd();
         //登录的key固定，不能改变
         initParam.put("loginUsername",dataSourceProperties.getMonitorName());
         initParam.put("loginPassword",dataSourceProperties.getMonitorPwd());

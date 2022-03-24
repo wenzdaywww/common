@@ -88,6 +88,18 @@
       "defaultValue": false,
       "description": "是否开启druid监控平台"
     },
+    {
+      "name": "com.www.common.datasource.monitor-name",
+      "type": "java.lang.String",
+      "defaultValue": "admin",
+      "description": "druid监控平台用户"
+    },
+    {
+      "name": "com.www.common.datasource.monitor-pwd",
+      "type": "java.lang.Boolean",
+      "defaultValue": "www362412",
+      "description": "druid监控平台密码"
+    },
 
     {
       "name": "com.www.common.file.enable",
