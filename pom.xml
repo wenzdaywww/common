@@ -21,6 +21,16 @@
     <properties>
         <spring-boot-version>2.3.12.RELEASE</spring-boot-version>
         <spring-cloud-version>2.2.9.RELEASE</spring-cloud-version>
+        <mybatis-plus-version>3.4.3</mybatis-plus-version>
+        <spring-cloud-starter-security-version>2.2.5.RELEASE</spring-cloud-starter-security-version>
+        <spring-cloud-starter-oauth2-version>2.2.5.RELEASE</spring-cloud-starter-oauth2-version>
+        <druid-spring-boot-starter-version>1.2.5</druid-spring-boot-starter-version>
+        <lombok-version>1.18.20</lombok-version>
+        <jjwt-version>0.9.0</jjwt-version>
+        <fastjson-version>1.2.49</fastjson-version>
+        <commons-lang3-version>3.9</commons-lang3-version>
+        <commons-collections4-version>4.4</commons-collections4-version>
+        <commons-codec-version>1.11</commons-codec-version>
     </properties>
     <!-- 应用依赖  -->
     <dependencies>
@@ -64,23 +74,22 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.3</version>
+            <version>${mybatis-plus-version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- springcloud相关依赖 -->
-        <!-- springcloud依赖 -->
         <!-- security安全认证依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
-            <version>2.2.5.RELEASE</version>
+            <version>${spring-cloud-starter-security-version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- oauth2认证-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <version>2.2.5.RELEASE</version>
+            <version>${spring-cloud-starter-oauth2-version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- ribbon负载均衡依赖 -->
@@ -94,7 +103,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.5</version>
+            <version>${druid-spring-boot-starter-version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- feign服务调用依赖-->
@@ -116,37 +125,37 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>${lombok-version}</version>
         </dependency>
         <!--token生成工具-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.0</version>
+            <version>${jjwt-version}</version>
         </dependency>
         <!--fastjson 依赖-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.49</version>
+            <version>${fastjson-version}</version>
         </dependency>
         <!--commons 依赖-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>${commons-lang3-version}</version>
         </dependency>
         <!--collections 依赖-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
+            <version>${commons-collections4-version}</version>
         </dependency>
         <!-- 加密包 -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.11</version>
+            <version>${commons-codec-version}</version>
         </dependency>
     </dependencies>
 

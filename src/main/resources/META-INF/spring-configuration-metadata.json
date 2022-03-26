@@ -25,6 +25,12 @@
       "sourceType": "com.www.common.config.mvc.MyMvcProperties"
     },
     {
+      "name": "com.www.common.mybatis",
+      "type": "com.www.common.config.mybatis.MyBatisCustomAutoConfiguration",
+      "description": "自定义Mybatis配置.",
+      "sourceType": "com.www.common.config.mybatis.MybatisProperties"
+    },
+    {
       "name": "com.www.common.oauth2",
       "type": "com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration",
       "description": "oauth2资源服务配置自动配置类.",
@@ -130,6 +136,25 @@
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "图片外其他文件保存的绝对路径"
+    },
+
+    {
+      "name": "com.www.common.mybatis.limit",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "是否开启全局结果集数量限制"
+    },
+    {
+      "name": "com.www.common.mybatis.database",
+      "type": "java.lang.String",
+      "defaultValue": "mysql",
+      "description": "数据库类型，不区分大小写"
+    },
+    {
+      "name": "com.www.common.mybatis.limitNum",
+      "type": "java.lang.Integer",
+      "defaultValue": 1000,
+      "description": "结果集限制数量"
     },
 
     {
