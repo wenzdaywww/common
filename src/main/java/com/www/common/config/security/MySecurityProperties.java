@@ -15,13 +15,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "com.www.common.securuty")
 public class MySecurityProperties {
     /** 是否开启Security认证 **/
-    private Boolean enable;
+    private Boolean enable = false;
     /** jwt令牌签名 */
-    private String secretKey ;
+    private String secretKey = "wenzday";
     /**  过期时间（秒） */
-    private Integer expireTimeSecond;
+    private int expireTimeSecond = 259200;
     /** cookie免登录有效天数 **/
-    private int cookieDay;
+    private int cookieDay = 3;
     /** 使用redis保存用户的token的key前缀 **/
     private String userPrefix;
 }

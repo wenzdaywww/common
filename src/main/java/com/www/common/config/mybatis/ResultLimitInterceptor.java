@@ -13,7 +13,6 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 
@@ -26,8 +25,6 @@ import java.sql.Connection;
 @Slf4j
 @Intercepts(@Signature(type = StatementHandler.class,method = "prepare",args = {Connection.class,Integer.class}))
 public class ResultLimitInterceptor implements Interceptor {
-    /** 查询结果集数量 **/
-    private int limitNum;
     /** 结果集数量限制类型 **/
     private String limitType;
     /** oracle数据库 **/
@@ -43,7 +40,6 @@ public class ResultLimitInterceptor implements Interceptor {
      */
     public ResultLimitInterceptor(MybatisProperties mybatisProperties){
         this.mybatisProperties = mybatisProperties;
-        limitNum = mybatisProperties.getLimitNum() < 1 ? 1000 : mybatisProperties.getLimitNum();
         limitType = StringUtils.equalsIgnoreCase(mybatisProperties.getDatabase(),ORACLE_DATABASE) ? " ROWNUM " : " LIMIT ";
         log.info("启动加载：自定义Mybatis配置：配置Mybatis查询结果集拦截器");
     }
@@ -82,7 +78,7 @@ public class ResultLimitInterceptor implements Interceptor {
         }
         //组装新sql语句
         String limitTypeTemp = StringUtils.equalsIgnoreCase(mybatisProperties.getDatabase(),ORACLE_DATABASE) ? " WHERE " + limitType + " <=" : limitType ;
-        String limitSql = String.format(LIMIT_SQL,originalSql,limitTypeTemp,limitNum);
+        String limitSql = String.format(LIMIT_SQL,originalSql,limitTypeTemp,mybatisProperties.getLimitNum());
         metaObject.setValue("delegate.boundSql.sql",limitSql);
         log.info("结果集数量限制后SQL：{}",limitSql);
         return invocation.proceed();

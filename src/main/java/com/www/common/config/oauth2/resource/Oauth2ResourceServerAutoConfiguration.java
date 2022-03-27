@@ -7,7 +7,6 @@ import com.www.common.config.oauth2.resource.meta.Oauth2MetadataSource;
 import com.www.common.config.oauth2.token.Oauth2TokenExtractor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +33,8 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @EnableConfigurationProperties(value = Oauth2Properties.class)
 @ConditionalOnProperty(prefix = "com.www.common.oauth2",name = "enable") //是否开启oauth2资源服务配置
 public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigurerAdapter {
-    /** 资源服务id **/
-    @Value("${spring.application.name}")
-    private String resourceId;
+    @Autowired
+    private Oauth2Properties oauth2Properties;
     @Autowired
     private TokenStore tokenStore;
     @Autowired
@@ -68,7 +66,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         log.info("启动加载：Oauth2资源服务方的认证配置类：资源服务器配置验证方式");
-        resources.resourceId(resourceId) //资源ID
+        resources.resourceId(oauth2Properties.getResourceId()) //资源ID
                 // .tokenServices(tokenServices()) //远程校验token时需要
                 .tokenStore(tokenStore) //jwt校验token
                 .stateless(true);

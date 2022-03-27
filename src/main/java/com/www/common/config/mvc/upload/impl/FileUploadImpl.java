@@ -8,11 +8,8 @@ import com.www.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,17 +24,9 @@ import java.util.Arrays;
 public class FileUploadImpl implements IFileUpload {
     /** 图片类型  **/
     private String[] imgType = {"BMP","JPG","JPEG","PNG","GIF"};
-    /** ip地址 **/
-    private String ip;
-    /** 端口 **/
-    @Value("${server.port}")
-    private String serverPort;
     /** mvc配置信息 **/
     @Autowired
     private MyMvcProperties myMvcProperties;
-    /** 环境配置信息 **/
-    @Autowired
-    private Environment environment;
 
     /**
      * <p>@Description 构造方法 </p>
@@ -46,16 +35,6 @@ public class FileUploadImpl implements IFileUpload {
      */
     public FileUploadImpl (){
         log.info("启动加载：自定义MVC配置类：配置文件上传");
-    }
-    /**
-     * <p>@Description 初始化数据 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/1/30 01:20 </p>
-     * @return void
-     */
-    @PostConstruct
-    private void init(){
-        ip = environment.getProperty("eureka.instance.ip-address"); //获取ip
     }
     /**
      * <p>@Description 上传文件并返回url地址 </p>
@@ -70,7 +49,7 @@ public class FileUploadImpl implements IFileUpload {
     public String uploadFileBackURL(MultipartFile file, String prevPath, String fileName) {
         String path = this.uploadFileBackPath(file,prevPath,fileName);
         if(StringUtils.isNotBlank(path)){
-            path = CharConstant.HTTP + ip + CharConstant.COLON + serverPort + path;
+            path = CharConstant.HTTP + myMvcProperties.getIp() + CharConstant.COLON + myMvcProperties.getPort() + path;
             return path;
         }else {
             return null;

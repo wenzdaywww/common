@@ -1,11 +1,11 @@
 package com.www.common.config.oauth2.token;
 
+import com.www.common.config.oauth2.resource.Oauth2Properties;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
 import com.www.common.pojo.dto.token.TokenInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -24,10 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public class Oauth2TokenExtractor extends BearerTokenExtractor {
     /** 保存到cookie的access_token的key **/
     public static final String COOKIES_ACCESS_TOKEN = "access_token";
-    /** 图片资源路径的application.yml的key **/
-    public static final String IMG_URL_PATH = "com.www.common.file.imgUrlPath";
     @Autowired
-    private Environment environment;
+    private Oauth2Properties oauth2Properties;
     @Autowired
     private JwtTokenConverter jwtTokenConverter;
     /** 路径匹配器 **/
@@ -51,7 +49,7 @@ public class Oauth2TokenExtractor extends BearerTokenExtractor {
      */
     @Override
     public Authentication extract(HttpServletRequest request) {
-        String imgUrl = environment.getProperty(IMG_URL_PATH); // 图片资源路径
+        String imgUrl = oauth2Properties.getImgUrlPath(); // 图片资源路径
         String uri = request.getRequestURI(); //当前uri
         // 判断是否是图片资源，是则不获取token
         if(StringUtils.isNotBlank(imgUrl) && antPathMatcher.match(imgUrl,uri)){

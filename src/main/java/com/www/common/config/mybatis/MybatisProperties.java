@@ -15,9 +15,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "com.www.common.mybatis")
 public class MybatisProperties {
     /** 是否开启全局结果集数量限制 **/
-    private Boolean limit;
+    private Boolean limit = true;
     /** 数据库类型 **/
-    private String database;
+    private String database = "mysql";
     /** 结果集限制数量 **/
-    private int limitNum;
+    private int limitNum = 1000;
 }

@@ -10,6 +10,7 @@ import com.www.common.pojo.enums.ResponseEnum;
 import com.www.common.utils.HttpUtils;
 import com.www.common.utils.NumberUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -22,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -38,12 +38,6 @@ import java.util.Map;
 @Slf4j
 @Aspect
 public class RequestAopConfig {
-    /** 请求或返回数据中存在大数据字段时替换的字符串 **/
-    private String replaceContent = "<longText>";
-    /** 是否超长字符串由 **/
-    private boolean isReplace = true;
-    /** 是否超长字符串由 **/
-    private int length = 256;
     /** 请求响应报文AOP拦截配置 **/
     @Autowired
     private RequestAopProperties requestAopProperties;
@@ -54,22 +48,6 @@ public class RequestAopConfig {
      */
     public RequestAopConfig(){
         log.info("启动加载：请求AOP拦截自动配置类：开启controller层的AOP日志拦截");
-    }
-    /**
-     * <p>@Description 初始化方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/1/1 17:59 </p>
-     * @return
-     */
-    @PostConstruct
-    public void init(){
-        //获取application.yml配置的参数信息
-        String contentPro = requestAopProperties.getContent(); //替换的字符串
-        Boolean isReplacePro = requestAopProperties.getReplace(); //是否开启字符串替换
-        Integer lengthPro = requestAopProperties.getLength(); //字符串长度限制
-        replaceContent = StringUtils.isNotBlank(contentPro) ? contentPro : replaceContent;
-        isReplace = isReplacePro != null ? isReplacePro : isReplace;
-        length = lengthPro != null ? lengthPro : length;
     }
     /**
      * <p>@Description 设置controller切入点 </p>
@@ -120,7 +98,7 @@ public class RequestAopConfig {
      * @return java.lang.String 替换的成指定字符串
      */
     private String handleBigDataReplace(String value){
-        return StringUtils.length(value) > length ? replaceContent : value;
+        return StringUtils.length(value) > requestAopProperties.getLength() ? requestAopProperties.getContent() : value;
     }
     /**
      * <p>@Description 处理方法返回的对象，输出为json数据 </p>
@@ -130,7 +108,7 @@ public class RequestAopConfig {
      * @return java.lang.String json数据
      */
     public String handleResultToJson(Object result){
-        if(isReplace){
+        if(BooleanUtils.isNotFalse(requestAopProperties.getReplace())){
             Map<String,Object> resultMap = JSONObject.parseObject(JSON.toJSONString(result));
             resultMap = handleResultMap(resultMap);
             String resultJson = JSONObject.toJSONString(resultMap);

@@ -15,11 +15,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "com.www.common.datasource")
 public class MultiDataSourceProperties {
     /**  是否开启多数据源配置 **/
-    private Boolean enable;
+    private Boolean enable = false;
     /**  是否开启druid监控平台 **/
-    private Boolean monitor;
+    private Boolean monitor = false;
     /**  druid监控平台用户 **/
-    private String monitorName;
+    private String monitorName = "admin";
     /**  druid监控平台密码 **/
-    private String monitorPwd;
+    private String monitorPwd = "www362412";
 }

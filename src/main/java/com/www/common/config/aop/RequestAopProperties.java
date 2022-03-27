@@ -15,11 +15,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "com.www.common.request")
 public class RequestAopProperties {
     /** 是否开启请求响应报文AOP拦截 **/
-    private Boolean enable;
+    private Boolean enable = false;
     /** 请求响应字段过长替换的字符串 **/
-    private String content;
+    private String content = "<longText>";
     /** 请求响应字段过长时是否开启字符串替换 **/
-    private Boolean replace;
+    private Boolean replace = true;
     /** 请求响应字段过长时字符串长度限制 **/
-    private Integer length;
+    private Integer length = 256;
 }
