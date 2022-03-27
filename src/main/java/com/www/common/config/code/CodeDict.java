@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +22,8 @@ import java.util.stream.Collectors;
 public class CodeDict {
     /** 数据字典集合Map<codeType,Map<codeKey, CodeDTO>> **/
     private static Map<String,Map<String, CodeDTO>> codeMap = new HashMap<>();
-
+    /** 读写锁 **/
+    private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     /**
      * <p>@Description 初始化数据字典数据 </p>
@@ -31,7 +33,12 @@ public class CodeDict {
      * @return void
      */
     public static void initCode(Map<String,Map<String, CodeDTO>> codeMap){
-        CodeDict.codeMap = codeMap;
+        try {
+            lock.writeLock().lock();
+            CodeDict.codeMap = codeMap;
+        }finally {
+            lock.writeLock().unlock();
+        }
     }
     /**
      * <p>@Description 判断value值对应的code类型中是否是非法数值 </p>
@@ -217,8 +224,13 @@ public class CodeDict {
      * @return codeType的所有键值对
      */
     public static Map<String,CodeDTO> getAllCodeDTO(String codeType){
-        if(codeMap.containsKey(codeType)){
-            return codeMap.get(codeType);
+        try {
+            lock.readLock().lock();
+            if(codeMap.containsKey(codeType)){
+                return codeMap.get(codeType);
+            }
+        }finally {
+            lock.readLock().unlock();
         }
         return new HashMap<>();
     }
