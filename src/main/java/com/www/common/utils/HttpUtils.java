@@ -46,6 +46,7 @@ public class HttpUtils {
     }
     /**
      * <p>@Description 获取请求客户端的ip地址 </p>
+     * 注：有代理服务器时，无法获取请用户请求的真实IP
      * <p>@Author www </p>
      * <p>@Date 2022/2/8 20:42 </p>
      * @return java.lang.String
