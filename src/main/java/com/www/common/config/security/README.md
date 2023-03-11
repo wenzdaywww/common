@@ -4,3 +4,10 @@
 #### 3、application.yml需要配置 com.www.common.securuty.secret-key : jwt令牌签名
 #### 4、application.yml需要配置 com.www.common.securuty.expire-time-second : 过期时间（秒）
 #### 5、application.yml需要配置 com.www.common.securuty.cookie-day : cookie免登录有效天数
+#### 6、需要引入依赖包
+##### <dependency>
+#####   <groupId>org.springframework.cloud</groupId>
+#####   <artifactId>spring-cloud-starter-security</artifactId>
+#####   <version>${spring-cloud-starter-security-version}</version>
+##### </dependency>
+#### 7、需要实现ISecurityServie接口

@@ -99,6 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")//退出路径
             .logoutSuccessHandler(logoutSuccessHandler)//退出成功处理逻辑
             .deleteCookies("JSESSIONID");//登出之后删除cookie
+        //记住我功能
+        http.rememberMe().rememberMeParameter("rmb");//配置记住我的参数
         http.addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);//设置token解析过滤器在账号密码验证器之前
     }
     /**
