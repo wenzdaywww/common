@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * <p>@Description token验证拦截器 </p>
@@ -87,5 +90,22 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
+    }
+    /**
+     * <p>@Description 从当前请求头中获取当前登录的用户ID </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/1/22 16:48 </p>
+     * @return java.lang.String 用户ID
+     */
+    public String getUserId(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if(attributes != null){
+            HttpServletRequest request = attributes.getRequest();
+            Cookie cookie = WebUtils.getCookie(request, LoginSuccessHandler.COOKIE_TOKEN);
+            String token = Optional.ofNullable(cookie).map(c -> c.getValue()).orElse("");
+            Map<String,Object> usrMap = TokenUtils.validateTokenAndGetClaims(token);
+            return Optional.ofNullable(usrMap).map(m -> String.valueOf(m.get(TokenUtils.USERID))).orElse(null);
+        }
+        return null;
     }
 }
