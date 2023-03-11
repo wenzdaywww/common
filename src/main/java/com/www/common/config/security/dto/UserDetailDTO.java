@@ -1,4 +1,4 @@
-package com.www.common.pojo.dto.security;
+package com.www.common.config.security.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

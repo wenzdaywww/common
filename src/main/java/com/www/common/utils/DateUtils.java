@@ -1,6 +1,6 @@
 package com.www.common.utils;
 
-import com.www.common.pojo.enums.DateFormatEnum;
+import com.www.common.data.enums.DateFormatEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;

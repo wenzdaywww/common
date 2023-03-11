@@ -1,4 +1,4 @@
-package com.www.common.pojo.dto.code;
+package com.www.common.config.code.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

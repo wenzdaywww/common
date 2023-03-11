@@ -1,7 +1,7 @@
 package com.www.common.utils;
 
-import com.www.common.pojo.enums.DateFormatEnum;
-import com.www.common.pojo.enums.Weeknum;
+import com.www.common.data.enums.DateFormatEnum;
+import com.www.common.data.enums.Weeknum;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

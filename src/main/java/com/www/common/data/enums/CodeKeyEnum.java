@@ -1,6 +1,4 @@
-package com.www.common.pojo.enums;
-
-import lombok.Data;
+package com.www.common.data.enums;
 
 /**
  * <p>@Description 通用key值枚举类 </p>

@@ -1,6 +1,6 @@
 package com.www.common.config.oauth2.resource.inf;
 
-import com.www.common.pojo.dto.security.ScopeDTO;
+import com.www.common.config.oauth2.dto.ScopeDTO;
 
 import java.util.List;
 

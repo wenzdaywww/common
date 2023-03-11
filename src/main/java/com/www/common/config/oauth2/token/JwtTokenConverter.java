@@ -2,7 +2,7 @@ package com.www.common.config.oauth2.token;
 
 import com.alibaba.fastjson.JSON;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
-import com.www.common.pojo.dto.token.TokenInfoDTO;
+import com.www.common.config.oauth2.dto.TokenInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

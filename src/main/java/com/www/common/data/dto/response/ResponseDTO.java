@@ -1,6 +1,6 @@
-package com.www.common.pojo.dto.response;
+package com.www.common.data.dto.response;
 
-import com.www.common.pojo.enums.ResponseEnum;
+import com.www.common.data.enums.ResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -97,7 +97,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
      * <p>@Date 2022/1/22 16:48 </p>
      * @return java.lang.String 用户ID
      */
-    public String getUserId(){
+    public static String getUserId(){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if(attributes != null){
             HttpServletRequest request = attributes.getRequest();

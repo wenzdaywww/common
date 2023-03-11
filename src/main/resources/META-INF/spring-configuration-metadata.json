@@ -8,7 +8,7 @@
     },
     {
       "name": "com.www.common.code",
-      "type": "com.www.common.config.code.CodeAutoConfiguration",
+      "type": "com.www.common.config.code.read.CodeAutoConfiguration",
       "description": "数据字典自动配置类.",
       "sourceType": "com.www.common.config.code.CodeProperties"
     },
@@ -70,18 +70,23 @@
     },
 
     {
-      "name": "com.www.common.code.enable",
+      "name": "com.www.common.code.read-enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启数据字典加载"
+      "description": "是否开启数据字典读取"
     },
     {
-      "name": "com.www.common.code.scheduled",
+      "name": "com.www.common.code.read-scheduled",
       "type": "java.lang.String",
       "defaultValue": "0 0 * * * ?",
-      "description": "定时重新加载字典的时间格式"
+      "description": "定时重新读取字典的时间格式"
     },
-
+    {
+      "name": "com.www.common.code.code-data-key",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "redis中数据字典的key"
+    },
     {
       "name": "com.www.common.datasource.enable",
       "type": "java.lang.Boolean",

@@ -14,8 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.code")
 public class CodeProperties {
-    /** 是否开启数据字典加载 **/
-    private Boolean enable = false;
-    /** 定时重新加载字典的时间格式 **/
-    private String scheduled = "0 0 * * * ?";
+    /** 是否开启数据字典读取 **/
+    private Boolean readEnable = false;
+    /** 定时重新读取数据字典的时间格式 **/
+    private String readScheduled = "0 0 * * * ?";
+    /** redis中数据字典的key **/
+    private String codeDataKey = null;
 }

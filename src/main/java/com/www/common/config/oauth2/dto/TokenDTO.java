@@ -1,4 +1,4 @@
-package com.www.common.pojo.dto.token;
+package com.www.common.config.oauth2.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

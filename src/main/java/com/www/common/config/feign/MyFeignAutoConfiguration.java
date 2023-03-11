@@ -4,7 +4,7 @@ import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
 import com.www.common.config.filter.core.TraceIdFilter;
 import com.www.common.config.oauth2.token.Oauth2TokenExtractor;
-import com.www.common.pojo.constant.CharConstant;
+import com.www.common.data.constant.CharConstant;
 import com.www.common.utils.HttpUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

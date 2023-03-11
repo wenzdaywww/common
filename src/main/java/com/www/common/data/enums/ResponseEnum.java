@@ -1,4 +1,4 @@
-package com.www.common.pojo.enums;
+package com.www.common.data.enums;
 
 /**
  * <p>@Description 响应码枚举值 </p>

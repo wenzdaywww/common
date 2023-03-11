@@ -1,7 +1,7 @@
 package com.www.common.config.security.meta;
 
 import com.www.common.config.security.inf.ISecurityServie;
-import com.www.common.pojo.dto.security.AuthorityDTO;
+import com.www.common.config.security.dto.AuthorityDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

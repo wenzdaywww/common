@@ -1,7 +1,7 @@
-package com.www.common.config.code.core;
+package com.www.common.config.code.read;
 
 import com.www.common.config.code.CodeDict;
-import com.www.common.pojo.dto.code.CodeDTO;
+import com.www.common.config.code.dto.CodeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;

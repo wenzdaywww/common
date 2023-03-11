@@ -2,8 +2,8 @@ package com.www.common.config.mvc.upload.impl;
 
 import com.www.common.config.mvc.MyMvcProperties;
 import com.www.common.config.mvc.upload.IFileUpload;
-import com.www.common.pojo.constant.CharConstant;
-import com.www.common.pojo.enums.DateFormatEnum;
+import com.www.common.data.constant.CharConstant;
+import com.www.common.data.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

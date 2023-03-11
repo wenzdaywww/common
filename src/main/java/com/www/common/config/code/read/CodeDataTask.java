@@ -1,4 +1,4 @@
-package com.www.common.config.code.core;
+package com.www.common.config.code.read;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class CodeDataTask {
      * <p>@Date 2022/1/1 17:20 </p>
      * @return void
      */
-    @Scheduled(cron = "${com.www.common.code.scheduled}")
+    @Scheduled(cron = "${com.www.common.code.read-scheduled}")
     public void reloadCodeData() {
         log.info("定时重新加载数据字典数据");
         codeDictRunner.initCodeData();

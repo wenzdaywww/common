@@ -2,7 +2,7 @@ package com.www.common.config.security.handler;
 
 import com.www.common.config.redis.RedisOperation;
 import com.www.common.config.security.MySecurityProperties;
-import com.www.common.pojo.constant.CharConstant;
+import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

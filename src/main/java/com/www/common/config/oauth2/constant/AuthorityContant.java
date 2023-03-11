@@ -1,4 +1,4 @@
-package com.www.common.pojo.constant;
+package com.www.common.config.oauth2.constant;
 
 /**
  * <p>@Description 角色权限枚举 </p>

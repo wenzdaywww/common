@@ -1,6 +1,6 @@
 package com.www.common.utils;
 
-import com.www.common.pojo.constant.CharConstant;
+import com.www.common.data.constant.CharConstant;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

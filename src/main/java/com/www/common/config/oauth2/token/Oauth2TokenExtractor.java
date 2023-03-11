@@ -2,7 +2,7 @@ package com.www.common.config.oauth2.token;
 
 import com.www.common.config.oauth2.resource.Oauth2Properties;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
-import com.www.common.pojo.dto.token.TokenInfoDTO;
+import com.www.common.config.oauth2.dto.TokenInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,8 @@
-package com.www.common.config.code;
+package com.www.common.config.code.read;
 
-import com.www.common.config.code.core.CodeDataTask;
-import com.www.common.config.code.core.CodeDictRunnerImpl;
-import com.www.common.config.code.core.CodeRedisHandler;
+import com.www.common.config.code.CodeProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +17,11 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(value = CodeProperties.class)
-@ConditionalOnProperty( prefix = "com.www.common.code", name = "enable", havingValue = "true")
+@ConditionalOnProperty( prefix = "com.www.common.code", name = "read-enable", havingValue = "true")
 public class CodeAutoConfiguration {
+    @Autowired
+    private CodeProperties codeProperties;
+
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
@@ -37,7 +38,7 @@ public class CodeAutoConfiguration {
      */
     @Bean
     public CodeRedisHandler codeRedisHandler(){
-        return new CodeRedisHandler();
+        return new CodeRedisHandler(codeProperties.getCodeDataKey());
     }
     /**
      * <p>@Description 注册数据字典加载对象 </p>
@@ -56,7 +57,7 @@ public class CodeAutoConfiguration {
      * @return com.www.common.config.code.task.CodeDataTask
      */
     @Bean
-    @ConditionalOnProperty(prefix = "com.www.common.code",name = {"scheduled"})
+    @ConditionalOnProperty(prefix = "com.www.common.code",name = {"read-scheduled"})
     public CodeDataTask codeDataTask(){
         return new CodeDataTask();
     }

@@ -1,4 +1,4 @@
-package com.www.common.pojo.constant;
+package com.www.common.data.constant;
 
 /**
  * <p>@Description 字符常量 </p>
