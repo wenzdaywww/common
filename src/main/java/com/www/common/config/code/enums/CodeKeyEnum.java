@@ -1,4 +1,4 @@
-package com.www.common.data.enums;
+package com.www.common.config.code.enums;
 
 /**
  * <p>@Description 通用key值枚举类 </p>
