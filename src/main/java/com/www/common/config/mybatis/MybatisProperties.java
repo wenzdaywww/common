@@ -19,5 +19,5 @@ public class MybatisProperties {
     /** 数据库类型 **/
     private String database = "mysql";
     /** 结果集限制数量 **/
-    private int limitNum = 1000;
+    private int limitNum = 10000;
 }

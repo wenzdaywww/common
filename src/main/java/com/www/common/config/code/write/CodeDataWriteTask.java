@@ -35,7 +35,6 @@ import org.springframework.stereotype.Component;
  * <p>@Date 2022/1/1 17:10 </p>
  */
 @Slf4j
-@Component
 public class CodeDataWriteTask {
     @Autowired
     private CodeRedisWriteHandler codeRedisWriteHandler;

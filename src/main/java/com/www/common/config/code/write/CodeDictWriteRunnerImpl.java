@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * <p>@Date 2022/1/1 16:04 </p>
  */
 @Slf4j
-@Component
 public class CodeDictWriteRunnerImpl implements ApplicationRunner {
     @Autowired
     private CodeRedisWriteHandler codeRedisWriteHandler;

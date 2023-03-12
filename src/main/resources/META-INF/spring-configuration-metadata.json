@@ -173,9 +173,9 @@
       "description": "数据库类型，不区分大小写"
     },
     {
-      "name": "com.www.common.mybatis.limitNum",
+      "name": "com.www.common.mybatis.limit-num",
       "type": "java.lang.Integer",
-      "defaultValue": 1000,
+      "defaultValue": 10000,
       "description": "结果集限制数量"
     },
 
