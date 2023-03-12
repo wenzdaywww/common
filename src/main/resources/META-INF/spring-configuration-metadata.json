@@ -8,7 +8,7 @@
     },
     {
       "name": "com.www.common.code",
-      "type": "com.www.common.config.code.read.CodeAutoConfiguration",
+      "type": "com.www.common.config.code.read.CodeReadAutoConfiguration",
       "description": "数据字典自动配置类.",
       "sourceType": "com.www.common.config.code.CodeProperties"
     },
@@ -68,7 +68,6 @@
       "defaultValue": 256,
       "description": "请求响应字段过长时字符串长度限制"
     },
-
     {
       "name": "com.www.common.code.read-enable",
       "type": "java.lang.Boolean",
@@ -82,7 +81,25 @@
       "description": "定时重新读取字典的时间格式"
     },
     {
-      "name": "com.www.common.code.code-data-key",
+      "name": "com.www.common.code.write-enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启数据字典写入redis"
+    },
+    {
+      "name": "com.www.common.code.write-scheduled",
+      "type": "java.lang.String",
+      "defaultValue": "0 0 * * * ?",
+      "description": "定时重新写入redis数据字典的时间格式"
+    },
+    {
+      "name": "com.www.common.code.code-redis-lock",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "数据字典的分布式锁key，不为空则使用分布式锁将数据字典写入redis"
+    },
+    {
+      "name": "com.www.common.code.code-redis-key",
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "redis中数据字典的key"

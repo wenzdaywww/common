@@ -1,8 +1,9 @@
-package com.www.common.config.code.read;
+package com.www.common.config.code.write;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>@Description 定时任务
@@ -34,27 +35,27 @@ import org.springframework.scheduling.annotation.Scheduled;
  * <p>@Date 2022/1/1 17:10 </p>
  */
 @Slf4j
-public class CodeDataTask {
+@Component
+public class CodeDataWriteTask {
     @Autowired
-    private CodeDictRunnerImpl codeDictRunner;
-
+    private CodeRedisWriteHandler codeRedisWriteHandler;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
-     * <p>@Date 2022/3/22 20:46 </p>
+     * <p>@Date 2023/3/12 13:04 </p>
      */
-    public CodeDataTask(){
-        log.info("启动加载：数据字典自动配置类：定时加载数据字典任务");
+    CodeDataWriteTask(){
+        log.info("启动加载：数据字典定时写入redis任务");
     }
     /**
-     * <p>@Description 整点重新加载code数据 </p>
+     * <p>@Description 整点重新code数据写入redis </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/1 17:20 </p>
      * @return void
      */
-    @Scheduled(cron = "${com.www.common.code.read-scheduled}")
+    @Scheduled(cron = "0 0 * * * ?")
     public void reloadCodeData() {
-        log.info("定时重新加载数据字典数据");
-        codeDictRunner.initCodeData();
+        log.info("整点定时任务:code数据重新写入redis");
+        codeRedisWriteHandler.initCodeData();
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.www.common.config.code.mapper.CodeDataMapper">
+  <resultMap id="BaseResultMap" type="com.www.common.config.code.entity.CodeDataEntity">
+    <result column="CODE_TYPE" property="codeType" />
+    <result column="CODE_NAME" property="codeName" />
+    <result column="CODE_KEY" property="codeKey" />
+    <result column="CODE_VALUE" property="codeValue" />
+    <result column="VALUE_NAME" property="valueName" />
+    <result column="IS_VALID" property="isValid" />
+  </resultMap>
+  <!--  查询所有有效的code数据-->
+  <select id="findAllCodeData" resultType="com.www.common.config.code.dto.CodeDTO">
+    SELECT C.CODE_TYPE TYPE,
+           C.CODE_NAME TYPE_NAME,
+           C.CODE_KEY CODE_KEY,
+           C.CODE_VALUE VALUE,
+           C.VALUE_NAME NAME
+    FROM CODE_DATA C WHERE C.IS_VALID='1'
+  </select>
+</mapper>
