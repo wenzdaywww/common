@@ -27,10 +27,10 @@ public class SysUserRoleEntity implements Serializable {
     @TableId(value = "SUR_ID",type = IdType.AUTO)
     private Long surId;
     /**
-    * 用户主键ID
+    * 用户ID
     */
-    @TableField("SU_ID")
-    private Long suId;
+    @TableField("USER_ID")
+    private String userId;
     /**
     * 角色ID
     */

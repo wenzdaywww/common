@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.www.common.config.security.entity.SysUserRoleEntity">
     <!--@Table sys_user_role-->
     <id column="SUR_ID" property="surId" />
-    <result column="SU_ID" property="suId" />
+    <result column="USER_ID" property="userId" />
     <result column="ROLE_ID" property="roleId" />
     <result column="UPDATE_TIME" property="updateTime" />
     <result column="CREATE_TIME" property="createTime" />
