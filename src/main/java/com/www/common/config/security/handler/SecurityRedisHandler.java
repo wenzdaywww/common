@@ -32,7 +32,7 @@ public class SecurityRedisHandler {
      * @return boolean true存在，false不存在
      */
     public boolean hasToken(String userId){
-        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId;
         return RedisOperation.hasKey(tokenKey);
     }
     /**
@@ -43,7 +43,7 @@ public class SecurityRedisHandler {
      * @return java.lang.String token
      */
     public String getToken(String userId){
-        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId;
         return RedisOperation.get(tokenKey);
     }
     /**
@@ -54,7 +54,7 @@ public class SecurityRedisHandler {
      * @return java.lang.String token
      */
     public boolean deleteToken(String userId){
-        String tokenKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
+        String tokenKey = mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId;
         return RedisOperation.deleteKey(tokenKey);
     }
     /**
@@ -68,7 +68,7 @@ public class SecurityRedisHandler {
      */
     public boolean saveToken(String userId,String token,int expirationTime){
         //将token添加到redis中
-        RedisOperation.set(mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId,token, expirationTime);
+        RedisOperation.set(mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId,token, expirationTime);
         return true;
     }
 }

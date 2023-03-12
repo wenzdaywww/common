@@ -18,10 +18,14 @@ public class MySecurityProperties {
     private Boolean enable = false;
     /** jwt令牌签名 */
     private String secretKey = "wenzday";
-    /**  过期时间（秒） */
-    private int expireTimeSecond = 259200;
+    /**  token过期时间（秒） */
+    private int tokenExpireSecond = 259200;
     /** cookie免登录有效天数 **/
     private int cookieDay = 3;
-    /** 使用redis保存用户的token的key前缀 **/
-    private String userPrefix;
+    /** 使用redis保存用户的token的key前缀,不需冒号结尾，代码已添加 **/
+    private String tokenPrefix;
+    /** 角色访问权限信息的redis的key，不为空则缓存到redis中 **/
+    private String roleRedisKey;
+    /** 角色访问权限信息的redis的key的过期时间（单位小时） **/
+    private long roleExpireHour = 1L;
 }

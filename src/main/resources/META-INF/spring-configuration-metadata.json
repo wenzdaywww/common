@@ -201,14 +201,14 @@
     {
       "name": "com.www.common.securuty.secret-key",
       "type": "java.lang.String",
-      "defaultValue": "",
+      "defaultValue": "wenzday",
       "description": "jwt令牌签名"
     },
     {
-      "name": "com.www.common.securuty.expire-time-second",
+      "name": "com.www.common.securuty.token-expire-second",
       "type": "java.lang.Integer",
-      "defaultValue": 0,
-      "description": "过期时间（秒）"
+      "defaultValue": 259200,
+      "description": "token过期时间（秒）"
     },
     {
       "name": "com.www.common.securuty.cookie-day",
@@ -217,10 +217,22 @@
       "description": "cookie免登录有效天数"
     },
     {
-      "name": "com.www.common.securuty.user-prefix",
+      "name": "com.www.common.securuty.token-prefix",
       "type": "java.lang.String",
       "defaultValue": "",
-      "description": "使用redis保存用户的token的key前缀"
+      "description": "使用redis保存用户的token的key前缀,不需冒号结尾，代码已添加"
+    },
+    {
+      "name": "com.www.common.securuty.role-redis-key",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "角色访问权限信息的redis的key，不为空则缓存到redis中"
+    },
+    {
+      "name": "com.www.common.securuty.role-expire-hour",
+      "type": "java.lang.Long",
+      "defaultValue": 1,
+      "description": "角色访问权限信息的redis的key的过期时间（单位小时）"
     }
   ],
   "hints": []

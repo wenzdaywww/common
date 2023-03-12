@@ -1,17 +1,17 @@
 package com.www.common.config.security.meta;
 
-import com.www.common.config.security.inf.ISecurityServie;
 import com.www.common.config.security.dto.AuthorityDTO;
+import com.www.common.config.security.service.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,8 +24,8 @@ import java.util.List;
  */
 @Slf4j
 public class SecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-    @Resource
-    private ISecurityServie securityUserServie;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     /** 路径匹配 **/
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -49,7 +49,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         log.info("3、访问权限角色配置");
         String requestURL = ((FilterInvocation)o).getRequestUrl();
-        List<AuthorityDTO> roleMenuList = securityUserServie.findAllAuthority();
+        List<AuthorityDTO> roleMenuList = userDetailsService.findAllAuthority();
         if(CollectionUtils.isNotEmpty(roleMenuList)){
             List<String> roleList = new ArrayList<>();
             for (AuthorityDTO dto : roleMenuList){

@@ -7,7 +7,7 @@ import com.www.common.config.security.handler.SecurityAuthRejectHandler;
 import com.www.common.config.security.handler.SecurityRedisHandler;
 import com.www.common.config.security.handler.SecurityUnauthHandler;
 import com.www.common.config.security.handler.SessionExpiredHandler;
-import com.www.common.config.security.impl.UserDetailsServiceImpl;
+import com.www.common.config.security.service.UserDetailsServiceImpl;
 import com.www.common.config.security.meta.JwtAuthorizationTokenFilter;
 import com.www.common.config.security.meta.SecurityAccessDecisionManager;
 import com.www.common.config.security.meta.SecurityMetadataSource;

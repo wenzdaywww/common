@@ -3,7 +3,7 @@ package com.www.common.config.security.meta;
 import com.www.common.config.security.MySecurityProperties;
 import com.www.common.config.security.handler.LoginSuccessHandler;
 import com.www.common.config.security.handler.SecurityRedisHandler;
-import com.www.common.config.security.impl.UserDetailsServiceImpl;
+import com.www.common.config.security.service.UserDetailsServiceImpl;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -59,7 +59,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
      */
     @PostConstruct
     public void setSecretAndExpireTime(){
-        TokenUtils.setSecretAndExpireTime(mySecurityProperties.getExpireTimeSecond(),mySecurityProperties.getSecretKey());
+        TokenUtils.setSecretAndExpireTime(mySecurityProperties.getTokenExpireSecond(),mySecurityProperties.getSecretKey());
     }
     /**
      * <p>@Description token验证 </p>

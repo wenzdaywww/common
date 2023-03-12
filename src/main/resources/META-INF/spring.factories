@@ -9,6 +9,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.filter.TraceIdAutoConfiguration,\
   com.www.common.config.mvc.MyMvcAutoConfiguration,\
   com.www.common.config.mybatis.MyBatisCustomAutoConfiguration,\
+  com.www.common.config.mybatis.TransactionAdviceConfig,\
   com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration,\
   com.www.common.config.oauth2.resource.Oauth2ResourceSecurityAutoConfiguration,\
   com.www.common.config.oauth2.resource.Oauth2ResourceServerAutoConfiguration,\

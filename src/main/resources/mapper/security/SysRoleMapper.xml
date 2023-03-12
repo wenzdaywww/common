@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.www.common.config.security.mapper.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.www.common.config.security.entity.SysRoleEntity">
+    <!--@Table sys_role-->
+    <id column="ROLE_ID" property="roleId" />
+    <result column="ROLE_CODE" property="roleCode" />
+    <result column="ROLE_NAME" property="roleName" />
+    <result column="UPDATE_TIME" property="updateTime" />
+    <result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+</mapper>
