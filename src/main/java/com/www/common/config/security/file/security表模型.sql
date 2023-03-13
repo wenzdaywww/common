@@ -1,6 +1,6 @@
 -- 1、角色信息
 CREATE TABLE IF NOT EXISTS SYS_ROLE (
-    ROLE_ID                   BIGINT          PRIMARY KEY AUTO_INCREMENT          COMMENT '角色主键ID',
+    ROLE_ID                   INT          PRIMARY KEY AUTO_INCREMENT             COMMENT '角色主键ID',
     ROLE_CODE                 VARCHAR(100)                                        COMMENT '角色编码，ROLE_开头',
     ROLE_NAME                 VARCHAR(256)                                        COMMENT '角色名称',
     UPDATE_TIME               DATETIME                                            COMMENT '更新时间',
@@ -10,7 +10,7 @@ ALTER TABLE     SYS_ROLE            COMMENT '角色信息';
 CREATE INDEX    INDEX_ROLE_CODE     ON  SYS_ROLE (ROLE_CODE);
 -- q、用户信息
 CREATE TABLE IF NOT EXISTS SYS_USER (
-    SU_ID                     BIGINT          PRIMARY KEY AUTO_INCREMENT          COMMENT '用户主键ID',
+    SU_ID                     INT          PRIMARY KEY AUTO_INCREMENT             COMMENT '用户主键ID',
     USER_ID                   VARCHAR(40)     NOT NULL UNIQUE                     COMMENT '用户名',
     USER_NAME                 VARCHAR(100)                                        COMMENT '用户昵称',
     PASSWORD                  VARCHAR(200)    NOT NULL                            COMMENT '密码',
@@ -34,9 +34,9 @@ CREATE INDEX    INDEX_USER_NAME     ON  SYS_USER (USER_NAME);
 CREATE INDEX    INDEX_STATE_CD      ON  SYS_USER (STATE_CD);
 -- 4、用户角色信息
 CREATE TABLE IF NOT EXISTS SYS_USER_ROLE (
-    SUR_ID                    BIGINT          PRIMARY KEY AUTO_INCREMENT          COMMENT '用户角色主键ID',
+    SUR_ID                    INT          PRIMARY KEY AUTO_INCREMENT             COMMENT '用户角色主键ID',
     USER_ID                   VARCHAR(40)                                         COMMENT '用户名',
-    ROLE_ID                   BIGINT                                              COMMENT '角色ID',
+    ROLE_ID                   INT                                                 COMMENT '角色ID',
     UPDATE_TIME               DATETIME                                            COMMENT '更新时间',
     CREATE_TIME               DATETIME                                            COMMENT '创建时间'
 );
@@ -44,9 +44,9 @@ ALTER TABLE     SYS_USER_ROLE       COMMENT '用户角色信息';
 CREATE INDEX    INDEX_ROLE_ID       ON  SYS_USER_ROLE (ROLE_ID);
 -- 5、角色访问权限信息
 CREATE TABLE IF NOT EXISTS AUTHORITY_ROLE (
-    AR_ID                     BIGINT          PRIMARY KEY AUTO_INCREMENT          COMMENT '角色权限主键ID',
+    AR_ID                     INT          PRIMARY KEY AUTO_INCREMENT             COMMENT '角色权限主键ID',
     URL                       VARCHAR(40)                                         COMMENT '访问路径',
-    ROLE_ID                   BIGINT                                              COMMENT '角色ID',
+    ROLE_ID                   INT                                                 COMMENT '角色ID',
     IS_VALID                  CHAR(1)         DEFAULT '1'                         COMMENT '是否有效：1有效，0无效',
     UPDATE_TIME               DATETIME                                            COMMENT '更新时间',
     CREATE_TIME               DATETIME                                            COMMENT '创建时间'
