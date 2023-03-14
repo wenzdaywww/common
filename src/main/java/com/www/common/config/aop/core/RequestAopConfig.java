@@ -87,7 +87,7 @@ public class RequestAopConfig {
             return result;
         }catch (Exception e){
             log.error("请求:{} 调用{}方法发生异常。请求报文:{}，异常信息:",request.getRequestURI(), controllerMethod,requestText,e);
-            return new ResponseDTO<>(ResponseEnum.UNDEFINE);
+            throw e;
         }
     }
     /**

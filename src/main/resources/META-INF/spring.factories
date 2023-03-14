@@ -5,6 +5,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.code.write.CodeWriteAutoConfiguration,\
   com.www.common.config.datasource.MultiDataSourceAutoConfiguration,\
   com.www.common.config.datasource.DruidMonitorAutoConfiguration,\
+  com.www.common.config.exception.GlobalExceptionHandler,\
   com.www.common.config.feign.MyFeignAutoConfiguration,\
   com.www.common.config.filter.TraceIdAutoConfiguration,\
   com.www.common.config.mvc.MyMvcAutoConfiguration,\
