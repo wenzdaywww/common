@@ -141,7 +141,7 @@ public final class RedisOperation {
         return false;
     }
     /**
-     * <p>@Description 保存String数据 </p>
+     * <p>@Description 保存String数据,不设置超时 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 21:07 </p>
      * @param key 键值
@@ -162,7 +162,21 @@ public final class RedisOperation {
      * @return java.lang.Object
      */
     public static Object set(String key,Object value,long seconds){
-        getRedisTemplate().opsForValue().set(key,value,seconds,TimeUnit.SECONDS);
+        set(key,value,seconds,TimeUnit.SECONDS);
+        return value;
+    }
+    /**
+     * <p>@Description 保存String数据,并设置超时时间 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/1 21:07 </p>
+     * @param key 键值
+     * @param value 值
+     * @param time 超时时间
+     * @param timeUnit 超时时间单位
+     * @return java.lang.Object
+     */
+    public static Object set(String key,Object value,long time,TimeUnit timeUnit){
+        getRedisTemplate().opsForValue().set(key,value,time,timeUnit);
         return value;
     }
     /**

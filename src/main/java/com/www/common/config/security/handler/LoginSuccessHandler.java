@@ -64,18 +64,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = (User)authentication.getPrincipal();
         Map<String,Object> chaims = new HashMap<>();
         chaims.put(TokenUtils.USERID,user.getUsername());
-        //设置token过期时间
-        int expirationTime = StringUtils.equals(IS_REMENMBER_ME,request.getParameter("rmb"))
-                ? 60*60*24* mySecurityProperties.getCookieDay() //天数
-                : TokenUtils.getExpirationTime(); //秒
         //生成token
         Map<String,String> tokenMap = TokenUtils.generateToken(chaims);
-        //将token保存到redis中
-        securityRedisHandler.saveToken(user.getUsername(),tokenMap.get(TokenUtils.TOKEN),expirationTime);
+        //将token保存到redis中,设置token过期时间
+        securityRedisHandler.saveToken(user.getUsername(),tokenMap.get(TokenUtils.TOKEN),mySecurityProperties.getTokenExpireHour());
         //数据返回
         ResponseDTO<Map> responseDTO = new ResponseDTO<>(ResponseEnum.SUCCESS,tokenMap);
         Cookie cookie = new Cookie(COOKIE_TOKEN,tokenMap.get(TokenUtils.TOKEN));
-        cookie.setMaxAge(expirationTime);
+        cookie.setMaxAge(mySecurityProperties.getTokenExpireHour()*60);//设置cookie过期时间(秒)
         cookie.setPath(CharConstant.LEFT_SLASH);
         response.addCookie(cookie);
         response.setContentType("application/json;charset=utf-8");

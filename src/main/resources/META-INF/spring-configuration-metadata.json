@@ -191,7 +191,6 @@
       "defaultValue": "",
       "description": "jwt令牌签名"
     },
-
     {
       "name": "com.www.common.securuty.enable",
       "type": "java.lang.Boolean",
@@ -205,16 +204,10 @@
       "description": "jwt令牌签名"
     },
     {
-      "name": "com.www.common.securuty.token-expire-second",
+      "name": "com.www.common.securuty.token-expire-hour",
       "type": "java.lang.Integer",
-      "defaultValue": 259200,
-      "description": "token过期时间（秒）"
-    },
-    {
-      "name": "com.www.common.securuty.cookie-day",
-      "type": "java.lang.Integer",
-      "defaultValue": 3,
-      "description": "cookie免登录有效天数"
+      "defaultValue": 48,
+      "description": "token过期时间（单位小时）,默认24小时"
     },
     {
       "name": "com.www.common.securuty.token-prefix",
@@ -223,16 +216,28 @@
       "description": "使用redis保存用户的token的key前缀,不需冒号结尾，代码已添加"
     },
     {
-      "name": "com.www.common.securuty.role-redis-key",
+      "name": "com.www.common.securuty.user-prefix",
       "type": "java.lang.String",
       "defaultValue": "",
-      "description": "角色访问权限信息的redis的key，不为空则缓存到redis中"
+      "description": "使用redis保存用户的角色信息的key前缀,不需冒号结尾，代码已添加"
     },
     {
-      "name": "com.www.common.securuty.role-expire-hour",
+      "name": "com.www.common.securuty.user-expire-hour",
       "type": "java.lang.Long",
-      "defaultValue": 1,
-      "description": "角色访问权限信息的redis的key的过期时间（单位小时）"
+      "defaultValue": 48,
+      "description": "保存用户的角色信息的redis的key的过期时间（单位小时）,默认48小时"
+    },
+    {
+      "name": "com.www.common.securuty.auth-redis-key",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "角色访问请求权限信息的redis的key，不为空则缓存到redis中"
+    },
+    {
+      "name": "com.www.common.securuty.auth-expire-hour",
+      "type": "java.lang.Long",
+      "defaultValue": 48,
+      "description": "角色访问请求权限信息的redis的key的过期时间（单位小时）,默认48小时"
     }
   ],
   "hints": []

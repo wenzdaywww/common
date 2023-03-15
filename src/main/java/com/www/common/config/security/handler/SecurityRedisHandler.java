@@ -6,6 +6,8 @@ import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * <p>@Description Security的redis操作类 </p>
  * <p>@Version 1.0 </p>
@@ -63,12 +65,12 @@ public class SecurityRedisHandler {
      * <p>@Date 2022/2/4 13:04 </p>
      * @param userId 用户id
      * @param token 令牌
-     * @param expirationTime 过期时间（秒）
+     * @param expirationTime 过期时间（小时）
      * @return boolean true保存成功，false失败
      */
     public boolean saveToken(String userId,String token,int expirationTime){
         //将token添加到redis中
-        RedisOperation.set(mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId,token, expirationTime);
+        RedisOperation.set(mySecurityProperties.getTokenPrefix() + CharConstant.COLON + userId,token, expirationTime, TimeUnit.HOURS);
         return true;
     }
 }

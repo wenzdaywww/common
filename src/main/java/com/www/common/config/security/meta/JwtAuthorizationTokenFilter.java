@@ -59,7 +59,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
      */
     @PostConstruct
     public void setSecretAndExpireTime(){
-        TokenUtils.setSecretAndExpireTime(mySecurityProperties.getTokenExpireSecond(),mySecurityProperties.getSecretKey());
+        TokenUtils.setSecretAndExpireTime(mySecurityProperties.getTokenExpireHour(),mySecurityProperties.getSecretKey());
     }
     /**
      * <p>@Description token验证 </p>

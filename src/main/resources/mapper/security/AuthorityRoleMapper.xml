@@ -11,6 +11,15 @@
   </resultMap>
   <!--  查询角色访问权限信息-->
   <select id="findAllAuthorityRole" resultType="com.www.common.config.security.dto.AuthorityDTO">
-    SELECT AR.URL url, R.ROLE_CODE role FROM AUTHORITY_ROLE AR,SYS_ROLE R  WHERE AR.ROLE_ID = R.ROLE_ID
+    SELECT AR.URL url, R.ROLE_CODE role
+    FROM AUTHORITY_ROLE AR,SYS_ROLE R
+    WHERE AR.ROLE_ID = R.ROLE_ID AND AR.URL_TYPE = '1'
+  </select>
+  <!--  查询当前用户拥有的角色访问权限信息-->
+  <select id="findUserAuthorityRole" resultType="com.www.common.config.security.dto.AuthorityDTO">
+    SELECT AR.URL url, R.ROLE_CODE role
+    FROM AUTHORITY_ROLE AR,SYS_ROLE R,SYS_USER_ROLE U
+    WHERE AR.ROLE_ID = R.ROLE_ID AND AR.URL_TYPE = '2'
+      AND R.ROLE_ID = U.ROLE_ID AND U.USER_ID = #{userId}
   </select>
 </mapper>

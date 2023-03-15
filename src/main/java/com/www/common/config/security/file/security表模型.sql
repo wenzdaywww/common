@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS AUTHORITY_ROLE (
     AR_ID                     INT             PRIMARY KEY AUTO_INCREMENT          COMMENT '角色权限主键ID',
     URL                       VARCHAR(40)                                         COMMENT '访问路径',
     ROLE_ID                   INT                                                 COMMENT '角色ID',
+    URL_TYPE                  CHAR(1)         DEFAULT '1'                         COMMENT 'URL类型：1=http请求路径，2=VUE的路由',
     IS_VALID                  CHAR(1)         DEFAULT '1'                         COMMENT '是否有效：1有效，0无效',
     UPDATE_TIME               DATETIME        DEFAULT NOW()                       COMMENT '更新时间',
     CREATE_TIME               DATETIME        DEFAULT NOW()                       COMMENT '创建时间'

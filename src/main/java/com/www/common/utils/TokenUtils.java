@@ -72,7 +72,7 @@ public class TokenUtils {
     public static Map<String, String> generateToken(Map<String, Object> claims) {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.SECOND, EXPIRATION_TIME);
+        c.add(Calendar.HOUR, EXPIRATION_TIME);
         Date d = c.getTime();
         String jwt = Jwts.builder()
                 .setClaims(claims)

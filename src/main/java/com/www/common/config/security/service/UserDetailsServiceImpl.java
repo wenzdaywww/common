@@ -10,6 +10,7 @@ import com.www.common.config.security.mapper.AuthorityRoleMapper;
 import com.www.common.config.security.mapper.SysUserMapper;
 import com.www.common.config.security.mapper.SysUserRoleMapper;
 import com.www.common.config.security.dto.UserDetailDTO;
+import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -119,6 +119,36 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(StringUtils.isBlank(userId)){
             return null;
         }
+        //用户的角色信息的redis的key，不为空则缓存到redis中
+        if(StringUtils.isNotBlank(mySecurityProperties.getUserPrefix())){
+            //用户的角色信息的redis的key
+            String userRoleKey = mySecurityProperties.getUserPrefix() + CharConstant.COLON + userId;
+            //从redis中获取
+            if(RedisOperation.hasKey(userRoleKey)){
+                List<String> roleList = (List<String>)RedisOperation.listGet(userRoleKey);
+                return roleList;
+            }else {
+                List<String> roleList = this.findUserRoleList(userId);
+                if(CollectionUtils.isNotEmpty(roleList)){
+                    roleList.forEach(dto -> {
+                        RedisOperation.listSet(userRoleKey,dto);
+                    });
+                    RedisOperation.keyExpire(userRoleKey,mySecurityProperties.getUserExpireHour(), TimeUnit.HOURS);//设置超时
+                }
+                return roleList;
+            }
+        }else {
+            return this.findUserRoleList(userId);
+        }
+    };
+    /**
+     * <p>@Description 查询用户拥有的角色 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/15 22:00 </p>
+     * @param userId 用户ID
+     * @return java.util.List<java.lang.String>
+     */
+    private List<String> findUserRoleList(String userId){
         List<SysRoleEntity> sysRoleList = sysUserRoleMapper.findUserRole(userId);
         List<String> roleList = Optional.ofNullable(sysRoleList)
                 .filter(e -> CollectionUtils.isNotEmpty(sysRoleList)).map(list -> {
@@ -129,7 +159,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     return tempList;
                 }).orElse(null);
         return roleList;
-    };
+    }
     /**
      * <p>@Description 查询所有请求权限 </p>
      * <p>@Author www </p>
@@ -138,18 +168,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     public List<AuthorityDTO> findAllAuthority(){
         //角色访问权限信息的redis的key，不为空则缓存到redis中
-        if(StringUtils.isNotBlank(mySecurityProperties.getRoleRedisKey())){
+        if(StringUtils.isNotBlank(mySecurityProperties.getAuthRedisKey())){
             //从redis中获取
-            if(RedisOperation.hasKey(mySecurityProperties.getRoleRedisKey())){
-                List<AuthorityDTO> authorityList = (List<AuthorityDTO>)RedisOperation.listGet(mySecurityProperties.getRoleRedisKey());
+            if(RedisOperation.hasKey(mySecurityProperties.getAuthRedisKey())){
+                List<AuthorityDTO> authorityList = (List<AuthorityDTO>)RedisOperation.listGet(mySecurityProperties.getAuthRedisKey());
                 return authorityList;
             }else {
                 List<AuthorityDTO> authorityList = authorityRoleMapper.findAllAuthorityRole();
                 if(CollectionUtils.isNotEmpty(authorityList)){
                     authorityList.forEach(dto -> {
-                        RedisOperation.listSet(mySecurityProperties.getRoleRedisKey(),dto);
+                        RedisOperation.listSet(mySecurityProperties.getAuthRedisKey(),dto);
                     });
-                    RedisOperation.keyExpire(mySecurityProperties.getRoleRedisKey(),mySecurityProperties.getRoleExpireHour(), TimeUnit.HOURS);//设置超时
+                    RedisOperation.keyExpire(mySecurityProperties.getAuthRedisKey(),mySecurityProperties.getAuthExpireHour(), TimeUnit.HOURS);//设置超时
                 }
                 return authorityList;
             }
