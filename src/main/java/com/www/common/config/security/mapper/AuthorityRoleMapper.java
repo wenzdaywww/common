@@ -31,4 +31,12 @@ public interface AuthorityRoleMapper extends BaseMapper<AuthorityRoleEntity> {
      * @return java.util.List<com.www.common.config.security.dto.AuthorityDTO>
      */
     List<AuthorityDTO> findUserAuthorityRole(@Param("userId") String userId);
+    /**
+     * <p>@Description 查询角色拥有的VUE路由 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/15 19:14 </p>
+     * @param roleList 角色信息集合
+     * @return java.util.List<com.www.common.config.security.dto.AuthorityDTO>
+     */
+    List<AuthorityDTO> findRoleAuthority(@Param("list") List<String> roleList);
 }

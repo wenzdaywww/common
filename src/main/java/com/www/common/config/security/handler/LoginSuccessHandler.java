@@ -71,7 +71,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //数据返回
         ResponseDTO<Map> responseDTO = new ResponseDTO<>(ResponseEnum.SUCCESS,tokenMap);
         Cookie cookie = new Cookie(COOKIE_TOKEN,tokenMap.get(TokenUtils.TOKEN));
-        cookie.setMaxAge(mySecurityProperties.getTokenExpireHour()*60);//设置cookie过期时间(秒)
+        cookie.setMaxAge(mySecurityProperties.getTokenExpireHour()*60*60);//设置cookie过期时间(秒)
         cookie.setPath(CharConstant.LEFT_SLASH);
         response.addCookie(cookie);
         response.setContentType("application/json;charset=utf-8");

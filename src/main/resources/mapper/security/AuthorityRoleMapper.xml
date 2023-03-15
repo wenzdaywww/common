@@ -22,4 +22,16 @@
     WHERE AR.ROLE_ID = R.ROLE_ID AND AR.URL_TYPE = '2'
       AND R.ROLE_ID = U.ROLE_ID AND U.USER_ID = #{userId}
   </select>
+  <!--  查询角色拥有的VUE路由-->
+  <select id="findRoleAuthority" resultType="com.www.common.config.security.dto.AuthorityDTO">
+    SELECT AR.URL url, R.ROLE_CODE role
+    FROM AUTHORITY_ROLE AR,SYS_ROLE R
+    WHERE AR.ROLE_ID = R.ROLE_ID AND AR.URL_TYPE = '2'
+      AND R.ROLE_CODE IN
+    <if test="list != null and list.size() gt 0">
+      <foreach item="item" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
 </mapper>
