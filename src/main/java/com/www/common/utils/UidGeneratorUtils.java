@@ -1,5 +1,6 @@
 package com.www.common.utils;
 
+import com.www.common.config.redis.RedisOperation;
 import com.www.common.data.enums.DateFormatEnum;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,33 @@ import java.util.Date;
  */
 public class UidGeneratorUtils {
     /**
+     * <p>@Description 获取redis的全局ID,随机增加至少step值 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/18 04:06 </p>
+     * @param uidKey 全局IDKey
+     * @param start id起始值
+     * @param step id步进值
+     * @return
+     */
+    public static long getRedisUid(String uidKey,Long start,int step){
+        int number = (int)(Math.random()*10+step); //生成的随机数范围在[step,step+10)
+        if(!RedisOperation.hasKey(uidKey)){
+            RedisOperation.set(uidKey,start);
+        }
+        return RedisOperation.hashIncrement(uidKey,number);
+    }
+    /**
+     * <p>@Description 获取redis的全局ID,随机增加至少step值，默认起始值1000 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/18 04:06 </p>
+     * @param uidKey 全局IDKey
+     * @param step id步进值
+     * @return
+     */
+    public static long getRedisUid(String uidKey,int step){
+        return UidGeneratorUtils.getRedisUid(uidKey,1000L,step);
+    }
+    /**
      * <p>@Description 获取雪花算法（SnowFlake）实现的ID
      * 默认时间戳：2020-01-01 00:00:00
      * </p>
@@ -25,15 +53,6 @@ public class UidGeneratorUtils {
      */
     public static long getSnowFlakeID(){
         return SnowFlakeID.nextId();
-    }
-    /**
-     * <p>@Description 设置雪花算法的时间戳 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/4/14 22:35 </p>
-     * @param date 时间戳
-     */
-    public static void setSnowFlakeIDTimestamp(Date date){
-        SnowFlakeID.setStartTimestamp(date);
     }
     /**
      * <p>@Description 获取8位UUID </p>
@@ -52,6 +71,15 @@ public class UidGeneratorUtils {
      */
     public static String getTraceId(){
         return Long.toString(getSnowFlakeID());
+    }
+    /**
+     * <p>@Description 设置雪花算法的时间戳 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/4/14 22:35 </p>
+     * @param date 时间戳
+     */
+    public static void setSnowFlakeIDTimestamp(Date date){
+        SnowFlakeID.setStartTimestamp(date);
     }
     /**
      * <p>@Description 基于雪花算法（SnowFlake）实现的ID

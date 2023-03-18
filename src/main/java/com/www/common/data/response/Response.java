@@ -1,4 +1,4 @@
-package com.www.common.data.dto.response;
+package com.www.common.data.response;
 
 import com.www.common.data.enums.ResponseEnum;
 import lombok.AllArgsConstructor;
@@ -18,20 +18,20 @@ import java.io.Serializable;
 @Accessors(chain = true)//开启链式编程
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDTO<T> implements Serializable {
+public class Response<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 请求全局跟踪号 **/
     private String traceId;
     /** 响应码 **/
     private Integer code;
+    /** 响应消息 **/
+    private String msg;
     /** 当前页数 **/
     private Integer pageNum;
     /** 页面条数 **/
     private Long pageSize;
     /** 总数 **/
     private Long totalNum;
-    /** 响应消息 **/
-    private String msg;
     /** 响应数据 **/
     private T data;
 
@@ -42,9 +42,25 @@ public class ResponseDTO<T> implements Serializable {
      * @param code 响应码
      * @param data 数据
      */
-    public ResponseDTO(ResponseEnum code, T data) {
+    public Response(ResponseEnum code, T data) {
         this.code = code.getCode();
         this.msg = code.getMsg();
+        this.data = data;
+    }
+    /**
+     * <p>@Description 响应报文构造方法：复制另一个Response除data以外的数据并设置响应数据 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/1 21:22 </p>
+     * @param response 响应对象
+     * @param data 响应数据
+     */
+    public Response(Response response, T data) {
+        this.traceId = response.getTraceId();
+        this.code = response.getCode();
+        this.msg = response.getMsg();
+        this.pageNum = response.getPageNum();
+        this.pageSize = response.getPageSize();
+        this.totalNum = response.getTotalNum();
         this.data = data;
     }
     /**
@@ -53,9 +69,23 @@ public class ResponseDTO<T> implements Serializable {
      * <p>@Date 2021/8/1 21:22 </p>
      * @param code 响应码
      */
-    public ResponseDTO(ResponseEnum code) {
+    public Response(ResponseEnum code) {
         this.code = code.getCode();
         this.msg = code.getMsg();
+    }
+    /**
+     * <p>@Description 响应报文构造方法：复制另一个Response除data以外的数据 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/1 21:22 </p>
+     * @param response 响应对象
+     */
+    public Response(Response response) {
+        this.traceId = response.getTraceId();
+        this.code = response.getCode();
+        this.msg = response.getMsg();
+        this.pageNum = response.getPageNum();
+        this.pageSize = response.getPageSize();
+        this.totalNum = response.getTotalNum();
     }
     /**
      * <p>@Description 设置响应码值及响应信息 </p>
@@ -93,13 +123,37 @@ public class ResponseDTO<T> implements Serializable {
         this.data = data;
     }
     /**
+     * <p>@Description 从另一个Response赋值响应码、响应信息，及设置响应数据 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/17 20:56 </p>
+     * @param response 响应对象
+     * @param data 响应数据
+     * @return void
+     */
+    public void setResponse(Response response,T data){
+        this.code = response.getCode();
+        this.msg = response.getMsg();
+        this.data = data;
+    }
+    /**
+     * <p>@Description 从另一个Response赋值响应码、响应信息 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/17 20:56 </p>
+     * @param response 响应对象
+     * @return void
+     */
+    public void setResponse(Response response){
+        this.code = response.getCode();
+        this.msg = response.getMsg();
+    }
+    /**
      * <p>@Description 获取成功返回的数据,只要code=200才有值 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/23 16:09 </p>
      * @param response 返回对象
      * @return T 返回数据
      */
-    public static <T> T getBackData(ResponseDTO<T> response){
+    public static <T> T getBackData(Response<T> response){
         if(response == null){
             return null;
         }

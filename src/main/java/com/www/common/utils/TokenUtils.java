@@ -101,11 +101,14 @@ public class TokenUtils {
             body = Jwts.parser().setSigningKey(SECRET)
                     .parseClaimsJws(token.replace(TOKEN_PREFIX + " ",""))
                     .getBody();
+            body.put(AUTHORIZATION,token.replace(TOKEN_PREFIX + " ",""));
         }catch (ExpiredJwtException e){
             log.error("token过期");
-            body = e.getClaims();
+            body = null;
+        }catch (Exception e){
+            log.error("token异常",e);
+            body = null;
         }
-        body.put(AUTHORIZATION,token.replace(TOKEN_PREFIX + " ",""));
         return body;
     }
     /**

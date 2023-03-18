@@ -3,11 +3,10 @@ package com.www.common.config.security.handler;
 import com.alibaba.fastjson.JSON;
 import com.www.common.config.security.MySecurityProperties;
 import com.www.common.data.constant.CharConstant;
-import com.www.common.data.dto.response.ResponseDTO;
+import com.www.common.data.response.Response;
 import com.www.common.data.enums.ResponseEnum;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -69,7 +68,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //将token保存到redis中,设置token过期时间
         securityRedisHandler.saveToken(user.getUsername(),tokenMap.get(TokenUtils.TOKEN),mySecurityProperties.getTokenExpireHour());
         //数据返回
-        ResponseDTO<Map> responseDTO = new ResponseDTO<>(ResponseEnum.SUCCESS,tokenMap);
+        Response<Map> responseDTO = new Response<>(ResponseEnum.SUCCESS,tokenMap);
         Cookie cookie = new Cookie(COOKIE_TOKEN,tokenMap.get(TokenUtils.TOKEN));
         cookie.setMaxAge(mySecurityProperties.getTokenExpireHour()*60*60);//设置cookie过期时间(秒)
         cookie.setPath(CharConstant.LEFT_SLASH);

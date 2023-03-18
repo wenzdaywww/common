@@ -148,7 +148,7 @@ public final class RedisOperation {
      * @param value 值
      * @return java.lang.Object
      */
-    public static String set(String key,String value){
+    public static Object set(String key,Object value){
         getRedisTemplate().opsForValue().set(key,value);
         return value;
     }
@@ -442,13 +442,11 @@ public final class RedisOperation {
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 21:08 </p>
      * @param key 键值
-     * @param okey 对象键值
      * @param value 自增值，正数为自增，负数为自减
-     * @return java.lang.Object
+     * @return Long
      */
-    public static Object hashIncrement(String key, String okey, long value){
-        getRedisTemplate().opsForHash().increment(key,okey,value);
-        return value;
+    public static Long hashIncrement(String key, long value){
+        return getRedisTemplate().opsForValue().increment(key,value);
     }
     /**
      * <p>@Description 从左边保存List数据 </p>

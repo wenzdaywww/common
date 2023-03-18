@@ -1,7 +1,7 @@
 package com.www.common.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.www.common.data.dto.response.ResponseDTO;
+import com.www.common.data.response.Response;
 import com.www.common.data.enums.ResponseEnum;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +58,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             String userId = String.valueOf(map.get(TokenUtils.USERID));
             securityRedisHandler.deleteToken(userId);
         }
-        ResponseDTO<String> responseDTO = new ResponseDTO<>(ResponseEnum.SUCCESS,"退出成功");
+        Response<String> responseDTO = new Response<>(ResponseEnum.SUCCESS,"退出成功");
         TokenUtils.clearResponseToken(httpServletResponse,LoginSuccessHandler.COOKIE_TOKEN);
         httpServletResponse.setContentType("application/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(responseDTO));

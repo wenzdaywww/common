@@ -1,7 +1,7 @@
 package com.www.common.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.www.common.data.dto.response.ResponseDTO;
+import com.www.common.data.response.Response;
 import com.www.common.data.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -61,7 +61,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler  {
         } else if (exception instanceof BadCredentialsException) {
             msg = "用户名或者密码输入错误，请重新输入!";
         }
-        ResponseDTO<String> responseDTO = new ResponseDTO<>(ResponseEnum.FAIL,msg);
+        Response<String> responseDTO = new Response<>(ResponseEnum.FAIL,msg);
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(JSON.toJSONString(responseDTO));
     }
