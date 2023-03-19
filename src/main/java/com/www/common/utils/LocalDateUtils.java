@@ -42,7 +42,7 @@ public class LocalDateUtils {
      * @return java.lang.String 日期时间字符串，例如 2015-08-11 09:51:53
      */
     public static String getLocalDateTimeStr() {
-        return format(LocalDateTime.now(), DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return format(LocalDateTime.now(), DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取当前日期字符串 </p>
@@ -51,7 +51,7 @@ public class LocalDateUtils {
      * @return java.lang.String 日期字符串，例如2015-08-11
      */
     public static String getLocalDateStr() {
-        return format(LocalDate.now(), DateFormatEnum.YYYY_MM_DD.getFormat());
+        return format(LocalDate.now(), DateFormatEnum.YYYYMMDD1.getFormat());
     }
     /**
      * <p>@Description 获取当前时间字符串 </p>
@@ -101,7 +101,7 @@ public class LocalDateUtils {
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 10:19 </p>
      * @param localDateTimeStr 日期时间字符串
-     * @param pattern 日期时间格式 例如DateFormatEnum.YYYY_MM_DD_HH_MM_SS.format
+     * @param pattern 日期时间格式 例如DateFormatEnum.YYYYMMDDHHMMSS1.format
      * @return java.time.LocalDateTime 日期时间
      */
     public static LocalDateTime parseLocalDateTime(String localDateTimeStr, String pattern) {
@@ -195,7 +195,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 00:00:00
      */
     public static String getFirstDayOfYearStr(LocalDateTime localDateTime) {
-        return getFirstDayOfYearStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getFirstDayOfYearStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当年最后一天的日期字符串 </p>
@@ -205,7 +205,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 23:59:59
      */
     public static String getLastDayOfYearStr(LocalDateTime localDateTime) {
-        return getLastDayOfYearStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getLastDayOfYearStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当年第一天的日期字符串,带日期格式化参数 </p>
@@ -255,7 +255,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 23:59:59
      */
     public static String getFirstDayOfMonthStr(LocalDateTime localDateTime) {
-        return getFirstDayOfMonthStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getFirstDayOfMonthStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当月最后一天的日期字符串 </p>
@@ -265,7 +265,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 23:59:59
      */
     public static String getLastDayOfMonthStr(LocalDateTime localDateTime) {
-        return getLastDayOfMonthStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getLastDayOfMonthStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当月第一天的日期字符串,带日期格式化参数 </p>
@@ -315,7 +315,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 00:00:00
      */
     public static String getFirstDayOfWeekStr(LocalDateTime localDateTime) {
-        return getFirstDayOfWeekStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getFirstDayOfWeekStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当周最后一天的日期字符串,这里最后一天为周日 </p>
@@ -325,7 +325,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 23:59:59
      */
     public static String getLastDayOfWeekStr(LocalDateTime localDateTime) {
-        return getLastDayOfWeekStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getLastDayOfWeekStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期当周第一天的日期字符串,这里第一天为周一,带日期格式化参数 </p>
@@ -375,7 +375,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 00:00:00
      */
     public static String getStartTimeOfDayStr(LocalDateTime localDateTime) {
-        return getStartTimeOfDayStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getStartTimeOfDayStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期结束时间的日期字符串 </p>
@@ -385,7 +385,7 @@ public class LocalDateUtils {
      * @return java.lang.String 格式：yyyy-MM-dd 23:59:59
      */
     public static String getEndTimeOfDayStr(LocalDateTime localDateTime) {
-        return getEndTimeOfDayStr(localDateTime, DateFormatEnum.YYYY_MM_DD_HH_MM_SS.getFormat());
+        return getEndTimeOfDayStr(localDateTime, DateFormatEnum.YYYYMMDDHHMMSS1.getFormat());
     }
     /**
      * <p>@Description 获取指定日期开始时间的日期字符串,带日期格式化参数 </p>
@@ -430,7 +430,7 @@ public class LocalDateUtils {
      */
     public static List<String> listDateStrs(String startDate, String endDate, String period) {
         List<String> result = new ArrayList<>();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DateFormatEnum.YYYY_MM_DD.getFormat());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DateFormatEnum.YYYYMMDD1.getFormat());
         LocalDate end = LocalDate.parse(endDate, dateTimeFormatter);
         LocalDate start = LocalDate.parse(startDate, dateTimeFormatter);
         LocalDate tmp = start;

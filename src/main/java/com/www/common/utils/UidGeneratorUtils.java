@@ -91,7 +91,7 @@ public class UidGeneratorUtils {
      */
     private static class SnowFlakeID {
         /** 起始的时间戳,取当前时间*/
-        private static long START_TIMESTAMP = DateUtils.parse("2016-11-04 13:14:52",DateFormatEnum.YYYY_MM_DD_HH_MM_SS).getTime();
+        private static long START_TIMESTAMP = DateUtils.parse("2016-11-04 13:14:52",DateFormatEnum.YYYYMMDDHHMMSS1).getTime();
         /** 数据中心占用的位数 */
         private final static long DATACENTER_ID_BIT = 5;
         /** 工作机器标识占用的位数 */

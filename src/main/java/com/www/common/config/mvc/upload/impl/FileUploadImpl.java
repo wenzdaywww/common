@@ -96,7 +96,7 @@ public class FileUploadImpl implements IFileUpload {
             savePath = myMvcProperties.getImgSavePath();;
         }else {
             urlPath = myMvcProperties.getOtherUrlPath();;
-            savePath = myMvcProperties.getOtherSavePath() + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD);
+            savePath = myMvcProperties.getOtherSavePath() + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD5);
         }
         //添加上一级路径
         urlPath = StringUtils.isNotBlank(prevPath) ? urlPath.replace("**",prevPath + CharConstant.LEFT_SLASH) : urlPath.replace("**","");
