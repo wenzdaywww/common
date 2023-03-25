@@ -1,7 +1,7 @@
 package com.www.common.config.mvc;
 
-import com.www.common.config.mvc.upload.IFileUpload;
-import com.www.common.config.mvc.upload.impl.FileUploadImpl;
+import com.www.common.config.mvc.upload.IFileService;
+import com.www.common.config.mvc.upload.impl.FileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -54,7 +54,7 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
      * @return com.www.common.config.mvc.upload.IFileUpload
      */
     @Bean
-    public IFileUpload fileUploadImpl(){
-        return new FileUploadImpl();
+    public IFileService fileUploadImpl(){
+        return new FileServiceImpl();
     }
 }

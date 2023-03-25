@@ -15,8 +15,6 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)//开启链式编程
-@AllArgsConstructor
-@NoArgsConstructor
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 请求全局跟踪号 **/
@@ -25,7 +23,7 @@ public class Result<T> implements Serializable {
     private Integer pageNum;
     /** 页面条数 **/
     private Long pageSize;
-    /** 总数 **/
+    /** 列表查询总条数 **/
     private Long totalNum;
     /** 响应结果数据 **/
     private T data;
@@ -34,9 +32,30 @@ public class Result<T> implements Serializable {
      * <p>@Description 响应报文构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 21:22 </p>
+     */
+    public Result() {}
+    /**
+     * <p>@Description 响应报文构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/8/1 21:22 </p>
      * @param data 数据
      */
     public Result(T data) {
+        this.data = data;
+    }
+    /**
+     * <p>@Description 响应报文构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/25 13:48 </p>
+     * @param pageNum 当前页数
+     * @param pageSize 页面条数
+     * @param totalNum 列表查询总条数
+     * @param data 响应结果数据
+     */
+    public Result(int pageNum,long pageSize,long totalNum,T data) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.totalNum = totalNum;
         this.data = data;
     }
     /**

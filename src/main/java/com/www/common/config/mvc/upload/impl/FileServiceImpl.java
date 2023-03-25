@@ -1,7 +1,7 @@
 package com.www.common.config.mvc.upload.impl;
 
 import com.www.common.config.mvc.MyMvcProperties;
-import com.www.common.config.mvc.upload.IFileUpload;
+import com.www.common.config.mvc.upload.IFileService;
 import com.www.common.data.constant.CharConstant;
 import com.www.common.data.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
@@ -20,7 +20,7 @@ import java.io.IOException;
  * <p>@Date 2021/12/5 22:38 </p>
  */
 @Slf4j
-public class FileUploadImpl implements IFileUpload {
+public class FileServiceImpl implements IFileService {
     /** 图片类型  **/
     private String[] imgType = {"BMP","JPG","JPEG","PNG","GIF"};
     /** mvc配置信息 **/
@@ -32,10 +32,25 @@ public class FileUploadImpl implements IFileUpload {
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 21:21 </p>
      */
-    public FileUploadImpl (){
-        log.info("启动加载：自定义MVC配置类：配置文件上传");
+    public FileServiceImpl(){
+        log.info("启动加载：自定义MVC配置类：配置文件上传下载");
     }
 
+    /**
+     * <p>@Description 将文件的绝对路径转为url访问路径 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/26 00:43 </p>
+     *
+     * @param filePath
+     * @return
+     */
+    @Override
+    public String convertToURL(String filePath) {
+        String urlPath = myMvcProperties.getUrlPath();// /doc/**
+        urlPath = urlPath.replace(CharConstant.STAR2,CharConstant.EMPTY); //  /doc/
+        String newPath = StringUtils.replaceChars(filePath,CharConstant.RIGHT_SLASH,CharConstant.LEFT_SLASH);
+        return StringUtils.substring(newPath,StringUtils.indexOf(newPath,urlPath));
+    }
     /**
      * <p>@Description 上传文件并返回URL完整路径 </p>
      * <p>@Author www </p>
@@ -51,6 +66,37 @@ public class FileUploadImpl implements IFileUpload {
         String url = this.uploadFileBackURL(file,prevPath,fileName);
         return StringUtils.isNotBlank(url) ? httpAddr + url : null;
     }
+
+    /**
+     * <p>@Description 上传文件并返回路径 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/12/4 15:03 </p>
+     * @param file     文件
+     * @param httpAddr URL的地址端口,格式如：http://1.2.3.4:1000 或 https://1.2.3.4:1000
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 0=文件访问的URL完整路径,1=文件保存的绝对路径
+     */
+    @Override
+    public String[] uploadFile(MultipartFile file, String httpAddr, String prevPath, String fileName) {
+        String[] pathArr = this.saveFileReturnPath(file,prevPath,fileName);
+        pathArr[0] = httpAddr + pathArr[0];
+        return pathArr;
+    }
+    /**
+     * <p>@Description 上传文件并返回路径 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/12/4 15:03 </p>
+     * @param file     文件
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 0=文件访问的URL相对路径,1=文件保存的绝对路径
+     */
+    @Override
+    public String[] uploadFile(MultipartFile file, String prevPath, String fileName) {
+        return this.saveFileReturnPath(file,prevPath,fileName);
+    }
+
     /**
      * <p>@Description 上传文件并返回文件访问的URL相对路径 </p>
      * <p>@Author www </p>
@@ -103,10 +149,28 @@ public class FileUploadImpl implements IFileUpload {
      * @return java.lang.String 返回url访问相对路径或文件绝对路径
      */
     private String saveFile(MultipartFile file, String prevPath, String fileName,boolean isReturnUrl){
+        String[] pathArr = this.saveFileReturnPath(file,prevPath,fileName);
+        return isReturnUrl ? pathArr[0] : pathArr[1];
+    }
+    /**
+     * <p>@Description 保存上传的文件并返回文件对象 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/25 15:48 </p>
+     * @param file 文件
+     * @param prevPath 在文件保存的绝对路径下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 0=文件访问的URL完整路径,1=文件保存的绝对路径
+     */
+    private String[] saveFileReturnPath(MultipartFile file, String prevPath, String fileName){
+        //获取url访问路径和文件保存绝对路径
         String[] path = this.getPath(prevPath);
         //保存上传的文件并返回文件对象
         File targetFile = this.saveFile(file,path[1],fileName);
-        return isReturnUrl ? path[0] + fileName : targetFile.getAbsolutePath();
+        String type = targetFile.getName().substring(targetFile.getName().lastIndexOf(CharConstant.POINT));
+        String[] pathArr = new String[2];
+        pathArr[0] = path[0] + fileName + type; //文件访问的URL完整路径
+        pathArr[1] = targetFile.getAbsolutePath(); //文件保存的绝对路径
+        return pathArr;
     }
     /**
      * <p>@Description 保存上传的文件并返回文件对象 </p>
