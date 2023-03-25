@@ -43,11 +43,9 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        log.info("配置MVC文件资源拦截规则");
-        //配置图片访问的相对路径
-        registry.addResourceHandler(myMvcProperties.getImgUrlPath()).addResourceLocations(FILE + myMvcProperties.getImgSavePath());
-        //配置图片外其他文件访问的相对路径
-        registry.addResourceHandler(myMvcProperties.getOtherUrlPath()).addResourceLocations(FILE + myMvcProperties.getOtherSavePath());
+        //配置文件访问的相对路径，
+        registry.addResourceHandler(myMvcProperties.getUrlPath()).addResourceLocations(FILE + myMvcProperties.getSavePath());
+        log.info("配置MVC文件资源拦截规则:文件访问的URL相对路径={}",myMvcProperties.getUrlPath());
     }
     /**
      * <p>@Description 注册文件上传对象 </p>

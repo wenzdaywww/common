@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.www.common.config.aop.RequestAopProperties;
 import com.www.common.data.constant.CharConstant;
-import com.www.common.data.response.Response;
+import com.www.common.data.response.Result;
 import com.www.common.utils.HttpUtils;
 import com.www.common.utils.NumberUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -77,8 +77,8 @@ public class RequestAopConfig {
         String requestText = this.handleRequestParamToJson(pjd);
         try {
             Object result = pjd.proceed();// 执行目标方法
-            if(result != null && result instanceof Response){
-                ((Response)result).setTraceId(traceId);
+            if(result != null && result instanceof Result){
+                ((Result)result).setTraceId(traceId);
             }
             stopWatch.stop();
             log.info("请求:{} 调用{}方法执行耗时:{}秒。请求报文:{}，响应报文:{}",request.getRequestURI(),
@@ -124,6 +124,9 @@ public class RequestAopConfig {
      * @return java.util.Map<java.lang.String, java.lang.Object>
      */
     private Map<String,Object> handleResultMap(Map<String,Object> resultMap){
+        if(resultMap == null){
+            return null;
+        }
         for (String key : resultMap.keySet()){
             Object value = resultMap.get(key);
             if(value != null && value instanceof JSONArray){

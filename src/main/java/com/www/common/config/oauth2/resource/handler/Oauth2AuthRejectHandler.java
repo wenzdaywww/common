@@ -1,11 +1,11 @@
 package com.www.common.config.oauth2.resource.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.www.common.config.oauth2.token.JwtTokenConverter;
-import com.www.common.data.response.Response;
 import com.www.common.config.oauth2.dto.TokenInfoDTO;
-import com.www.common.data.enums.ResponseEnum;
+import com.www.common.config.oauth2.token.JwtTokenConverter;
+import com.www.common.data.response.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -48,8 +48,8 @@ public class Oauth2AuthRejectHandler implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         TokenInfoDTO tokenDTO = jwtTokenConverter.decodeToken(httpServletRequest);
         log.error("4、请求认证失败，认证信息：{}，失败原因：{}",JSON.toJSONString(tokenDTO),e.getMessage());
-        Response<String> responseDTO = new Response<>(ResponseEnum.UNAUTHORIZED,"认证失败");
-        httpServletResponse.setStatus(ResponseEnum.UNAUTHORIZED.getCode());
+        Result<String> responseDTO = new Result<>("认证失败");
+        httpServletResponse.setStatus(HttpStatus.SC_UNAUTHORIZED);
         httpServletResponse.setContentType("application/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(responseDTO));
     }

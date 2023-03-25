@@ -1,5 +1,6 @@
 package com.www.common.utils;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,13 +38,23 @@ public class SpringUtils implements ApplicationContextAware {
         return applicationContext;
     }
     /**
-     * <p>@Description 获取bean </p>
+     * <p>@Description 根据bean名称获取bean </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 21:45 </p>
-     * @param name
-     * @return java.lang.Object
+     * @param name bean名称
+     * @return bean对象
      */
     public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
+    }
+    /**
+     * <p>@Description 根据实例类名获取bean </p>
+     * <p>@Author www </p>
+     * <p>@Date 2022/3/22 21:45 </p>
+     * @param tClass 实例类名
+     * @return 类实例
+     */
+    public static T getBeanClass(Class<T> tClass) {
+        return getApplicationContext().getBean(tClass);
     }
 }

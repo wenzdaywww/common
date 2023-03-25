@@ -31,6 +31,8 @@
         <commons-lang3-version>3.9</commons-lang3-version>
         <commons-collections4-version>4.4</commons-collections4-version>
         <commons-codec-version>1.11</commons-codec-version>
+        <javacsv-version>2.0</javacsv-version>
+        <poi-version>5.0.0</poi-version>
     </properties>
     <!-- 应用依赖  -->
     <dependencies>
@@ -162,6 +164,23 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec-version}</version>
+        </dependency>
+        <!-- csv文件操作-->
+        <dependency>
+            <groupId>net.sourceforge.javacsv</groupId>
+            <artifactId>javacsv</artifactId>
+            <version>${javacsv-version}</version>
+        </dependency>
+        <!-- excel文件操作-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi-version}</version>
         </dependency>
     </dependencies>
 

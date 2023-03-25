@@ -1,9 +1,9 @@
 package com.www.common.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.www.common.data.response.Response;
-import com.www.common.data.enums.ResponseEnum;
+import com.www.common.data.response.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -42,8 +42,8 @@ public class SecurityUnauthHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
         log.info("5、访问权限角色验证不通过");
-        Response<String> responseDTO = new Response<>(ResponseEnum.FORBIDDEN,"无权限访问");
-        httpServletResponse.setStatus(403);
+        Result<String> responseDTO = new Result<>("无权限访问");
+        httpServletResponse.setStatus(HttpStatus.SC_FORBIDDEN);
         httpServletResponse.setContentType("application/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(responseDTO));
     }

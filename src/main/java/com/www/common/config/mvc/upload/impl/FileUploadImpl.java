@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * <p>@Description 文件上传Service </p>
@@ -36,71 +35,98 @@ public class FileUploadImpl implements IFileUpload {
     public FileUploadImpl (){
         log.info("启动加载：自定义MVC配置类：配置文件上传");
     }
+
     /**
-     * <p>@Description 上传文件并返回url地址 </p>
+     * <p>@Description 上传文件并返回URL完整路径 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/4 15:03 </p>
      * @param file     文件
-     * @param prevPath 上一级文件夹，可设置多级，如temp、temp/test
+     * @param httpAddr URL的地址端口,格式如：http://1.2.3.4:1000 或 https://1.2.3.4:1000
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
      * @param fileName 保存的文件名，不含文件格式
-     * @return com.www.myblog.common.pojo.ResponseDTO<java.lang.String>
+     * @return 文件访问的URL完整路径
+     */
+    @Override
+    public String uploadFileBackURL(MultipartFile file, String httpAddr, String prevPath, String fileName) {
+        String url = this.uploadFileBackURL(file,prevPath,fileName);
+        return StringUtils.isNotBlank(url) ? httpAddr + url : null;
+    }
+    /**
+     * <p>@Description 上传文件并返回文件访问的URL相对路径 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/12/4 15:03 </p>
+     * @param file     文件
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 文件访问的URL相对路径
      */
     @Override
     public String uploadFileBackURL(MultipartFile file, String prevPath, String fileName) {
-        String path = this.uploadFileBackPath(file,prevPath,fileName);
-        if(StringUtils.isNotBlank(path)){
-            path = CharConstant.HTTP + myMvcProperties.getIp() + CharConstant.COLON + myMvcProperties.getPort() + path;
-            return path;
-        }else {
-            return null;
-        }
+        return this.saveFile(file,prevPath,fileName,true);
     }
-
     /**
-     * <p>@Description 上传文件并返回地址 </p>
+     * <p>@Description 上传文件并返回文件绝对路径 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/4 15:03 </p>
      * @param file 文件
-     * @param prevPath 上一级文件夹，可设置多级，如temp、temp/test
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
      * @param fileName 保存的文件名，不含文件格式
-     * @return com.www.myblog.common.pojo.ResponseDTO<java.lang.String>
+     * @return 文件绝对路径
      */
     @Override
     public String uploadFileBackPath(MultipartFile file, String prevPath, String fileName){
-        return this.saveFile(file,prevPath,fileName);
+        return this.saveFile(file,prevPath,fileName,false);
+    }
+    /**
+     * <p>@Description 上传文件并返回文件对象 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/12/4 15:03 </p>
+     * @param file     文件
+     * @param prevPath 在文件保存的绝对路径(${com.www.common.file.save-path})下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 文件对象
+     */
+    @Override
+    public File uploadFileBackFile(MultipartFile file, String prevPath, String fileName) {
+        String[] path = this.getPath(prevPath);
+        //保存上传的文件并返回文件对象
+        return this.saveFile(file,path[1],fileName);
     }
     /**
      * <p>@Description 保存上传的文件 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/10 22:28 </p>
      * @param file 文件
-     * @param prevPath 上一级文件夹，可设置多级，如temp、temp/test
+     * @param prevPath 在文件保存的绝对路径下再添加一级或多级文件夹路径，选填，如temp、temp/test
      * @param fileName 保存的文件名，不含文件格式
-     * @return java.lang.String 返回文件的相对路径
+     * @param isReturnUrl 是否返回url访问路径，ture返回url访问路径，false返回文件绝对路径
+     * @return java.lang.String 返回url访问相对路径或文件绝对路径
      */
-    private String saveFile(MultipartFile file, String prevPath,String fileName){
+    private String saveFile(MultipartFile file, String prevPath, String fileName,boolean isReturnUrl){
+        String[] path = this.getPath(prevPath);
+        //保存上传的文件并返回文件对象
+        File targetFile = this.saveFile(file,path[1],fileName);
+        return isReturnUrl ? path[0] + fileName : targetFile.getAbsolutePath();
+    }
+    /**
+     * <p>@Description 保存上传的文件并返回文件对象 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2021/12/10 22:28 </p>
+     * @param file 文件
+     * @param savePath 文件保存的绝对路径
+     * @param fileName 保存的文件名，不含文件格式
+     * @return 文件对象
+     */
+    private File saveFile(MultipartFile file, String savePath, String fileName){
         if(file == null){
-            return null;
+            throw new RuntimeException("文件对象为空");
         }
         //获取原始文件名称(包含格式)
         String origFileFullName = file.getOriginalFilename();
         //获取文件名称（不包含格式）
-        String orgFileName = origFileFullName.substring(0, origFileFullName.lastIndexOf("."));
+        String orgFileName = origFileFullName.substring(0, origFileFullName.lastIndexOf(CharConstant.POINT));
         //获取文件类型，以最后一个`.`为标识
-        String fileType = origFileFullName.substring(origFileFullName.lastIndexOf(".") + 1);
-        String urlPath = "";
-        String savePath = "";
-        //上传的文件为图片
-        if(Arrays.asList(imgType).contains(StringUtils.upperCase(fileType))){
-            urlPath = myMvcProperties.getImgUrlPath();;
-            savePath = myMvcProperties.getImgSavePath();;
-        }else {
-            urlPath = myMvcProperties.getOtherUrlPath();;
-            savePath = myMvcProperties.getOtherSavePath() + DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDD5);
-        }
-        //添加上一级路径
-        urlPath = StringUtils.isNotBlank(prevPath) ? urlPath.replace("**",prevPath + CharConstant.LEFT_SLASH) : urlPath.replace("**","");
-        savePath = StringUtils.isNotBlank(prevPath) ? savePath + prevPath + CharConstant.LEFT_SLASH : savePath;
+        String fileType = origFileFullName.substring(origFileFullName.lastIndexOf(CharConstant.POINT) + 1);
         //判断文件夹是否存在，不存在则创建
         File filePath = new File(savePath);
         if (!filePath.exists() && !filePath.isDirectory()) {
@@ -109,9 +135,9 @@ public class FileUploadImpl implements IFileUpload {
         if(StringUtils.isBlank(fileName)){
             //设置文件新名称: 当前时间+文件名称（不包含格式）
             String date = DateUtils.format(DateUtils.getCurrentDateTime(), DateFormatEnum.YYYYMMDDHHMMSSSSS);
-            fileName = date + "-" + orgFileName + "." + fileType;
+            fileName = date + CharConstant.MINUS_SIGN + orgFileName + CharConstant.POINT + fileType;
         }else {
-            fileName += "." + fileType;
+            fileName += CharConstant.POINT  + fileType;
         }
         //在指定路径下创建一个文件
         File targetFile = new File(savePath, fileName);
@@ -122,8 +148,30 @@ public class FileUploadImpl implements IFileUpload {
             //将文件在服务器的存储路径返回
         } catch (IOException e) {
             log.info("上传失败,失败信息：{}",e.getMessage());
-            return null;
+            throw new RuntimeException("文件保存失败，失败信息：{}",e);
         }
-        return urlPath + fileName;
+        return targetFile;
+    }
+    /**
+     * <p>@Description 获取url访问路径和文件保存绝对路径 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/22 20:34 </p>
+     * @param prevPath 在文件保存的绝对路径下再添加一级或多级文件夹路径，选填，如temp、temp/test
+     * @return [0]= url访问路径,[1]=文件保存绝对路径
+     */
+    private String[] getPath(String prevPath){
+        String urlPath = myMvcProperties.getUrlPath();//文件访问的URL相对路径
+        String savePath = myMvcProperties.getSavePath();//文件保存的绝对路径
+        if(StringUtils.isBlank(urlPath)){
+            throw new RuntimeException("文件访问的URL相对路径未配置");
+        }
+        if(StringUtils.isBlank(savePath)){
+            throw new RuntimeException("文件保存的绝对路径未配置");
+        }
+        //添加上一级路径
+        urlPath = StringUtils.isNotBlank(prevPath) ? urlPath.replace(CharConstant.STAR2,prevPath + CharConstant.LEFT_SLASH) : urlPath.replace(CharConstant.STAR2,CharConstant.EMPTY);
+        savePath = StringUtils.isNotBlank(prevPath) ? savePath + prevPath + CharConstant.LEFT_SLASH : savePath;
+        String[] path = {urlPath,savePath};
+        return path;
     }
 }

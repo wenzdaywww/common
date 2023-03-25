@@ -11,24 +11,38 @@ public class CharConstant {
     public static final String EMPTY = "";
     /** 空格 **/
     public static final String SPACE = " ";
-    /** 左花括号 **/
+    /** { **/
     public static final String LEFT_BRACE = "{";
-    /** 右花括号 **/
+    /** } **/
     public static final String RIGHT_BRACE = "}";
-    /** 等号 **/
+    /** = **/
     public static final String EQUAL = "=";
-    /** 逗号 **/
+    /** , **/
     public static final String COMMA = ",";
-    /** 星号 **/
+    /** * **/
     public static final String STAR = "*";
-    /** 分号 **/
+    /** ** **/
+    public static final String STAR2 = "**";
+    /** ; **/
     public static final String SEMICOLON = ";";
-    /** 冒号 **/
+    /** : **/
     public static final String COLON = ":";
-    /** 问号 **/
+    /** ? **/
     public static final String QUESTION_MARK = "?";
-    /** 左斜杆 **/
+    /** / **/
     public static final String LEFT_SLASH = "/";
+    /** \ **/
+    public static final String RIGHT_SLASH = "\\";
     /** http **/
     public static final String HTTP = "http://";
+    /** https **/
+    public static final String HTTPS = "https://";
+    /** . **/
+    public static final String POINT = ".";
+    /** - **/
+    public static final String MINUS_SIGN = "-";
+    /** # **/
+    public static final String JING_HAO = "#";
+    /** ' **/
+    public static final String SINGLE_QUOTATION_MARK = "'";
 }
