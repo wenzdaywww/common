@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>@Description 会话过期处理 </p>
+ * <p>@Description 会话过期处理,使用jwt则不需要该类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/11/18 21:05 </p>
  */
+@Deprecated
 @Slf4j
 public class SessionExpiredHandler implements SessionInformationExpiredStrategy {
 

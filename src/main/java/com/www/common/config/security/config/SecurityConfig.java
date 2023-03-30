@@ -5,11 +5,10 @@ import com.www.common.config.security.handler.LoginSuccessHandler;
 import com.www.common.config.security.handler.LogoutSuccessHandlerImpl;
 import com.www.common.config.security.handler.SecurityAuthRejectHandler;
 import com.www.common.config.security.handler.SecurityUnauthHandler;
-import com.www.common.config.security.handler.SessionExpiredHandler;
-import com.www.common.config.security.service.UserDetailsServiceImpl;
 import com.www.common.config.security.meta.JwtAuthorizationTokenFilter;
 import com.www.common.config.security.meta.SecurityAccessDecisionManager;
 import com.www.common.config.security.meta.SecurityMetadataSource;
+import com.www.common.config.security.service.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -45,8 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LogoutSuccessHandlerImpl logoutSuccessHandler;
     @Autowired
-    private SessionExpiredHandler sessionExpiredHandler;
-    @Autowired
     private SecurityUnauthHandler securityUnauthHandler;
     @Autowired
     private SecurityMetadataSource securityMetadataSource;
@@ -75,9 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("security服务配置访问的安全拦截策略");
         http.cors()//开启跨域
             .and().csrf().disable();//关闭CSRF（不关闭会出现会话过期）
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//关闭session
-            .maximumSessions(1)//单点登录
-            .expiredSessionStrategy(sessionExpiredHandler);//会话过期处理
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//关闭session
         http.authorizeRequests().anyRequest().authenticated()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
             @Override
@@ -99,7 +94,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")//退出路径
             .logoutSuccessHandler(logoutSuccessHandler)//退出成功处理逻辑
             .deleteCookies("JSESSIONID");//登出之后删除cookie
-        http.csrf().disable();//关闭csrf
         //记住我功能
         http.rememberMe().rememberMeParameter("rmb");//配置记住我的参数
         http.addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);//设置token解析过滤器在账号密码验证器之前
