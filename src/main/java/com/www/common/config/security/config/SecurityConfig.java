@@ -73,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("security服务配置访问的安全拦截策略");
-        //关闭CSRF（防止网站攻击）
-        http.csrf().disable();
+        http.cors()//开启跨域
+            .and().csrf().disable();//关闭CSRF（不关闭会出现会话过期）
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//关闭session
             .maximumSessions(1)//单点登录
             .expiredSessionStrategy(sessionExpiredHandler);//会话过期处理
@@ -99,6 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")//退出路径
             .logoutSuccessHandler(logoutSuccessHandler)//退出成功处理逻辑
             .deleteCookies("JSESSIONID");//登出之后删除cookie
+        http.csrf().disable();//关闭csrf
         //记住我功能
         http.rememberMe().rememberMeParameter("rmb");//配置记住我的参数
         http.addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);//设置token解析过滤器在账号密码验证器之前
