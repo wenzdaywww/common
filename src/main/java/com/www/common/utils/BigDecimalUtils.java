@@ -4,12 +4,32 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * <p>@Description BigDecimal金额工具类 </p>
+ * <p>@Description BigDecimal工具类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2023/3/16 23:22 </p>
  */
-public class MoneyUtils {
+public class BigDecimalUtils {
+    /**
+     * <p>@Description BigDecimal转为字符串，为空则返回null </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/16 23:23 </p>
+     * @param decimal 数据
+     * @return 字符串数值
+     */
+    public static String toString(BigDecimal decimal){
+        return decimal == null ? null : decimal.toString();
+    }
+    /**
+     * <p>@Description BigDecimal转为字符串，为空则返回0 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/16 23:23 </p>
+     * @param decimal 数据
+     * @return 字符串数值
+     */
+    public static String toString0(BigDecimal decimal){
+        return decimal == null ? "0" : decimal.toString();
+    }
     /**
      * <p>@Description 金额处理，为空则返回0，其他则保留2位小数 </p>
      * <p>@Author www </p>
