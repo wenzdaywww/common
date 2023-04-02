@@ -2,6 +2,7 @@ package com.www.common.data.dto.excel;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 /**
@@ -17,6 +18,8 @@ public class CellDTO {
     private int cellIndex;
     /** 单元格值，必填 **/
     private String cellValue;
+    /** 单元样式 **/
+    private CellStyle cellStyle;
     /** 单元格背景填充色 **/
     private Short fillBackgroundColor;
     /**
