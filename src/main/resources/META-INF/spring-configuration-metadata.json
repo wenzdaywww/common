@@ -139,7 +139,7 @@
       "name": "com.www.common.file.url-path",
       "type": "java.lang.String",
       "defaultValue": "",
-      "description": "文件访问的URL相对路径，必须是**结尾，如/imgs/**"
+      "description": "文件访问的URL相对路径，必须是/开头，**结尾，如/imgs/**"
     },
     {
       "name": "com.www.common.file.save-path",

@@ -40,16 +40,15 @@ public class FileServiceImpl implements IFileService {
      * <p>@Description 将文件的绝对路径转为url访问路径 </p>
      * <p>@Author www </p>
      * <p>@Date 2023/3/26 00:43 </p>
-     *
      * @param filePath
-     * @return
+     * @return url访问路径，开头不含/
      */
     @Override
     public String convertToURL(String filePath) {
         String urlPath = myMvcProperties.getUrlPath();// /doc/**
         urlPath = urlPath.replace(CharConstant.STAR2,CharConstant.EMPTY); //  /doc/
         String newPath = StringUtils.replaceChars(filePath,CharConstant.RIGHT_SLASH,CharConstant.LEFT_SLASH);
-        return StringUtils.substring(newPath,StringUtils.indexOf(newPath,urlPath));
+        return StringUtils.substring(newPath,StringUtils.indexOf(newPath,urlPath)+1);
     }
     /**
      * <p>@Description 上传文件并返回URL完整路径 </p>

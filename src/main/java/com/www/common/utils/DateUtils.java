@@ -31,6 +31,21 @@ public class DateUtils {
         return c.getTime();
     }
     /**
+     * 在给定的时间加上或减去指定小时
+     * @param sourceDate 原始时间
+     * @param hour      要调整的小时，向前为负数，向后为正数
+     * @return
+     */
+    public static Date stepHour(Date sourceDate, int hour) {
+        if(sourceDate == null){
+            return null;
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(sourceDate);
+        c.add(Calendar.HOUR, hour);
+        return c.getTime();
+    }
+    /**
      * 在给定的日期加上或减去指定天数后的日期
      * @param sourceDate 原始时间
      * @param day      要调整的天数，向前为负数，向后为正数

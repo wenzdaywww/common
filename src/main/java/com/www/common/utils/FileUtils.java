@@ -90,4 +90,15 @@ public class FileUtils {
         return StringUtils.isBlank(filePath) ? "" :
                 StringUtils.substring(filePath,filePath.lastIndexOf(CharConstant.POINT),filePath.length());
     }
+    /**
+     * <p>@Description 根据文件路径获取文件名 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/3/25 23:48 </p>
+     * @param filePath 文件路径
+     * @return 文件名,含扩展名
+     */
+    public static String getFileName(String filePath){
+        return StringUtils.isBlank(filePath) ? "" :
+                StringUtils.substring(filePath,filePath.lastIndexOf(CharConstant.LEFT_SLASH)+1,filePath.length());
+    }
 }

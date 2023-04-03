@@ -1,6 +1,7 @@
 package com.www.common.utils;
 
 import com.www.common.config.exception.BusinessException;
+import com.www.common.data.constant.CharConstant;
 import com.www.common.data.dto.excel.CellDTO;
 import com.www.common.data.dto.excel.SheetDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -240,7 +241,7 @@ public class ExcelUtils {
             outputStream = new FileOutputStream(outFile);
             workbook.write(outputStream);
             workbook.close();
-            return outFile.getAbsolutePath();
+            return outFile.getAbsolutePath().replace(CharConstant.RIGHT_SLASH,CharConstant.LEFT_SLASH);
         }catch (Exception e) {
             log.error("写入excel模板文件数据失败，异常信息：", e);
             return null;
