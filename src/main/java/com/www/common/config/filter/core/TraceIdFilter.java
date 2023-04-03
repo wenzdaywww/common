@@ -1,6 +1,8 @@
 package com.www.common.config.filter.core;
 
+import com.www.common.utils.UidGeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -43,7 +45,12 @@ public class TraceIdFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        MDC.put(TRACE_ID, httpServletRequest.getHeader(TRACE_ID));
+        String traceId = httpServletRequest.getHeader(TRACE_ID);
+        //请求不带跟踪号，则重新赋值跟踪号
+        if (StringUtils.isBlank(traceId)){
+            traceId = UidGeneratorUtils.getTraceId();
+        }
+        MDC.put(TRACE_ID, traceId);
         filterChain.doFilter(httpServletRequest,httpServletResponse);
         MDC.remove(TRACE_ID);
     }
