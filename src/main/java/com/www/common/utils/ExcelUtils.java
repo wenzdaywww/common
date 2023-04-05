@@ -23,8 +23,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -146,15 +148,37 @@ public class ExcelUtils {
      * @return 插入数据后的excel文件保存完整路径，含文件扩展名，如：/home/ap/template-write.xlsx
      */
     public static String writeTemplateExcel(String templatePath,String newFilePath, Object data) {
-        if(data == null || StringUtils.isAnyBlank(templatePath,newFilePath)){
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(templatePath);
+        } catch (FileNotFoundException e) {
+            log.error("写入excel模板文件数据失败，异常信息：", e);
+            return null;
+        }
+        return writeTemplateExcel(inputStream,templatePath,newFilePath,data);
+    }
+    /**
+     * <p>@Description 根据模板文件配置的字段映射关系插入数据；
+     *    <p> 1、最多支持data对象中的二级属性映射，如：#{name},#{user.name}</p>
+     *    <p>2、如果写入字段为空，则需检查属性映射是否正确</p>
+     *    <p>3、如果待写入的是List集合数据，则sheet页中配置的属性映射应是最后一行，否则会覆盖原有数据</p>
+     * </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/2 15:47 </p>
+     * @param inputStream excel模板文件流
+     * @param templateName excel模板文件名称
+     * @param newFilePath 插入数据后的excel文件保存路径，不含文件扩展名，如：/home/ap/template-write
+     * @param data 待插入的数据对象
+     * @return 插入数据后的excel文件保存完整路径，含文件扩展名，如：/home/ap/template-write.xlsx
+     */
+    public static String writeTemplateExcel(InputStream inputStream, String templateName, String newFilePath, Object data) {
+        if(data == null || inputStream == null || StringUtils.isAnyBlank(templateName,newFilePath)){
             return null;
         }
         OutputStream outputStream = null;
-        FileInputStream inputStream = null;
         try {
             Class tClass = data.getClass();//反射获取类
             //读取excel模板文件输入流
-            inputStream = new FileInputStream(templatePath);
             Workbook workbook = WorkbookFactory.create(inputStream);
             //遍历sheet页
             Iterator<Sheet> sheetIterator = workbook.sheetIterator();
@@ -233,7 +257,7 @@ public class ExcelUtils {
                 }
             }
             //写入数据excel模板文件并转为新文件保存
-            String fileType = FileUtils.getFileType(templatePath);
+            String fileType = FileUtils.getFileType(templateName);
             File outFile = new File(newFilePath + fileType);
             if(!outFile.exists()){
                 outFile.createNewFile();
