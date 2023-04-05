@@ -3,7 +3,6 @@ package com.www.common.config.code.write;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>@Description 定时任务
@@ -52,9 +51,9 @@ public class CodeDataWriteTask {
      * <p>@Date 2022/1/1 17:20 </p>
      * @return void
      */
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "${com.www.common.code.write-scheduled}")
     public void reloadCodeData() {
-        log.info("整点定时任务:code数据重新写入redis");
+        log.info("定时任务:code数据重新写入redis");
         codeRedisWriteHandler.initCodeData();
     }
 }

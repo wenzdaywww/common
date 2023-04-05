@@ -47,7 +47,6 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
-        log.info("3、访问权限角色配置");
         String requestURL = ((FilterInvocation)o).getRequestUrl();
         List<AuthorityDTO> roleMenuList = userDetailsService.findAllAuthority();
         if(CollectionUtils.isNotEmpty(roleMenuList)){
@@ -58,8 +57,10 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
                 }
             }
             String[] roleArr = roleList.toArray(new String[roleList.size()]);
+            log.info("3、访问URL验证通过,url={}",requestURL);
             return SecurityConfig.createList(roleArr);
         }
+        log.info("3、访问URL验证不通过,url={}",requestURL);
         return null;
     }
 
