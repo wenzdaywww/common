@@ -20,6 +20,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.aspectj.util.FileUtil;
+import org.springframework.boot.actuate.autoconfigure.metrics.export.newrelic.NewRelicPropertiesConfigAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -142,20 +144,20 @@ public class ExcelUtils {
      * </p>
      * <p>@Author www </p>
      * <p>@Date 2023/4/2 15:47 </p>
-     * @param templatePath excel模板文件路径，如：/home/ap/template.xlsx
-     * @param newFilePath 插入数据后的excel文件保存路径，不含文件扩展名，如：/home/ap/template-write
+     * @param templatePath excel模板文件绝对路径
+     * @param newFilePath 插入数据后的excel文件保存路径，含文件扩展名，如：/home/ap/template-write.xlsx
      * @param data 待插入的数据对象
      * @return 插入数据后的excel文件保存完整路径，含文件扩展名，如：/home/ap/template-write.xlsx
      */
-    public static String writeTemplateExcel(String templatePath,String newFilePath, Object data) {
+    public static String writeTemplateExcel(String templatePath, String newFilePath, Object data) {
         FileInputStream inputStream = null;
         try {
             inputStream = new FileInputStream(templatePath);
-        } catch (FileNotFoundException e) {
-            log.error("写入excel模板文件数据失败，异常信息：", e);
+            return ExcelUtils.writeTemplateExcel(inputStream,newFilePath,data);
+        } catch (Exception e) {
+            log.info("读取模板文件流失败，异常：{}",e);
             return null;
         }
-        return writeTemplateExcel(inputStream,templatePath,newFilePath,data);
     }
     /**
      * <p>@Description 根据模板文件配置的字段映射关系插入数据；
@@ -166,13 +168,12 @@ public class ExcelUtils {
      * <p>@Author www </p>
      * <p>@Date 2023/4/2 15:47 </p>
      * @param inputStream excel模板文件流
-     * @param templateName excel模板文件名称
-     * @param newFilePath 插入数据后的excel文件保存路径，不含文件扩展名，如：/home/ap/template-write
+     * @param newFilePath 插入数据后的excel文件保存路径，含文件扩展名，如：/home/ap/template-write.xlsx
      * @param data 待插入的数据对象
      * @return 插入数据后的excel文件保存完整路径，含文件扩展名，如：/home/ap/template-write.xlsx
      */
-    public static String writeTemplateExcel(InputStream inputStream, String templateName, String newFilePath, Object data) {
-        if(data == null || inputStream == null || StringUtils.isAnyBlank(templateName,newFilePath)){
+    public static String writeTemplateExcel(InputStream inputStream, String newFilePath, Object data) {
+        if(data == null || inputStream == null || StringUtils.isAnyBlank(newFilePath)){
             return null;
         }
         OutputStream outputStream = null;
@@ -257,8 +258,12 @@ public class ExcelUtils {
                 }
             }
             //写入数据excel模板文件并转为新文件保存
-            String fileType = FileUtils.getFileType(templateName);
-            File outFile = new File(newFilePath + fileType);
+            File outFile = new File(newFilePath);
+            File dirFile = outFile.getParentFile();
+            //linux中文件夹不存在需要先创建
+            if(!dirFile.exists()){
+                dirFile.mkdir();
+            }
             if(!outFile.exists()){
                 outFile.createNewFile();
             }
