@@ -1,4 +1,4 @@
-package com.www.common.config.mybatis;
+package com.www.common.config.transaction;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
@@ -6,11 +6,12 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
@@ -24,11 +25,14 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 @Slf4j
 @Aspect
 @Configuration
-@ConditionalOnClass(PlatformTransactionManager.class)
-public class TransactionAdviceConfig {
-    private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.www..*.service..*.*(..))";
+@EnableConfigurationProperties(value = TransactionProperties.class)
+@ConditionalOnProperty( prefix = "com.www.common.transaction", name = "enable", havingValue = "true")
+public class TransactionAdviceConfiguation {
     @Autowired
-    private PlatformTransactionManager transactionManager;
+    private TransactionManager transactionManager;
+    @Autowired
+    private TransactionProperties transactionProperties;
+
     /**
      * <p>@Description 设置事物传播级别 </p>
      * <p>@Author www </p>
@@ -60,7 +64,7 @@ public class TransactionAdviceConfig {
     @Bean
     public Advisor txAdviceAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
+        pointcut.setExpression(transactionProperties.getAopPointcut());
         return new DefaultPointcutAdvisor(pointcut, txAdvice());
     }
 }

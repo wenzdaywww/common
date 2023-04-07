@@ -41,6 +41,12 @@
       "type": "com.www.common.config.security.MySecurityAutoConfiguration",
       "description": "Security认证自动配置类.",
       "sourceType": "com.www.common.config.security.MySecurityProperties"
+    },
+    {
+      "name": "com.www.common.transaction",
+      "type": "com.www.common.config.transaction.TransactionAdviceConfiguation",
+      "description": "全局事物管理类.",
+      "sourceType": "com.www.common.config.transaction.TransactionAdviceConfiguation"
     }
   ],
   "properties": [
@@ -226,6 +232,18 @@
       "type": "java.lang.Long",
       "defaultValue": 48,
       "description": "角色访问请求权限信息的redis的key的过期时间（单位小时）,默认48小时"
+    },
+    {
+      "name": "com.www.common.transaction.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启全局事物管理，默认关闭"
+    },
+    {
+      "name": "com.www.common.transaction.aop-pointcut",
+      "type": "java.lang.String",
+      "defaultValue": "execution(* com.www..*.service..*.*(..))",
+      "description": "全局事物管理AOP拦截路径"
     }
   ],
   "hints": []
