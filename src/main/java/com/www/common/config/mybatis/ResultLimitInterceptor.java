@@ -126,7 +126,7 @@ public class ResultLimitInterceptor implements Interceptor {
                 Method[] methodArr = interFaceArr[i].getDeclaredMethods();
                 //遍历接口方法
                 for (int j = 0; methodArr != null && j < methodArr.length;j++){
-                    //TODO 2023/3/27 20:06 重载方法暂无法区别，待后续处理
+                    //mapper类没用重载方法，不需要考虑
                     if(StringUtils.equals(methodArr[j].getName(),mapperShortMethodName)){
                         RowLimitInterceptor[] annoArr = methodArr[j].getDeclaredAnnotationsByType(RowLimitInterceptor.class);
                         if(annoArr != null && annoArr.length > 0){

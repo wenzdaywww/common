@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.www.common.config.uaa.mapper.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.www.common.config.uaa.entity.SysUserRoleEntity">
+    <!--@Table SYS_USER_ROLE -->
+    <id column="SUR_ID" property="surId" />
+    <result column="SU_ID" property="suId" />
+    <result column="ROLE_ID" property="roleId" />
+    <result column="UPDATE_TIME" property="updateTime" />
+    <result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+</mapper>

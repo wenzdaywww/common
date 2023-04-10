@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.www.common.config.uaa.mapper.OauthClientDetailMapper">
+  <resultMap id="BaseResultMap" type="com.www.common.config.uaa.entity.OauthClientDetailEntity">
+    <!--@Table OAUTH_CLIENT_DETAILS -->
+    <id column="CLIENT_ID" property="clientId" />
+    <result column="CLIENT_SECRET" property="clientSecret" />
+    <result column="RESOURCE_ID" property="resourceId" />
+    <result column="GRANT_TYPE" property="grantType" />
+    <result column="SCOPE" property="scope" />
+    <result column="AUTO_APPROVE" property="autoApprove" />
+    <result column="REDIRECT_URI" property="redirectUri" />
+    <result column="UPDATE_TIME" property="updateTime" />
+    <result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+</mapper>

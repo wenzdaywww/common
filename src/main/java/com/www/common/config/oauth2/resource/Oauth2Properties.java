@@ -23,6 +23,6 @@ public class Oauth2Properties {
     @Value("${spring.application.name}")
     private String resourceId;
     /** 图片资源路径 **/
-    @Value("${com.www.common.file.img-url-path:unknown}")
-    private String imgUrlPath;
+    @Value("${com.www.common.file.url-path:unknown}")
+    private String urlPath;
 }

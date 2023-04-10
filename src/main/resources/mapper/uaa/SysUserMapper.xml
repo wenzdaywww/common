@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.www.common.config.uaa.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.www.common.config.uaa.entity.SysUserEntity">
+    <!--@Table SYS_USER -->
+    <id column="SU_ID" property="suId" />
+    <result column="USER_ID" property="userId" />
+    <result column="USER_NAME" property="userName" />
+    <result column="PASSWORD" property="password" />
+    <result column="PHONE_NUM" property="phoneNum" />
+    <result column="BIRTHDAY" property="birthday" />
+    <result column="SEX" property="sex" />
+    <result column="PHOTO" property="photo" />
+    <result column="EMAIL" property="email" />
+    <result column="BRIEF" property="brief" />
+    <result column="STATE_CD" property="stateCd" />
+    <result column="NOT_EXPIRED" property="notExpired" />
+    <result column="NOT_LOCKED" property="notLocked" />
+    <result column="CREDENTIALS_NOT_EXPIRED" property="credentialsNotExpired" />
+    <result column="UPDATE_TIME" property="updateTime" />
+    <result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+</mapper>

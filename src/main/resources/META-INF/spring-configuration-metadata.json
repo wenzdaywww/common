@@ -47,6 +47,12 @@
       "type": "com.www.common.config.transaction.TransactionAdviceConfiguation",
       "description": "全局事物管理类.",
       "sourceType": "com.www.common.config.transaction.TransactionAdviceConfiguation"
+    },
+    {
+      "name": "com.www.common.transaction",
+      "type": "com.www.common.config.uaa.UaaAutoConfiguration",
+      "description": "单点登录认证服务方自动配置类.",
+      "sourceType": "com.www.common.config.uaa.UaaAutoConfiguration"
     }
   ],
   "properties": [
@@ -244,6 +250,12 @@
       "type": "java.lang.String",
       "defaultValue": "execution(* com.www..*.service..*.*(..))",
       "description": "全局事物管理AOP拦截路径"
+    },
+    {
+      "name": "com.www.common.uaa.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启uaa单点登录认证服务方配置，默认关闭"
     }
   ],
   "hints": []

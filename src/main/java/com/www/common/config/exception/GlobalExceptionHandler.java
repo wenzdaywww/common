@@ -59,7 +59,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Result<String>> handlerBusinessException(BusinessException e){
-//        log.error("发生BusinessException异常：",e);
         return new ResponseEntity<>(new Result<>(e.getMsg()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     /**
@@ -72,7 +71,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Result<String>> handlerConstraintViolationException(ConstraintViolationException e){
-//        log.error("发生ConstraintViolationException异常：",e);
         HashSet<ConstraintViolation> errSet = (HashSet) e.getConstraintViolations();
         StringBuilder sb = new StringBuilder();
         errSet.forEach(er -> {
@@ -89,7 +87,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     public ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-//        log.error("发生BindException异常：",e);
         List<FieldError> errList = ex.getFieldErrors();
         StringBuilder sb = Optional.ofNullable(errList).filter(item -> CollectionUtils.isNotEmpty(errList)).map(
                     list -> {

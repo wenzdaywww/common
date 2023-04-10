@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户授权</title>
+</head>
+<body style="margin: 0px">
+<div class="title">
+    用户授权
+</div>
+<div class="container">
+    <h3 th:text="${clientId}+' 请求授权，该应用将获取你的以下信息'"></h3>
+    <h4>昵称，头像</h4>
+    <h4>授权后表明您已同意</h4>
+    <form method="post" action="/oauth/authorize">
+        <input type="hidden" name="user_oauth_approval" value="true">
+        <input type="hidden" name="user_scope" th:value="${scopes}">
+        <div>
+            <input type="radio" name="select" value="true" checked>同意
+            <input type="radio" name="select" value="false" >拒绝
+        </div>
+        <input name="authorize" value="确定" type="submit" class="authorize">
+    </form>
+</div>
+</body>
+<style>
+    html{
+        padding: 0px;
+        margin: 0px;
+    }
+    .title {
+        background-color: #69b4e6;
+        height: 50px;
+        padding-left: 20%;
+        padding-right: 20%;
+        color: white;
+        line-height: 50px;
+        font-size: 18px;
+        text-align: center;
+    }
+    .container{
+        clear: both;
+        text-align: center;
+    }
+    .authorize {
+        background:none;
+        display:block;
+        margin:20px auto;
+        text-align:center;
+        border:2px solid #3796f8;
+        padding:4px 40px;
+        outline:none;
+        color:#5d5454;
+        border-radius:24px;
+        transition:0.25s;
+        cursor:pointer;
+    }
+    .authorize:hover {
+        background:#3796f8;
+        color:white;
+    }
+</style>
+</html>

@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>统一登录平台</title>
+</head>
+<body>
+
+<form class="box" method="post" action="/login">
+    <p th:if="${#httpSession.getAttribute('error')}" class="bg-danger" th:text="${#httpSession.getAttribute('error')}"></p>
+    <h1>登录</h1>
+    <input type="text" id="username" name="username" placeholder="用户名"  required>
+    <input type="password" id="password" name="password" placeholder="密码" required>
+    <input type="submit" value="登录">
+</form>
+</body>
+<style>
+    body {
+        margin:0;
+        padding:0;
+        font-family:sans-serif;
+        background-image: url(/uaa/img/login-bg.jpg);
+        background-size: 100%;
+    }
+    .bg-danger{
+        color: #dc3434;
+    }
+    .box {
+        width:300px;
+        padding:40px;
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.3);
+        text-align:center;
+        box-shadow:20px 25px 45px 15px;
+    }
+    .box h1 {
+        color:white;
+        text-transform:uppercase;
+        font-weight:500;
+    }
+    .box input[type = "text"],.box input[type = "password"] {
+        background:none;
+        display:block;
+        margin:20px auto;
+        text-align:center;
+        border:2px solid #69b4e6;
+        padding:14px 10px;
+        width:200px;
+        outline:none;
+        color: #5d5454;
+        border-radius:24px;
+        transition:0.25s;
+    }
+    .box input[type = "text"]:focus,.box input[type = "password"]:focus {
+        width:280px;
+        border-color: #3796f8;
+    }
+    .box input[type = "submit"] {
+        background:none;
+        display:block;
+        margin:20px auto;
+        text-align:center;
+        border:2px solid #3796f8;
+        padding:8px 50px;
+        outline:none;
+        color:#5d5454;
+        border-radius:24px;
+        transition:0.25s;
+        cursor:pointer;
+    }
+    .box input[type = "submit"]:hover {
+        background:#3796f8;
+        color:white;
+    }
+</style>
+</html>

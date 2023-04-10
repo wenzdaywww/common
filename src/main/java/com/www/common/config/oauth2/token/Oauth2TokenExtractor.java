@@ -49,7 +49,7 @@ public class Oauth2TokenExtractor extends BearerTokenExtractor {
      */
     @Override
     public Authentication extract(HttpServletRequest request) {
-        String imgUrl = oauth2Properties.getImgUrlPath(); // 图片资源路径
+        String imgUrl = oauth2Properties.getUrlPath(); // 图片资源路径
         String uri = request.getRequestURI(); //当前uri
         // 判断是否是图片资源，是则不获取token
         if(StringUtils.isNotBlank(imgUrl) && antPathMatcher.match(imgUrl,uri)){
