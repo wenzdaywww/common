@@ -44,9 +44,9 @@ public class OauthController {
     /** 保存到cookie的user的角色的key **/
     public static final String COOKIES_USER_ROLES = "roles";
     @Autowired
-    private TokenEndpoint tokenEndpoint;
+    protected TokenEndpoint tokenEndpoint;
     @Autowired
-    private JwtTokenConverter jwtTokenConverter;
+    protected JwtTokenConverter jwtTokenConverter;
 
     /**
      * <p>@Description 重写oauth/token的get请求 </p>

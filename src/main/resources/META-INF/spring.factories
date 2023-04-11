@@ -19,5 +19,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.www.common.config.security.config.SecurityConfig,\
   com.www.common.config.transaction.TransactionAdviceConfiguation,\
   com.www.common.config.uaa.UaaAutoConfiguration,\
+  com.www.common.config.uaa.authorize.core.AuthorizeSecurityConfig,\
+  com.www.common.config.uaa.authorize.core.AuthorizeServerConfig,\
+  com.www.common.config.uaa.authorize.core.AuthorizeTokenConfig,\
   com.www.common.config.zuul.ZuulAutoConfiguration,\
   com.www.common.utils.SpringUtils

@@ -30,15 +30,16 @@ import java.util.Map;
 @SessionAttributes({ConfirmController.AUTHORIZATION_REQUEST_ATTR_NAME,ConfirmController.ORIGINAL_AUTHORIZATION_REQUEST_ATTR_NAME}) //必须配置
 public class ConfirmController{
     /** 授权页面form提交的用户请求的所有scope的name **/
-    static final String USER_SCOPE = "user_scope";
+    public static final String USER_SCOPE = "user_scope";
     /** 授权页面同意/拒绝的form提交的name **/
-    static final String SELECT = "select";
+    public static final String SELECT = "select";
     //重写请求需要的session参数
-    static final String AUTHORIZATION_REQUEST_ATTR_NAME = "authorizationRequest";
+    public static final String AUTHORIZATION_REQUEST_ATTR_NAME = "authorizationRequest";
     //重写请求需要的session参数
-    static final String ORIGINAL_AUTHORIZATION_REQUEST_ATTR_NAME = "org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint.ORIGINAL_AUTHORIZATION_REQUEST";
+    public static final String ORIGINAL_AUTHORIZATION_REQUEST_ATTR_NAME = "org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint.ORIGINAL_AUTHORIZATION_REQUEST";
     @Autowired
-    private AuthorizationEndpoint authorizationEndpoint;
+    protected AuthorizationEndpoint authorizationEndpoint;
+
     /**
      * <p>@Description 重写授权页面跳转 </p>
      * <p>@Author www </p>
@@ -51,7 +52,7 @@ public class ConfirmController{
     public ModelAndView getAccessConfirmation(Map<String, Object> model, HttpServletRequest request) throws Exception {
         AuthorizationRequest authorizationRequest = (AuthorizationRequest) model.get("authorizationRequest");
         ModelAndView view = new ModelAndView();
-        view.setViewName("confirm"); //自定义页面名字，resources\templates\authorize.html
+        view.setViewName("uaa/confirm"); //自定义页面名字，resources\templates\authorize.html
         view.addObject("clientId", authorizationRequest.getClientId());
         view.addObject("scopes",authorizationRequest.getScope());
         return view;
@@ -68,6 +69,7 @@ public class ConfirmController{
      */
     @RequestMapping(value = "/oauth/authorize")
     public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,SessionStatus sessionStatus, Principal principal){
+        log.info("--------> 重写/oauth/authorize请求");
         return authorizationEndpoint.authorize(model,parameters,sessionStatus,principal);
     }
     /**

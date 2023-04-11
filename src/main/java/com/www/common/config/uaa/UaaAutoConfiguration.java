@@ -4,10 +4,11 @@ import com.www.common.config.uaa.authorize.handler.Oauth2LoginFailureHandler;
 import com.www.common.config.uaa.authorize.handler.Oauth2LogoutSuccessHandler;
 import com.www.common.config.uaa.authorize.handler.UserServiceHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Slf4j
 @Configuration
+@MapperScan("com.www.common.config.uaa")//配置mapper扫描路径
+@ComponentScan("com.www.common.config.uaa.controller")//配置controller扫描路径
 @EnableConfigurationProperties(value = UaaProperties.class)
 @ConditionalOnProperty( prefix = "com.www.common.uaa", name = "enable", havingValue = "true")
 public class UaaAutoConfiguration implements WebMvcConfigurer {
@@ -35,7 +38,7 @@ public class UaaAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         log.info("启动加载：单点登录认证服务方自动配置--加载视图控制器");
-        registry.addViewController("/uaa-login").setViewName("uaa_login");//自定义登录页面跳转
+        registry.addViewController("/uaa-login").setViewName("uaa/uaa_login");//自定义登录页面跳转
     }
     /**
      * <p>@Description 注册oauth2登录认证失败处理对象 </p>
