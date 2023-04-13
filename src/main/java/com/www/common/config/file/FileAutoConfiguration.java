@@ -1,7 +1,7 @@
-package com.www.common.config.mvc;
+package com.www.common.config.file;
 
-import com.www.common.config.mvc.upload.IFileService;
-import com.www.common.config.mvc.upload.impl.FileServiceImpl;
+import com.www.common.config.file.upload.IFileService;
+import com.www.common.config.file.upload.impl.FileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,28 +12,21 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * <p>@Description MVC配置 </p>
+ * <p>@Description 文件上传自动配置类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/12/10 20:48 </p>
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(value = MyMvcProperties.class)
+@EnableConfigurationProperties(value = FileProperties.class)
 @ConditionalOnProperty(prefix = "com.www.common.file",name = "enable")
-public class MyMvcAutoConfiguration implements WebMvcConfigurer {
+public class FileAutoConfiguration implements WebMvcConfigurer {
     @Autowired
-    private MyMvcProperties myMvcProperties;
+    private FileProperties myMvcProperties;
     /** 资源映射前缀 **/
     private static final String FILE = "file:";
-    /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 10:45 </p>
-     */
-    public MyMvcAutoConfiguration(){
-        log.info("启动加载：自定义MVC配置类");
-    }
+
     /**
      * <p>@Description 资源拦截配置 </p>
      * <p>@Author www </p>
@@ -45,7 +38,7 @@ public class MyMvcAutoConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //配置文件访问的相对路径，
         registry.addResourceHandler(myMvcProperties.getUrlPath()).addResourceLocations(FILE + myMvcProperties.getSavePath());
-        log.info("配置MVC文件资源拦截规则:文件访问的URL相对路径={}",myMvcProperties.getUrlPath());
+        log.info("配置MVC文件资源拦截规则>>>文件访问的URL相对路径={}",myMvcProperties.getUrlPath());
     }
     /**
      * <p>@Description 注册文件上传对象 </p>

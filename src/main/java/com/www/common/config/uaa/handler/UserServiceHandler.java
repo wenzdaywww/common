@@ -1,4 +1,4 @@
-package com.www.common.config.uaa.authorize.handler;
+package com.www.common.config.uaa.handler;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -34,6 +34,14 @@ public class UserServiceHandler implements UserDetailsService {
     @Autowired
     private SysRoleMapper sysRoleMapper;
 
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/12 21:28 </p>
+     */
+    public UserServiceHandler(){
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>开启oauth2用户详细信息服务配置");
+    }
     /**
      * <p>@Description 加载用户信息 </p>
      * <p>@Author www </p>

@@ -28,15 +28,6 @@ public class DruidMonitorAutoConfiguration {
     @Autowired
     private MultiDataSourceProperties dataSourceProperties;
     /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/1/1 18:04 </p>
-     * @return
-     */
-    public DruidMonitorAutoConfiguration(){
-        log.info("启动加载：Druid监控平台自动配置类");
-    }
-    /**
      * <p>@Description 设置druid后台监控功能
      *     因为spring boot内置了servlet容器，所以没有web.xml，替代方法使用：ServletRegistrationBean
      *     注：监控页面路径为：localhost:8080/druid </p>
@@ -57,7 +48,7 @@ public class DruidMonitorAutoConfiguration {
 //        initParam.put("www","192.168.1.105");
         //设置初始化参数
         bean.setInitParameters(initParam);
-        log.info("启动加载：Druid监控平台自动配置类：配置Druid后台监控信息");
+        log.info("启动加载>>>Druid监控平台自动配置>>>配置Druid后台监控信息");
         return  bean;
     }
     /**
@@ -74,7 +65,7 @@ public class DruidMonitorAutoConfiguration {
         //设置不统计的过滤器
         initParam.put("exclusions","*.js,*.css,/druid/*");
         bean.setInitParameters(initParam);
-        log.info("启动加载：Druid监控平台自动配置类：配置Druid监控过滤器");
+        log.info("启动加载>>>Druid监控平台自动配置>>>配置Druid监控过滤器");
         return bean;
     }
 }

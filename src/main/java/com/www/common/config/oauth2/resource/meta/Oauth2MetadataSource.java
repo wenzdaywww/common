@@ -1,7 +1,7 @@
 package com.www.common.config.oauth2.resource.meta;
 
-import com.www.common.config.oauth2.resource.inf.IOauth2Service;
 import com.www.common.config.oauth2.dto.ScopeDTO;
+import com.www.common.config.oauth2.resource.inf.IOauth2Service;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +36,7 @@ public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSou
      * <p>@Date 2022/3/22 22:44 </p>
      */
     public Oauth2MetadataSource(){
-        log.info("启动加载：Oauth2资源服务方自动配置类：注册资源服务器配置安全元数据源");
+        log.info("启动加载>>>Oauth2资源服务方自动配置>>>资源服务方配置URL可访问的范围");
     }
     /**
      * <p>@Description 访问权限角色配置 </p>

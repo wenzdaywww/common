@@ -14,13 +14,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.securuty")
 public class MySecurityProperties {
-    /** 是否开启Security认证 **/
+    /** 是否开启Security认证，默认关闭false **/
     private Boolean enable = false;
-    /** jwt令牌签名 */
+    /** jwt令牌签名，默认wenzday */
     private String secretKey = "wenzday";
     /** 使用redis保存用户的token的key前缀,不需冒号结尾，代码已添加 **/
     private String tokenPrefix;
-    /**  token过期时间（单位小时）,默认24小时 */
+    /**  用户token过期时间（单位小时）,默认48小时 */
     private int tokenExpireHour = 48;
     /** 使用redis保存用户的角色信息的key前缀,不需冒号结尾，代码已添加 **/
     private String userPrefix;
@@ -30,4 +30,12 @@ public class MySecurityProperties {
     private String authRedisKey;
     /** 角色访问请求权限信息的redis的key的过期时间（单位小时）,默认48小时 **/
     private long authExpireHour = 48L;
+    /** 登录的http请求地址，即表单form中action的地址，默认/login **/
+    private String login = "/login";
+    /** 登录的http请求的用户名key，即表单form中action的参数key，默认id **/
+    private String name = "id";
+    /** 登录的http请求的密码key，即表单form中action的参数key，默认pwd **/
+    private String password = "pwd";
+    /** 退出登录的http请求地址，默认/logout **/
+    private String logout = "/logout";
 }

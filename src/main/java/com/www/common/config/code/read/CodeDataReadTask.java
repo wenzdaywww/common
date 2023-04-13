@@ -44,7 +44,7 @@ public class CodeDataReadTask {
      * <p>@Date 2022/3/22 20:46 </p>
      */
     public CodeDataReadTask(){
-        log.info("启动加载：定时读取数据字典任务");
+        log.info("启动加载>>>开启定时重新从redis中读取数据字典数据任务");
     }
     /**
      * <p>@Description 定时重新读取数据字典数据 </p>
@@ -54,7 +54,7 @@ public class CodeDataReadTask {
      */
     @Scheduled(cron = "${com.www.common.code.read-scheduled}")
     public void reloadCodeData() {
-        log.info("定时重新读取数据字典数据");
+        log.info("定时任务>>>重新从redis中读取数据字典数据");
         codeRedisReadHandler.initCodeData();
     }
 }

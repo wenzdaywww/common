@@ -32,7 +32,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler  {
      * @return
      */
     public LoginFailureHandler(){
-        log.info("启动加载：Security认证自动配置类：注册security配置登录认证失败处理");
+        log.info("启动加载>>>Security认证自动配置>>>配置登录认证失败处理");
     }
     /**
      * <p>@Description 登录失败处理事件 </p>

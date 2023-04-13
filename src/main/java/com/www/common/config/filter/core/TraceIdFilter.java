@@ -32,7 +32,7 @@ public class TraceIdFilter extends OncePerRequestFilter {
      * @return
      */
     public TraceIdFilter(){
-        log.info("启动加载：开启日志全局跟踪号过滤器");
+        log.info("启动加载>>>开启日志全局跟踪号过滤器");
     }
     /**
      * <p>@Description 过滤器设置 </p>

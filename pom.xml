@@ -34,6 +34,7 @@
         <commons-codec-version>1.11</commons-codec-version>
         <javacsv-version>2.0</javacsv-version>
         <poi-version>5.0.0</poi-version>
+        <jasypt-spring-boot-starter-version>2.1.1</jasypt-spring-boot-starter-version>
     </properties>
     <!-- 应用依赖  -->
     <dependencies>
@@ -45,6 +46,7 @@
             <version>${spring-boot-version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- springboot自动配置依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -189,6 +191,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi-version}</version>
+        </dependency>
+        <!-- application加密包 -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt-spring-boot-starter-version}</version>
         </dependency>
     </dependencies>
 

@@ -6,7 +6,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
 /**
- * <p>@Description 数据字典加载 </p>
+ * <p>@Description 启动自动从redis读取数据字典数据 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/1/1 16:04 </p>
@@ -24,7 +24,7 @@ public class CodeDictReadRunnerImpl implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("启动加载：启动读取数据字典数据");
+        log.info("启动加载>>>启动自动从redis读取数据字典数据");
         codeRedisReadHandler.initCodeData();
     }
 

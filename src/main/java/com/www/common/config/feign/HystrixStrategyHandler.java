@@ -58,9 +58,9 @@ public class HystrixStrategyHandler extends HystrixConcurrencyStrategy {
             HystrixPlugins.getInstance().registerEventNotifier(eventNotifier);
             HystrixPlugins.getInstance().registerMetricsPublisher(metricsPublisher);
             HystrixPlugins.getInstance().registerPropertiesStrategy(propertiesStrategy);
-            log.info("启动加载：自定义Hystrix并发策略");
+            log.info("启动加载>>>自定义Hystrix并发策略");
         } catch (Exception e) {
-            log.error("启动加载：自定义Hystrix并发策略失败", e);
+            log.error("启动加载>>>自定义Hystrix并发策略失败", e);
         }
     }
 

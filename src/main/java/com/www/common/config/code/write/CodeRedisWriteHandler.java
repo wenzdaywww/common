@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * <p>@Description 数据字典redis操作类 </p>
+ * <p>@Description 数据字典redis写入操作类 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/2/4 12:22 </p>
@@ -28,6 +28,15 @@ public class CodeRedisWriteHandler {
     private CodeProperties codeProperties;
     @Autowired
     private CodeDataMapper codeDataMapper;
+
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/11 21:59 </p>
+     */
+    public CodeRedisWriteHandler(){
+        log.info("启动加载>>>数据字典redis写入操作类");
+    }
     /**
      * <p>@Description 初始化code数据写入redis </p>
      * <p>@Author www </p>

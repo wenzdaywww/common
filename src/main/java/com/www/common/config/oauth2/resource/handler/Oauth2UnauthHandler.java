@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>@Description 拒绝访问异常处理 </p>
+ * <p>@Description 资源服务方拒绝访问异常处理 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/11/24 22:25 </p>
@@ -32,7 +32,7 @@ public class Oauth2UnauthHandler implements AccessDeniedHandler {
      * <p>@Date 2022/3/22 22:44 </p>
      */
     public Oauth2UnauthHandler(){
-        log.info("启动加载：Oauth2资源服务方自动配置类：注册资源服务器配置拒绝访问异常处理");
+        log.info("启动加载>>>Oauth2资源服务方自动配置>>>资源服务方拒绝访问异常处理");
     }
     /**
      * <p>@Description 拒绝访问异常处理  </p>

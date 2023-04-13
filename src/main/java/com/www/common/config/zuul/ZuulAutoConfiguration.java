@@ -26,7 +26,7 @@ public class ZuulAutoConfiguration {
      */
     @Bean
     public PreFilter preFilter(){
-        log.info("启动加载：zuul自动配置pre过滤器");
+        log.info("启动加载>>>zuul自动配置pre过滤器");
         return new PreFilter();
     }
     /**
@@ -37,7 +37,7 @@ public class ZuulAutoConfiguration {
      */
     @Bean
     public PostFilter postFilter(){
-        log.info("启动加载：zuul自动配置post过滤器");
+        log.info("启动加载>>>zuul自动配置post过滤器");
         return new PostFilter();
     }
 }

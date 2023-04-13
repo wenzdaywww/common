@@ -27,7 +27,7 @@ public class SecurityAccessDecisionManager implements AccessDecisionManager {
      * @return
      */
     public SecurityAccessDecisionManager(){
-        log.info("启动加载：Security认证自动配置类：注册security配置访问决策管理器");
+        log.info("启动加载>>>Security认证自动配置>>>配置访问权限角色验证");
     }
     /**
      * <p>@Description url访问校验 </p>

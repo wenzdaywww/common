@@ -1,14 +1,15 @@
-package com.www.common.config.aop.core;
+package com.www.common.config.request.core;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.www.common.config.aop.RequestAopProperties;
+import com.www.common.config.request.RequestPrintProperties;
 import com.www.common.data.constant.CharConstant;
 import com.www.common.data.response.Result;
 import com.www.common.utils.HttpUtils;
 import com.www.common.utils.NumberUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,24 +30,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>@Description 请求响应报文AOP拦截配置 </p>
+ * <p>@Description 请求响应报文打印配置 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2021/12/8 20:08 </p>
  */
 @Slf4j
 @Aspect
-public class RequestAopConfig {
-    /** 请求响应报文AOP拦截配置 **/
+public class RequestPrintConfig {
+    /** 请求响应报文打印AOP拦截自动配置属性类 **/
     @Autowired
-    private RequestAopProperties requestAopProperties;
+    private RequestPrintProperties requestPrintProperties;
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 19:50 </p>
      */
-    public RequestAopConfig(){
-        log.info("启动加载：请求AOP拦截自动配置类：开启controller层的AOP日志拦截");
+    public RequestPrintConfig(){
+        log.info("启动加载>>>开启controller请求响应报文打印配置");
     }
     /**
      * <p>@Description 设置controller切入点 </p>
@@ -61,7 +62,7 @@ public class RequestAopConfig {
      * <p>@Author www </p>
      * <p>@Date 2021/12/8 21:22 </p>
      * @param pjd 方法切入点
-     * @return java.lang.Object
+     * @return 响应报文
      */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint pjd) throws Throwable {
@@ -97,7 +98,7 @@ public class RequestAopConfig {
      * @return java.lang.String 替换的成指定字符串
      */
     private String handleBigDataReplace(String value){
-        return StringUtils.length(value) > requestAopProperties.getLength() ? requestAopProperties.getContent() : value;
+        return StringUtils.length(value) > requestPrintProperties.getLength() ? requestPrintProperties.getContent() : value;
     }
     /**
      * <p>@Description 处理方法返回的对象，输出为json数据 </p>
@@ -107,7 +108,7 @@ public class RequestAopConfig {
      * @return java.lang.String json数据
      */
     public String handleResultToJson(Object result){
-        if(BooleanUtils.isNotFalse(requestAopProperties.getReplace())){
+        if(BooleanUtils.isNotFalse(requestPrintProperties.getReplace())){
             Map<String,Object> resultMap = JSONObject.parseObject(JSON.toJSONString(result));
             resultMap = handleResultMap(resultMap);
             String resultJson = JSONObject.toJSONString(resultMap);
@@ -124,7 +125,7 @@ public class RequestAopConfig {
      * @return java.util.Map<java.lang.String, java.lang.Object>
      */
     private Map<String,Object> handleResultMap(Map<String,Object> resultMap){
-        if(resultMap == null){
+        if(MapUtils.isEmpty(resultMap)){
             return null;
         }
         for (String key : resultMap.keySet()){
@@ -146,7 +147,6 @@ public class RequestAopConfig {
         }
         return resultMap;
     }
-
     /**
      * <p>@Description 处理请求方法的入参，转为json数据 </p>
      * <p>@Author www </p>

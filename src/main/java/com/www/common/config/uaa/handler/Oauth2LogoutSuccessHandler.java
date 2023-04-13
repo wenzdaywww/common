@@ -1,10 +1,10 @@
-package com.www.common.config.uaa.authorize.handler;
+package com.www.common.config.uaa.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.www.common.config.oauth2.dto.TokenInfoDTO;
 import com.www.common.config.oauth2.token.JwtTokenConverter;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
-import com.www.common.config.uaa.controller.OauthController;
+import com.www.common.config.uaa.UaaProperties;
 import com.www.common.data.response.Result;
 import com.www.common.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,19 @@ import java.io.IOException;
  */
 @Slf4j
 public class Oauth2LogoutSuccessHandler implements LogoutSuccessHandler {
-    /** 自定义jwt的token转换器 **/
+    @Autowired
+    private UaaProperties uaaProperties;
     @Autowired
     private JwtTokenConverter jwtTokenConverter;
 
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/12 21:27 </p>
+     */
+    public Oauth2LogoutSuccessHandler(){
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>开启oauth2退出成功的处理配置");
+    }
     /**
      * <p>@Description 退出成功处理 </p>
      * <p>@Author www </p>
@@ -44,10 +53,10 @@ public class Oauth2LogoutSuccessHandler implements LogoutSuccessHandler {
         //获取token信息
         TokenInfoDTO tokenInfoDTO = jwtTokenConverter.decodeToken(httpServletRequest);
         //删除用户登录的token到redis中
-        RedisTokenHandler.deleteUserIdToken(tokenInfoDTO);
+        RedisTokenHandler.deleteUserIdToken(tokenInfoDTO,uaaProperties.getTokenKeyPrefix());
         Result<String> response = new Result<>("退出成功");
         //清除token
-        TokenUtils.clearResponseToken(httpServletResponse, OauthController.COOKIES_ACCESS_TOKEN,OauthController.COOKIES_REFRESH_TOKEN,OauthController.COOKIES_USER);
+        TokenUtils.clearResponseToken(httpServletResponse, uaaProperties.getCookiesAccessToken(),uaaProperties.getCookiesRefreshToken(),uaaProperties.getCookiesUser());
         httpServletResponse.setContentType("application/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(response));
     }

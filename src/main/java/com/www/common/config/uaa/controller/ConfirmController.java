@@ -1,5 +1,7 @@
 package com.www.common.config.uaa.controller;
 
+import com.www.common.config.uaa.UaaProperties;
+import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class ConfirmController{
     //重写请求需要的session参数
     public static final String ORIGINAL_AUTHORIZATION_REQUEST_ATTR_NAME = "org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint.ORIGINAL_AUTHORIZATION_REQUEST";
     @Autowired
+    protected UaaProperties uaaProperties;
+    @Autowired
     protected AuthorizationEndpoint authorizationEndpoint;
 
     /**
@@ -52,9 +56,9 @@ public class ConfirmController{
     public ModelAndView getAccessConfirmation(Map<String, Object> model, HttpServletRequest request) throws Exception {
         AuthorizationRequest authorizationRequest = (AuthorizationRequest) model.get("authorizationRequest");
         ModelAndView view = new ModelAndView();
-        view.setViewName("uaa/confirm"); //自定义页面名字，resources\templates\authorize.html
-        view.addObject("clientId", authorizationRequest.getClientId());
-        view.addObject("scopes",authorizationRequest.getScope());
+        view.setViewName(uaaProperties.getConfirmPage()); //自定义页面名字
+        view.addObject(uaaProperties.getClientId(), authorizationRequest.getClientId());
+        view.addObject(uaaProperties.getScopes(),authorizationRequest.getScope());
         return view;
     }
     /**
@@ -69,7 +73,6 @@ public class ConfirmController{
      */
     @RequestMapping(value = "/oauth/authorize")
     public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,SessionStatus sessionStatus, Principal principal){
-        log.info("--------> 重写/oauth/authorize请求");
         return authorizationEndpoint.authorize(model,parameters,sessionStatus,principal);
     }
     /**
@@ -87,8 +90,8 @@ public class ConfirmController{
         String scopes = approvalParameters.get(USER_SCOPE);
         //对多个scope统一由一对同意/拒绝控制，则需要对每个scope设置true或false
         if(StringUtils.isNotBlank(scopes)){
-            scopes = scopes.replaceAll("\\[","").replaceAll("\\]","");
-            String[] scopeArr = scopes.split(",");
+            scopes = scopes.replaceAll("\\[",CharConstant.EMPTY).replaceAll("\\]",CharConstant.EMPTY);
+            String[] scopeArr = scopes.split(CharConstant.COMMA);
             for (int i = 0;i < scopeArr.length;i++){
                 approvalParameters.put(OAuth2Utils.SCOPE_PREFIX + scopeArr[i],approvalParameters.get(SELECT));
             }

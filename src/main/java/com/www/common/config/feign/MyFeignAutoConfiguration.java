@@ -44,7 +44,7 @@ public class MyFeignAutoConfiguration {
     @Bean
     @LoadBalanced //此注解开启负载均衡
     public RestTemplate restTemplate(){
-        log.info("启动加载：自定义Rest配置类：配置RestTemplate负载均衡");
+        log.info("启动加载>>>配置RestTemplate负载均衡");
         // 创建 RestTemplate 实例， 我这里使用的OkHttp
         RestTemplate restTemplate = restTemplateBuilder.build();
         return restTemplate;
@@ -57,7 +57,7 @@ public class MyFeignAutoConfiguration {
      */
     @Bean
     public IRule getRule(){
-        log.info("启动加载：自定义Rest配置类：配置全局负载均衡策略");
+        log.info("启动加载>>>配置全局负载均衡策略");
         return new RandomRule();
     }
     /**
@@ -78,7 +78,7 @@ public class MyFeignAutoConfiguration {
      */
     @Bean
     public RequestInterceptor requestInterceptor(){
-        log.info("启动加载：自定义Feign配置类：配置Feign请求头转发");
+        log.info("启动加载>>>配置Feign请求头转发");
         return new RequestInterceptor(){
             @Override
             public void apply(RequestTemplate requestTemplate) {

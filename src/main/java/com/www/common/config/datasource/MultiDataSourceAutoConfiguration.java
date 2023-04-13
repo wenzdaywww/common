@@ -29,10 +29,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.transaction.TransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -76,13 +73,13 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      */
     public MultiDataSourceAutoConfiguration(MybatisPlusProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider, ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider, ResourceLoader resourceLoader, ObjectProvider<DatabaseIdProvider> databaseIdProvider, ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider, ObjectProvider<List<MybatisPlusPropertiesCustomizer>> mybatisPlusPropertiesCustomizerProvider, ApplicationContext applicationContext) {
         super(properties, interceptorsProvider, typeHandlersProvider, languageDriversProvider, resourceLoader, databaseIdProvider, configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
-        log.info("启动加载：多数据源自动配置类");
+        log.info("启动加载>>>多数据源自动配置类");
     }
     /**
      * <p>@Description 注册读写分离数据源切换的拦截器-AOP注入对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 21:59 </p>
-     * @return com.www.common.config.datasource.interceptor.ReadWriteInterceptor
+     * @return
      */
     @Bean
     public ReadWriteInterceptor ReadWriteInterceptor(){
@@ -92,7 +89,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 注册写权限数据源实现类对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:01 </p>
-     * @return com.www.common.config.datasource.datasoure.WriteDataSource
+     * @return
      */
     @Bean
     @ConditionalOnProperty(prefix = "com.www.common.datasource.write",name = {"url"})
@@ -103,7 +100,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 注册默认数据源对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:01 </p>
-     * @return com.www.common.config.datasource.datasoure.WriteDataSource
+     * @return
      */
     @Bean
     @ConditionalOnProperty(prefix = "com.www.common.datasource.write",name = {"url"})
@@ -115,7 +112,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 注册读权限数据源1实现类对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:01 </p>
-     * @return com.www.common.config.datasource.datasoure.WriteDataSource
+     * @return
      */
     @Bean
     @ConditionalOnProperty(prefix = "com.www.common.datasource.read-one",name = {"url"})
@@ -126,7 +123,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 注册读权限数据源1实现类对象 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/3/22 22:01 </p>
-     * @return com.www.common.config.datasource.datasoure.WriteDataSource
+     * @return
      */
     @Bean
     @ConditionalOnProperty(prefix = "com.www.common.datasource.read-two",name = {"url"})
@@ -137,7 +134,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 加载数据源类型 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 20:47 </p>
-     * @return org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
+     * @return
      */
     @Bean
     public AbstractRoutingDataSource routingDataSource(){
@@ -154,7 +151,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
                     DefaultDataSource = writeMap.get(key);
                 }
             }
-            log.info("启动加载：多数据源自动配置类：加载{}个读写权限的数据源",writeNum);
+            log.info("启动加载>>>多数据源自动配置>>>加载{}个读写权限的数据源",writeNum);
         }
         //加载读权限的数据源
         Map<String, IReadDataSoure> readMap = applicationContext.getBeansOfType(IReadDataSoure.class);//读权限数据源集合
@@ -163,7 +160,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
                 targetDataSource.put(READ_DATA_SOURCE_PREFIX + readNum, readMap.get(key));
                 readNum ++;
             }
-            log.info("启动加载：多数据源自动配置类：加载{}个只读权限的数据源",readNum);
+            log.info("启动加载>>>多数据源自动配置>>>加载{}个只读权限的数据源",readNum);
         }
         //默认数据源
         proxy.setDefaultTargetDataSource(DefaultDataSource);
@@ -176,7 +173,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 20:47 </p>
      * @param dataSource
-     * @return org.apache.ibatis.session.SqlSessionFactory
+     * @return
      */
     @Bean
     @Override
@@ -187,7 +184,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 获取写权限数据源个数 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/30 22:26 </p>
-     * @return int
+     * @return int 写权限数据源个数
      */
     public static int getWriteNum() {
         return writeNum;
@@ -196,7 +193,7 @@ public class MultiDataSourceAutoConfiguration extends MybatisPlusAutoConfigurati
      * <p>@Description 获取读权限数据源个数 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/30 22:26 </p>
-     * @return int
+     * @return int 读权限数据源个数
      */
     public static int getReadNum() {
         return readNum;

@@ -16,8 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
@@ -31,7 +29,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @Configuration
 @EnableResourceServer
 @EnableConfigurationProperties(value = Oauth2Properties.class)
-@ConditionalOnProperty(prefix = "com.www.common.oauth2",name = "enable") //是否开启oauth2资源服务配置
+@ConditionalOnProperty(prefix = "com.www.common.oauth2",name = "enable", havingValue = "true") //是否开启oauth2资源服务配置
 public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired
     private Oauth2Properties oauth2Properties;
@@ -49,14 +47,6 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
     private Oauth2TokenExtractor oauth2TokenExtractor;
 
     /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 10:48 </p>
-     */
-    public Oauth2ResourceServerAutoConfiguration(){
-        log.info("启动加载：Oauth2资源服务方的认证配置类");
-    }
-    /**
      * <p>@Description 配置资源服务方验证方式 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/19 16:25 </p>
@@ -65,7 +55,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
      */
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        log.info("启动加载：Oauth2资源服务方的认证配置类：资源服务器配置验证方式");
+        log.info("启动加载>>>Oauth2资源服务方的认证配置>>>资源服务方配置验证方式");
         resources.resourceId(oauth2Properties.getResourceId()) //资源ID
                 // .tokenServices(tokenServices()) //远程校验token时需要
                 .tokenStore(tokenStore) //jwt校验token
@@ -84,7 +74,7 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        log.info("启动加载：Oauth2资源服务方的认证配置类：资源服务器配置安全拦截策略");
+        log.info("启动加载>>>Oauth2资源服务方的认证配置>>>资源服务器配置安全拦截策略");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//关闭session策略
         //固定写法的配置scope范围
@@ -100,19 +90,5 @@ public class Oauth2ResourceServerAutoConfiguration extends ResourceServerConfigu
                   return o;
                }
             });
-    }
-    /**
-     * <p>@Description 远程校验token </p>
-     * <p>@Author www </p>
-     * <p>@Date 2021/12/19 12:28 </p>
-     * @return org.springframework.security.oauth2.provider.token.ResourceServerTokenServices
-     */
-    @Deprecated
-    public ResourceServerTokenServices tokenServices(){
-        RemoteTokenServices services = new RemoteTokenServices();
-        services.setCheckTokenEndpointUrl("http://localhost:8003/oauth/check_token");
-        services.setClientId("blog");
-        services.setClientSecret("wenzday");
-        return services;
     }
 }

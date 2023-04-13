@@ -1,8 +1,9 @@
-package com.www.common.config.uaa.authorize.core;
+package com.www.common.config.uaa.core;
 
 import com.www.common.config.uaa.UaaAutoConfiguration;
-import com.www.common.config.uaa.authorize.handler.Oauth2LoginFailureHandler;
-import com.www.common.config.uaa.authorize.handler.Oauth2LogoutSuccessHandler;
+import com.www.common.config.uaa.UaaProperties;
+import com.www.common.config.uaa.handler.Oauth2LogoutSuccessHandler;
+import com.www.common.config.uaa.handler.Oauth2LoginFailureHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,7 +29,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true) //配置基于方法的安全认证,必要
 @ConditionalOnProperty( prefix = "com.www.common.uaa", name = "enable", havingValue = "true")
-public class AuthorizeSecurityConfig extends WebSecurityConfigurerAdapter {
+public class AuthorizeSecurityAutoConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UaaProperties uaaProperties;
     @Autowired
     private Oauth2LogoutSuccessHandler oauth2LogoutSuccessHandler;
     @Autowired
@@ -42,7 +45,7 @@ public class AuthorizeSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder passwordEncoder(){
-        log.info("启动加载：单点登录认证服务方自动配置--配置密码加密方式");
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>配置密码加密方式");
         return new BCryptPasswordEncoder();
     }
     /**
@@ -53,7 +56,7 @@ public class AuthorizeSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public AuthenticationManager authenticationManager() throws Exception{
-        log.info("启动加载：单点登录认证服务方自动配置--配置认证管理器");
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>配置认证管理器");
         return super.authenticationManager();
     }
     /**
@@ -66,8 +69,8 @@ public class AuthorizeSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage(UaaAutoConfiguration.LOGIN_PAGE) //自定义的登录页面 **重要**
-                .loginProcessingUrl("/login")  //原始的处理登录的URL,保持和uaa_login.html的form表单的action一致 ，不要修改
+                .loginPage(uaaProperties.getLoginUrl()) //自定义的登录页面 **重要**
+                .loginProcessingUrl(uaaProperties.getLogin())  //原始的处理登录的URL,保持和uaa_login.html的form表单的action一致 ，不要修改
                 .failureHandler(oauth2LoginFailureHandler)//登录失败处理逻辑
                 .permitAll() //放开
                 .and()
@@ -75,7 +78,7 @@ public class AuthorizeSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();//关闭csrf
         http.logout()//退出
-                .logoutUrl("/logout")//退出路径
+                .logoutUrl(uaaProperties.getLogout())//退出路径
                 .logoutSuccessHandler(oauth2LogoutSuccessHandler)//退出成功处理逻辑
                 .deleteCookies("JSESSIONID");//登出之后删除cookie
     }

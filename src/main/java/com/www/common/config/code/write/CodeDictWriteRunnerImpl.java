@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>@Description 数据字典写入redis加载 </p>
@@ -25,7 +24,7 @@ public class CodeDictWriteRunnerImpl implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("启动加载：数据字典自动写入redis");
+        log.info("启动加载>>>启动自动写入数据字典数据到redis中");
         codeRedisWriteHandler.initCodeData();
     }
 }

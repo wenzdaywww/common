@@ -1,4 +1,4 @@
-package com.www.common.config.mvc.upload;
+package com.www.common.config.file.upload;
 
 import org.springframework.web.multipart.MultipartFile;
 

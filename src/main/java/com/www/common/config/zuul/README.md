@@ -1,1 +1,1 @@
-### com.www.common.config.zuul下的配置类引入zuul相关依赖则自动开启配置
+### 使用zuul包下的配置类引入zuul相关依赖则自动开启配置

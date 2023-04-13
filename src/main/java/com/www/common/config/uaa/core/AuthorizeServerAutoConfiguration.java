@@ -1,8 +1,8 @@
-package com.www.common.config.uaa.authorize.core;
+package com.www.common.config.uaa.core;
 
 import com.www.common.config.datasource.sources.impl.WriteDataSource;
 import com.www.common.config.oauth2.token.JwtTokenConverter;
-import com.www.common.config.uaa.authorize.handler.UserServiceHandler;
+import com.www.common.config.uaa.handler.UserServiceHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -52,7 +52,7 @@ import java.util.Arrays;
 @Configuration
 @EnableAuthorizationServer
 @ConditionalOnProperty( prefix = "com.www.common.uaa", name = "enable", havingValue = "true")
-public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizeServerAutoConfiguration extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private WriteDataSource writeDataSource;
     @Autowired
@@ -91,7 +91,6 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        log.info("认证服务器配置客户端");
         clients.withClientDetails(clientDetails());
     }
     /**
@@ -103,7 +102,6 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        log.info("认证服务器配置令牌端点的安全约束");
         security.tokenKeyAccess("permitAll()")//oauth/token_key设置公开
                 .checkTokenAccess("permitAll()")//oauth/check_token设置公开
                 .allowFormAuthenticationForClients();//允许表单认证，申请令牌
@@ -117,7 +115,6 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        log.info("认证服务器配置令牌端点");
         endpoints.authenticationManager(authenticationManager)//密码模式需要的管理器
                 .userDetailsService(userServiceHandler)//密码模式的用户信息管理
                 .authorizationCodeServices(authorizationCodeServices)//授权码需要的服务
@@ -133,7 +130,7 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Bean
     public ClientDetailsService clientDetails() {
-        log.info("启动加载：单点登录认证服务方自动配置--配置数据库方式读取client信息");
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>配置数据库方式读取client信息");
         JdbcClientDetailsService clientService = new JdbcClientDetailsService(writeDataSource);
         clientService.setPasswordEncoder(passwordEncoder);
         return clientService;
@@ -146,7 +143,7 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Bean
     public AuthorizationServerTokenServices tokenServices(){
-        log.info("启动加载：单点登录认证服务方自动配置--注册token服务");
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>注册token服务");
         DefaultTokenServices services = new DefaultTokenServices();
         services.setClientDetailsService(clientDetails());//客户端详情服务
         services.setSupportRefreshToken(true);//允许令牌自动刷新
@@ -168,7 +165,7 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
      */
     @Bean
     public AuthorizationCodeServices authorizationCodeServices(){
-        log.info("启动加载：单点登录认证服务方自动配置--设置授权码模式的授权码存储方式");
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>设置授权码模式的授权码存储方式");
         //数据库存储授权码
         return new JdbcAuthorizationCodeServices(writeDataSource);
     }

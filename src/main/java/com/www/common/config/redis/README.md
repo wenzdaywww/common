@@ -1,1 +1,1 @@
-### com.www.common.config.redis包下的redis配置引入redis依赖即自动开启
+### 使用redis包下的redis配置引入redis依赖即自动开启

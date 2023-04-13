@@ -14,10 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.mybatis")
 public class MybatisProperties {
-    /** 是否开启全局结果集数量限制 **/
+    /** 是否开启全局结果集数量限制，默认开启true **/
     private Boolean limit = true;
-    /** 数据库类型 **/
+    /** 数据库类型，默认mysql **/
     private String database = "mysql";
-    /** 结果集限制数量 **/
+    /** 结果集限制数量，默认10000，使用@RowLimitInterceptor注解则限制数量失效 **/
     private int limitNum = 10000;
 }

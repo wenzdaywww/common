@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.www.common.config.redis.RedisOperation;
 import com.www.common.config.security.MySecurityProperties;
 import com.www.common.config.security.dto.AuthorityDTO;
+import com.www.common.config.security.dto.UserDetailDTO;
 import com.www.common.config.security.entity.SysRoleEntity;
 import com.www.common.config.security.entity.SysUserEntity;
 import com.www.common.config.security.mapper.AuthorityRoleMapper;
 import com.www.common.config.security.mapper.SysUserMapper;
 import com.www.common.config.security.mapper.SysUserRoleMapper;
-import com.www.common.config.security.dto.UserDetailDTO;
 import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,15 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
 
-    /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/1/1 18:20 </p>
-     * @return
-     */
-    public UserDetailsServiceImpl(){
-        log.info("启动加载：Security认证自动配置类：注册security配置用户详细信息服务类");
-    }
     /**
      * <p>@Description 加载用户信息 </p>
      * <p>@Author www </p>

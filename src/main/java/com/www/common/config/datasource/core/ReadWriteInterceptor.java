@@ -23,7 +23,7 @@ public class ReadWriteInterceptor implements Ordered {
      * @return
      */
     public ReadWriteInterceptor(){
-        log.info("启动加载：多数据源自动配置类：开启读写分离数据源切换AOP拦截");
+        log.info("启动加载>>>多数据源自动配置>>>开启读写分离数据源切换AOP拦截");
     }
     /**
      * <p>@Description 读数据操作AOP切面 </p>

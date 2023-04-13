@@ -49,7 +49,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
      * @return
      */
     public JwtAuthorizationTokenFilter(){
-        log.info("启动加载：Security认证自动配置类：注册security配置token验证拦截器");
+        log.info("启动加载>>>Security认证自动配置>>>配置token验证拦截器");
     }
     /**
      * <p>@Description 设置token过期时间和密钥 </p>

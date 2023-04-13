@@ -20,6 +20,16 @@ import java.util.Map;
 public class CodeRedisReadHandler {
     @Autowired
     private CodeProperties codeProperties;
+
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/11 21:45 </p>
+     * @return
+     */
+    public CodeRedisReadHandler(){
+        log.info("启动加载>>>数据字典redis读取操作类");
+    }
     /**
      * <p>@Description 初始化code数据 </p>
      * <p>@Author www </p>

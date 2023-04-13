@@ -28,7 +28,7 @@ public class SecurityUnauthHandler implements AccessDeniedHandler {
      * @return
      */
     public SecurityUnauthHandler(){
-        log.info("启动加载：Security认证自动配置类：注册security配置拒绝访问异常处理");
+        log.info("启动加载>>>Security认证自动配置>>>配置拒绝访问处理");
     }
     /**
      * <p>@Description 拒绝访问异常处理  </p>

@@ -1,5 +1,6 @@
-package com.www.common.config.security.config;
+package com.www.common.config.security.core;
 
+import com.www.common.config.security.MySecurityProperties;
 import com.www.common.config.security.handler.LoginFailureHandler;
 import com.www.common.config.security.handler.LoginSuccessHandler;
 import com.www.common.config.security.handler.LogoutSuccessHandlerImpl;
@@ -34,6 +35,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @ConditionalOnProperty(prefix = "com.www.common.securuty",name = "enable") //是否开启Security安全
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
+    private MySecurityProperties mySecurityProperties;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private SecurityAuthRejectHandler securityAuthRejectHandler;
@@ -53,14 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter;
 
     /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 10:53 </p>
-     */
-    public SecurityConfig(){
-        log.info("启动加载：Security认证自动配置类：Security安全配置类");
-    }
-    /**
      * <p>@Description 授权,配置如何通过拦截器保护请求 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 21:10 </p>
@@ -69,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        log.info("security服务配置访问的安全拦截策略");
+        log.info("启动加载>>>Security认证自动配置>>>配置访问的安全拦截策略");
         http.cors()//开启跨域
             .and().csrf().disable();//关闭CSRF（不关闭会出现会话过期）
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//关闭session
@@ -85,17 +80,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(securityAuthRejectHandler);//认证失败时的异常处理
         http.exceptionHandling().accessDeniedHandler(securityUnauthHandler);//拒绝访问异常处理
         http.formLogin()//登入
-            .loginProcessingUrl("/login")//登录表单form中action的地址，也就是处理认证请求的路径
-            .usernameParameter("id")//登录表单form中用户名输入框input的name名，不修改的话默认是username
-            .passwordParameter("pwd")//form中密码输入框input的name名，不修改的话默认是password
+            .loginProcessingUrl(mySecurityProperties.getLogin())//登录表单form中action的地址，也就是处理认证请求的路径
+            .usernameParameter(mySecurityProperties.getName())//登录表单form中用户名输入框input的name名，不修改的话默认是username
+            .passwordParameter(mySecurityProperties.getPassword())//form中密码输入框input的name名，不修改的话默认是password
             .successHandler(loginSuccessHandler)//登录成功处理逻辑
             .failureHandler(loginFailureHandler);//登录失败处理逻辑
         http.logout()//退出
-            .logoutUrl("/logout")//退出路径
+            .logoutUrl(mySecurityProperties.getLogout())//退出路径
             .logoutSuccessHandler(logoutSuccessHandler)//退出成功处理逻辑
             .deleteCookies("JSESSIONID");//登出之后删除cookie
         //记住我功能
-        http.rememberMe().rememberMeParameter("rmb");//配置记住我的参数
+//        http.rememberMe().rememberMeParameter("rmb");//配置记住我的参数
         http.addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);//设置token解析过滤器在账号密码验证器之前
     }
     /**
@@ -107,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("security服务配置认证用户信息");
+        log.info("启动加载>>>Security认证自动配置>>>认证用户信息配置");
         //从数据库查询用户信息
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());;
     }

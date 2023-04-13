@@ -16,7 +16,7 @@ public interface IOauth2Service {
      *  scope配置在此方法查询，用户拥有的角色不在此处查询，统一在使用@PreAuthorize注解的方法上校验</p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/24 22:46 </p>
-     * @return java.util.List<com.www.myblog.common.pojo.ScopeDTO>
+     * @return
      */
     List<ScopeDTO> findUrlScope();
 }

@@ -1,8 +1,7 @@
 package com.www.common.config.oauth2.token;
 
-import com.www.common.config.oauth2.resource.Oauth2Properties;
-import com.www.common.config.oauth2.util.RedisTokenHandler;
 import com.www.common.config.oauth2.dto.TokenInfoDTO;
+import com.www.common.config.oauth2.util.RedisTokenHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,34 +24,38 @@ public class Oauth2TokenExtractor extends BearerTokenExtractor {
     /** 保存到cookie的access_token的key **/
     public static final String COOKIES_ACCESS_TOKEN = "access_token";
     @Autowired
-    private Oauth2Properties oauth2Properties;
-    @Autowired
     private JwtTokenConverter jwtTokenConverter;
     /** 路径匹配器 **/
     AntPathMatcher antPathMatcher = new AntPathMatcher();
+    /** 用户登录的token保存到redis中的key的前缀 **/
+    private String redisKeyPrefix;
+    /** 文件资源路径 **/
+    private String urlPath;
 
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/21 22:39 </p>
-     * @return
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀
+     * @param urlPath 文件资源路径
      */
-    public Oauth2TokenExtractor(){
-        log.info("启动加载：注册自定义token提取器");
+    public Oauth2TokenExtractor(String redisKeyPrefix,String urlPath){
+        log.info("启动加载>>>自定义token提取器配置");
+        this.redisKeyPrefix = redisKeyPrefix;
+        this.urlPath = urlPath;
     }
     /**
      * <p>@Description 设置token获取方法 </p>
      * <p>@Author www </p>
      * <p>@Date 2021/12/26 16:32 </p>
      * @param request 请求
-     * @return org.springframework.security.core.Authentication
+     * @return
      */
     @Override
     public Authentication extract(HttpServletRequest request) {
-        String imgUrl = oauth2Properties.getUrlPath(); // 图片资源路径
         String uri = request.getRequestURI(); //当前uri
         // 判断是否是图片资源，是则不获取token
-        if(StringUtils.isNotBlank(imgUrl) && antPathMatcher.match(imgUrl,uri)){
+        if(StringUtils.isNotBlank(urlPath) && antPathMatcher.match(urlPath,uri)){
             log.debug("当前请求{} 为图片资源，不获取token",uri);
             return null;
         }
@@ -62,7 +65,7 @@ public class Oauth2TokenExtractor extends BearerTokenExtractor {
             return null;
         }
         TokenInfoDTO tokenInfoDTO = jwtTokenConverter.decodeToken(tokenValue);
-        if(RedisTokenHandler.isInvalidToken(tokenInfoDTO,tokenValue)){
+        if(RedisTokenHandler.isInvalidToken(tokenInfoDTO,tokenValue,redisKeyPrefix)){
             log.info("1、获取请求{} 中的token单点登录验证不通过，请求中的token已失效",uri);
             return null;
         }

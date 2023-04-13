@@ -1,7 +1,7 @@
 package com.www.common.config.oauth2.constant;
 
 /**
- * <p>@Description 角色权限枚举 </p>
+ * <p>@Description 角色权限常量值 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2022/1/22 17:52 </p>

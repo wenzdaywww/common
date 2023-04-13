@@ -1,108 +1,84 @@
 {
   "groups": [
     {
-      "name": "com.www.common.request",
-      "type": "com.www.common.config.aop.RequestAopAutoConfiguration",
-      "description": "请求响应报文AOP拦截自动配置类.",
-      "sourceType": "com.www.common.config.aop.RequestAopProperties"
-    },
-    {
       "name": "com.www.common.code",
       "type": "com.www.common.config.code.read.CodeReadAutoConfiguration",
-      "description": "数据字典自动配置类.",
+      "description": "数据字典自动配置类",
       "sourceType": "com.www.common.config.code.CodeProperties"
     },
     {
       "name": "com.www.common.datasource",
       "type": "com.www.common.config.datasource.MultiDataSourceAutoConfiguration",
-      "description": "多数据源自动配置类.",
+      "description": "多数据源自动配置类",
       "sourceType": "com.www.common.config.code.CodeProperties"
     },
     {
       "name": "com.www.common.file",
-      "type": "com.www.common.config.mvc.MyMvcAutoConfiguration",
-      "description": "文件上传自动配置类.",
-      "sourceType": "com.www.common.config.mvc.MyMvcProperties"
+      "type": "com.www.common.config.file.FileAutoConfiguration",
+      "description": "文件上传自动配置类",
+      "sourceType": "com.www.common.config.file.FileProperties"
     },
     {
       "name": "com.www.common.mybatis",
       "type": "com.www.common.config.mybatis.MyBatisCustomAutoConfiguration",
-      "description": "自定义Mybatis配置.",
+      "description": "自定义Mybatis配置",
       "sourceType": "com.www.common.config.mybatis.MybatisProperties"
     },
     {
       "name": "com.www.common.oauth2",
       "type": "com.www.common.config.oauth2.resource.Oauth2ResourceAutoConfiguration",
-      "description": "oauth2资源服务配置自动配置类.",
+      "description": "oauth2资源服务配置自动配置类",
       "sourceType": "com.www.common.config.oauth2.resource.Oauth2Properties"
+    },
+    {
+      "name": "com.www.common.request",
+      "type": "com.www.common.config.request.RequestPrintAutoConfiguration",
+      "description": "请求响应报文打印AOP拦截自动配置类",
+      "sourceType": "com.www.common.config.request.RequestPrintProperties"
     },
     {
       "name": "com.www.common.securuty",
       "type": "com.www.common.config.security.MySecurityAutoConfiguration",
-      "description": "Security认证自动配置类.",
+      "description": "Security认证自动配置类",
       "sourceType": "com.www.common.config.security.MySecurityProperties"
     },
     {
       "name": "com.www.common.transaction",
       "type": "com.www.common.config.transaction.TransactionAdviceConfiguation",
-      "description": "全局事物管理类.",
-      "sourceType": "com.www.common.config.transaction.TransactionAdviceConfiguation"
+      "description": "全局事物管理类",
+      "sourceType": "com.www.common.config.transaction.TransactionProperties"
     },
     {
-      "name": "com.www.common.transaction",
+      "name": "com.www.common.uaa",
       "type": "com.www.common.config.uaa.UaaAutoConfiguration",
-      "description": "单点登录认证服务方自动配置类.",
-      "sourceType": "com.www.common.config.uaa.UaaAutoConfiguration"
+      "description": "单点登录认证服务方自动配置类",
+      "sourceType": "com.www.common.config.uaa.UaaProperties"
     }
   ],
   "properties": [
     {
-      "name": "com.www.common.request.enable",
-      "type": "java.lang.Boolean",
-      "defaultValue": false,
-      "description": "是否开启请求响应报文AOP拦截"
-    },
-    {
-      "name": "com.www.common.request.content",
-      "type": "java.lang.String",
-      "defaultValue": "<longText>",
-      "description": "请求响应字段过长替换的字符串"
-    },
-    {
-      "name": "com.www.common.request.replace",
-      "type": "java.lang.Boolean",
-      "defaultValue": true,
-      "description": "请求响应字段过长时是否开启字符串替换"
-    },
-    {
-      "name": "com.www.common.request.length",
-      "type": "java.lang.Integer",
-      "defaultValue": 256,
-      "description": "请求响应字段过长时字符串长度限制"
-    },
-    {
       "name": "com.www.common.code.read-enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启数据字典读取"
+      "description": "是否开启数据字典读取，默认关闭false"
     },
     {
       "name": "com.www.common.code.read-scheduled",
       "type": "java.lang.String",
       "defaultValue": "0 0 * * * ?",
-      "description": "定时重新读取字典的时间格式"
+      "description": "定时重新读取字典的时间格式，默认每天0点执行"
     },
     {
       "name": "com.www.common.code.write-enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启数据字典写入redis"
+      "description": "是否开启数据字典写入redis，默认关闭false"
     },
     {
       "name": "com.www.common.code.write-scheduled",
       "type": "java.lang.String",
       "defaultValue": "0 0 * * * ?",
-      "description": "定时重新写入redis数据字典的时间格式"
+      "description": "定时重新写入redis数据字典的时间格式，默认每天0点执行"
     },
     {
       "name": "com.www.common.code.code-redis-lock",
@@ -116,36 +92,49 @@
       "defaultValue": "",
       "description": "redis中数据字典的key"
     },
+
     {
       "name": "com.www.common.datasource.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启多数据源配置"
+      "description": "是否开启多数据源配置，默认关闭false"
     },
     {
       "name": "com.www.common.datasource.monitor",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启druid监控平台"
+      "description": "是否开启druid监控平台，默认关闭false"
     },
     {
       "name": "com.www.common.datasource.monitor-name",
       "type": "java.lang.String",
       "defaultValue": "admin",
-      "description": "druid监控平台用户"
+      "description": "druid监控平台用户，默认admin"
     },
     {
-      "name": "com.www.common.datasource.monitor-pwd",
-      "type": "java.lang.Boolean",
-      "defaultValue": "www362412",
-      "description": "druid监控平台密码"
+      "name": "com.www.common.datasource.write",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "写权限数据源配置，数据源配置参数与druid的配置参数一致，必须配置"
+    },
+    {
+      "name": "com.www.common.datasource.read-one",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "读权限数据源1配置，数据源配置参数与druid的配置参数一致"
+    },
+    {
+      "name": "com.www.common.datasource.read-two",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "读权限数据源2配置，数据源配置参数与druid的配置参数一致"
     },
 
     {
       "name": "com.www.common.file.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启文件上传"
+      "description": "是否开启文件上传，默认关闭false"
     },
     {
       "name": "com.www.common.file.url-path",
@@ -164,50 +153,88 @@
       "name": "com.www.common.mybatis.limit",
       "type": "java.lang.Boolean",
       "defaultValue": true,
-      "description": "是否开启全局结果集数量限制"
+      "description": "是否开启全局结果集数量限制，默认开启true"
     },
     {
       "name": "com.www.common.mybatis.database",
       "type": "java.lang.String",
       "defaultValue": "mysql",
-      "description": "数据库类型，不区分大小写"
+      "description": "数据库类型，默认mysql，不区分大小写"
     },
     {
       "name": "com.www.common.mybatis.limit-num",
       "type": "java.lang.Integer",
       "defaultValue": 10000,
-      "description": "结果集限制数量"
+      "description": "结果集限制数量，默认10000，使用@RowLimitInterceptor注解则限制数量失效"
     },
 
     {
       "name": "com.www.common.oauth2.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启oauth2资源方认证配置"
+      "description": "是否开启oauth2资源方认证配置，默认关闭false"
     },
     {
       "name": "com.www.common.oauth2.signing-key",
       "type": "java.lang.String",
-      "defaultValue": "",
-      "description": "jwt令牌签名"
+      "defaultValue": "wenzday",
+      "description": "jwt令牌签名，即认证服务方应用用户token的令牌签名，默认wenzday"
     },
+    {
+      "name": "com.www.common.oauth2.token-key-prefix",
+      "type": "java.lang.String",
+      "defaultValue": "oauth2_token:user_token:",
+      "description": "用户登录的token保存到redis中的key的前缀，需与uaa包的认证服务方应用保持一致，默认oauth2_token:user_token:"
+    },
+    {
+      "name": "spring.application.name",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "资源服务id，必须配置"
+    },
+
+    {
+      "name": "com.www.common.request.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否开启请求响应报文打印，默认关闭false"
+    },
+    {
+      "name": "com.www.common.request.content",
+      "type": "java.lang.String",
+      "defaultValue": "<longText>",
+      "description": "请求响应字段过长替换的字符串，默认为<longText>"
+    },
+    {
+      "name": "com.www.common.request.replace",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "请求响应字段过长时是否开启字符串替换，默认开启true"
+    },
+    {
+      "name": "com.www.common.request.length",
+      "type": "java.lang.Integer",
+      "defaultValue": 256,
+      "description": "请求响应字段过长时字符串长度限制，默认长度256"
+    },
+
     {
       "name": "com.www.common.securuty.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启Security认证"
+      "description": "是否开启Security认证，默认关闭false"
     },
     {
       "name": "com.www.common.securuty.secret-key",
       "type": "java.lang.String",
       "defaultValue": "wenzday",
-      "description": "jwt令牌签名"
+      "description": "jwt令牌签名，默认wenzday"
     },
     {
       "name": "com.www.common.securuty.token-expire-hour",
       "type": "java.lang.Integer",
       "defaultValue": 48,
-      "description": "token过期时间（单位小时）,默认24小时"
+      "description": "token过期时间（单位小时）,默认48小时"
     },
     {
       "name": "com.www.common.securuty.token-prefix",
@@ -240,22 +267,138 @@
       "description": "角色访问请求权限信息的redis的key的过期时间（单位小时）,默认48小时"
     },
     {
+      "name": "com.www.common.securuty.login",
+      "type": "java.lang.String",
+      "defaultValue": "/login",
+      "description": "登录的http请求地址，即表单form中action的地址，默认/login"
+    },
+    {
+      "name": "com.www.common.securuty.name",
+      "type": "java.lang.String",
+      "defaultValue": "id",
+      "description": "登录的http请求的用户名key，即表单form中action的参数key，默认id"
+    },
+    {
+      "name": "com.www.common.securuty.password",
+      "type": "java.lang.String",
+      "defaultValue": "pwd",
+      "description": "登录的http请求的密码key，即表单form中action的参数key，默认pwd"
+    },
+    {
+      "name": "com.www.common.securuty.logout",
+      "type": "java.lang.String",
+      "defaultValue": "/logout",
+      "description": "退出登录的http请求地址，默认/logout"
+    },
+
+    {
       "name": "com.www.common.transaction.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启全局事物管理，默认关闭"
+      "description": "是否开启全局事物管理，默认关闭false"
     },
     {
       "name": "com.www.common.transaction.aop-pointcut",
       "type": "java.lang.String",
       "defaultValue": "execution(* com.www..*.service..*.*(..))",
-      "description": "全局事物管理AOP拦截路径"
+      "description": "全局事物管理AOP拦截路径，默认execution(* com.www..*.service..*.*(..))"
     },
+
     {
       "name": "com.www.common.uaa.enable",
       "type": "java.lang.Boolean",
       "defaultValue": false,
-      "description": "是否开启uaa单点登录认证服务方配置，默认关闭"
+      "description": "是否开启uaa单点登录认证服务方配置，默认关闭false"
+    },
+    {
+      "name": "com.www.common.uaa.login",
+      "type": "java.lang.String",
+      "defaultValue": "/login",
+      "description": "登录的http请求，即登录页面loginPage中form的action请求，默认/login"
+    },
+    {
+      "name": "com.www.common.uaa.logout",
+      "type": "java.lang.String",
+      "defaultValue": "/logout",
+      "description": "退出登录的http请求，即form的action请求，默认/logout"
+    },
+    {
+      "name": "com.www.common.uaa.login-url",
+      "type": "java.lang.String",
+      "defaultValue": "/uaa-login",
+      "description": "自定义登录页面请求url，默认/uaa-login"
+    },
+    {
+      "name": "com.www.common.uaa.login-page",
+      "type": "java.lang.String",
+      "defaultValue": "uaa/uaa_login",
+      "description": "自定义登录页面thymeleaf文件存在路径，如：resource/uaa/uaa_login.html，只需配置uaa/uaa_login，默认uaa/uaa_login"
+    },
+    {
+      "name": "com.www.common.uaa.error",
+      "type": "java.lang.String",
+      "defaultValue": "error",
+      "description": "登录失败返回的Session的Attribute的名称，默认error"
+    },
+    {
+      "name": "com.www.common.uaa.confirm-page",
+      "type": "java.lang.String",
+      "defaultValue": "uaa/confirm",
+      "description": "自定义授权页面thymeleaf文件存在路径，如：resource/uaa/confirm.html，只需配置uaa/confirm，默认uaa/confirm"
+    },
+    {
+      "name": "com.www.common.uaa.client-id",
+      "type": "java.lang.String",
+      "defaultValue": "clientId",
+      "description": "自定义授权页面配置的资源服务方客户端的key，默认clientId"
+    },
+    {
+      "name": "com.www.common.uaa.scopes",
+      "type": "java.lang.String",
+      "defaultValue": "scopes",
+      "description": "自定义授权页面配置的资源服务方权限范围的key，默认scopes"
+    },
+    {
+      "name": "com.www.common.uaa.cookies-access-token",
+      "type": "java.lang.String",
+      "defaultValue": "access_token",
+      "description": "保存到cookie的access_token的key，默认access_token"
+    },
+    {
+      "name": "com.www.common.uaa.cookies-refresh-token",
+      "type": "java.lang.String",
+      "defaultValue": "refresh_token",
+      "description": "保存到cookie的refresh_token的key，默认refresh_token"
+    },
+    {
+      "name": "com.www.common.uaa.cookies-user",
+      "type": "java.lang.String",
+      "defaultValue": "user",
+      "description": "保存到cookie的user的key，默认user"
+    },
+    {
+      "name": "com.www.common.uaa.cookies-user-id",
+      "type": "java.lang.String",
+      "defaultValue": "userId",
+      "description": "保存到cookie的user的ID的key，默认userId"
+    },
+    {
+      "name": "com.www.common.uaa.cookies-user-roles",
+      "type": "java.lang.String",
+      "defaultValue": "roles",
+      "description": "保存到cookie的user的角色的key，默认roles"
+    },
+    {
+      "name": "com.www.common.uaa.signing-key",
+      "type": "java.lang.String",
+      "defaultValue": "wenzday",
+      "description": "jwt令牌签名，即生成token的令牌签名，默认wenzday"
+    },
+    {
+      "name": "com.www.common.uaa.token-key-prefix",
+      "type": "java.lang.String",
+      "defaultValue": "oauth2_token:user_token:",
+      "description": "用户登录的token保存到redis中的key的前缀，需冒号结尾，默认oauth2_token:user_token:"
     }
   ],
   "hints": []

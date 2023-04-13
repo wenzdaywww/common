@@ -5,6 +5,7 @@ import com.www.common.config.oauth2.dto.TokenDTO;
 import com.www.common.config.oauth2.dto.TokenInfoDTO;
 import com.www.common.config.oauth2.token.JwtTokenConverter;
 import com.www.common.config.oauth2.util.RedisTokenHandler;
+import com.www.common.config.uaa.UaaProperties;
 import com.www.common.data.constant.CharConstant;
 import com.www.common.data.response.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -33,16 +34,8 @@ import java.util.Map;
 @Slf4j
 @RestController
 public class OauthController {
-    /** 保存到cookie的access_token的key **/
-    public static final String COOKIES_ACCESS_TOKEN = "access_token";
-    /** 保存到cookie的refresh_token的key **/
-    public static final String COOKIES_REFRESH_TOKEN = "refresh_token";
-    /** 保存到cookie的user的key **/
-    public static final String COOKIES_USER = "user";
-    /** 保存到cookie的user的ID的key **/
-    public static final String COOKIES_USER_ID = "userId";
-    /** 保存到cookie的user的角色的key **/
-    public static final String COOKIES_USER_ROLES = "roles";
+    @Autowired
+    protected UaaProperties uaaProperties;
     @Autowired
     protected TokenEndpoint tokenEndpoint;
     @Autowired
@@ -83,29 +76,29 @@ public class OauthController {
         TokenInfoDTO tokenInfoDTO = jwtTokenConverter.decodeToken(tokenDTO.getAccessToken());
         tokenDTO.setUserId(tokenInfoDTO != null ? tokenInfoDTO.getUser_name() : null);
         //将token保存到cookie中
-        Cookie tokenCookie = new Cookie(COOKIES_ACCESS_TOKEN,tokenDTO.getAccessToken());
+        Cookie tokenCookie = new Cookie(uaaProperties.getCookiesAccessToken(),tokenDTO.getAccessToken());
         tokenCookie.setMaxAge(tokenDTO.getExpiresSeconds());
         tokenCookie.setPath(CharConstant.LEFT_SLASH);
         response.addCookie(tokenCookie);
         // 有刷新令牌则也保存到cookie中
         if(tokenDTO.getRefreshToken() != null){
-            Cookie refreshCookie = new Cookie(COOKIES_REFRESH_TOKEN,tokenDTO.getRefreshToken());
+            Cookie refreshCookie = new Cookie(uaaProperties.getCookiesRefreshToken(),tokenDTO.getRefreshToken());
             refreshCookie.setPath(CharConstant.LEFT_SLASH);
             response.addCookie(refreshCookie);
         }
         //将用户ID和角色信息保存到cookies中
         if(tokenInfoDTO != null){
             Map<String,Object> userMap = new HashMap<>();
-            userMap.put(COOKIES_USER_ID,tokenInfoDTO.getUser_name());
-            userMap.put(COOKIES_USER_ROLES,tokenInfoDTO.getAuthorities());
-            Cookie userCookie = new Cookie(COOKIES_USER, URLEncoder.encode(JSONObject.toJSONString(userMap),"UTF-8"));
+            userMap.put(uaaProperties.getCookiesUserId(),tokenInfoDTO.getUser_name());
+            userMap.put(uaaProperties.getCookiesUserRoles(),tokenInfoDTO.getAuthorities());
+            Cookie userCookie = new Cookie(uaaProperties.getCookiesUser(), URLEncoder.encode(JSONObject.toJSONString(userMap),"UTF-8"));
             userCookie.setMaxAge(tokenDTO.getExpiresSeconds());
             userCookie.setPath(CharConstant.LEFT_SLASH);
             response.addCookie(userCookie);
         }
         result.setData(tokenDTO);
         //保存用户登录的token到redis中
-        RedisTokenHandler.setUserIdToken(tokenInfoDTO,tokenDTO.getAccessToken(),tokenDTO.getExpiresSeconds());
+        RedisTokenHandler.setUserIdToken(tokenInfoDTO,tokenDTO.getAccessToken(),tokenDTO.getExpiresSeconds(),uaaProperties.getTokenKeyPrefix());
         return result;
     }
 }

@@ -36,7 +36,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
      * @return
      */
     public SecurityMetadataSource(){
-        log.info("启动加载：Security认证自动配置类：注册security配置安全元数据源");
+        log.info("启动加载>>>Security认证自动配置>>>配置访问URL验证");
     }
     /**
      * <p>@Description 访问权限角色配置 </p>

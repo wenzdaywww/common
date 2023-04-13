@@ -26,14 +26,6 @@ public class MyBatisCustomAutoConfiguration {
     @Autowired
     private MybatisProperties mybatisProperties;
     /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 10:46 </p>
-     */
-    public MyBatisCustomAutoConfiguration(){
-        log.info("启动加载：自定义Mybatis配置");
-    }
-    /**
      * <p>@Description 新的分页插件,一缓和二缓遵循mybatis的规则,
      *    需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题
      * </p>
@@ -43,7 +35,7 @@ public class MyBatisCustomAutoConfiguration {
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
-        log.info("启动加载：自定义Mybatis配置：配置Mybatis分页拦截器");
+        log.info("启动加载>>>配置Mybatis分页拦截器");
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;

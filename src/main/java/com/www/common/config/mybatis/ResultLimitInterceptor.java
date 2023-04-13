@@ -44,7 +44,7 @@ public class ResultLimitInterceptor implements Interceptor {
     public ResultLimitInterceptor(MybatisProperties mybatisProperties){
         this.mybatisProperties = mybatisProperties;
         limitType = StringUtils.equalsIgnoreCase(mybatisProperties.getDatabase(),ORACLE_DATABASE) ? " ROWNUM " : " LIMIT ";
-        log.info("启动加载：自定义Mybatis配置：配置Mybatis查询结果集拦截器");
+        log.info("启动加载>>>配置Mybatis查询结果集数量限制");
     }
     /**
      * <p>@Description 自定义结果集数量拦截 </p>
@@ -138,6 +138,7 @@ public class ResultLimitInterceptor implements Interceptor {
                 }
             }
         }catch (Exception e){
+            log.error("获取" + mapperLongMethodName + "的RowLimitInterceptor注解信息失败，异常信息：{}",e);
         }finally {
             arr[0] = isAnnno;
             arr[1] = annoLimitNum;

@@ -1,7 +1,8 @@
-package com.www.common.config.uaa.authorize.handler;
+package com.www.common.config.uaa.handler;
 
-import com.www.common.config.uaa.UaaAutoConfiguration;
+import com.www.common.config.uaa.UaaProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -24,6 +25,16 @@ import java.io.IOException;
  */
 @Slf4j
 public class Oauth2LoginFailureHandler implements AuthenticationFailureHandler  {
+    @Autowired
+    private UaaProperties uaaProperties;
+    /**
+     * <p>@Description 构造方法 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/12 21:27 </p>
+     */
+    public Oauth2LoginFailureHandler(){
+        log.info("启动加载>>>单点登录认证服务方自动配置>>>开启oauth2登录认证失败处理配置");
+    }
     /**
      * <p>@Description 登录失败处理事件 </p>
      * <p>@Author www </p>
@@ -48,7 +59,7 @@ public class Oauth2LoginFailureHandler implements AuthenticationFailureHandler  
             msg = "用户名或者密码输入错误，请重新输入!";
         }
         log.error("登录认证服务器认证失败处理,失败原因：{}",msg);
-        request.getSession().setAttribute("error",msg);
-        response.sendRedirect(UaaAutoConfiguration.LOGIN_PAGE);
+        request.getSession().setAttribute(uaaProperties.getError(),msg);
+        response.sendRedirect(uaaProperties.getLoginUrl());
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.transaction")
 public class TransactionProperties {
-    /** 是否开启全局事物管理 **/
+    /** 是否开启全局事物管理，默认关闭false **/
     private Boolean enable = false;
     /** 全局事物管理AOP拦截路径 **/
     private String aopPointcut = "execution(* com.www..*.service..*.*(..))";

@@ -233,5 +233,8 @@
     <orderEntry type="library" name="Maven: de.rototor.pdfbox:graphics2d:0.30" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox:2.0.22" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:fontbox:2.0.22" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.melloware:jasypt:1.9.4" level="project" />
   </component>
 </module>

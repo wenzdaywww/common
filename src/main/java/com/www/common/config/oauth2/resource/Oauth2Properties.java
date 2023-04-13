@@ -15,14 +15,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "com.www.common.oauth2")
 public class Oauth2Properties {
-    /** 是否开启oauth2资源方认证配置 **/
+    /** 是否开启oauth2资源方认证配置，默认关闭false **/
     private Boolean enable = false;
-    /** jwt令牌签名 **/
+    /** jwt令牌签名，即认证服务方应用用户token的令牌签名，默认wenzday **/
     private String signingKey = "wenzday";
-    /** 资源服务id **/
+    /** 用户登录的token保存到redis中的key的前缀，需与uaa包的认证服务方应用保持一致，默认oauth2_token:user_token: **/
+    private String tokenKeyPrefix = "oauth2_token:user_token:";
+    /** 资源服务id，必须配置 **/
     @Value("${spring.application.name}")
     private String resourceId;
-    /** 图片资源路径 **/
+    /** 文件资源路径 **/
     @Value("${com.www.common.file.url-path:unknown}")
     private String urlPath;
 }

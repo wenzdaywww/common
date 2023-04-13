@@ -23,14 +23,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @ConditionalOnClass(RedisTemplate.class)
 public class RedisAutoConfiguration {
     /**
-     * <p>@Description 构造方法 </p>
-     * <p>@Author www </p>
-     * <p>@Date 2022/3/23 10:51 </p>
-     */
-    public RedisAutoConfiguration(){
-        log.info("启动加载：自定义Redis配置类");
-    }
-    /**
      * <p>@Description 自定义redisTemplate </p>
      * <p>@Author www </p>
      * <p>@Date 2021/8/1 21:06 </p>
@@ -39,7 +31,7 @@ public class RedisAutoConfiguration {
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        log.info("启动加载：自定义Redis配置类：配置RedisTemplate序列信息");
+        log.info("启动加载>>>自定义Redis配置>>>配置RedisTemplate序列信息");
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
         //json序列化配置

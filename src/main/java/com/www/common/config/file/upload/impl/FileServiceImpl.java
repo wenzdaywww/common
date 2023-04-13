@@ -1,7 +1,7 @@
-package com.www.common.config.mvc.upload.impl;
+package com.www.common.config.file.upload.impl;
 
-import com.www.common.config.mvc.MyMvcProperties;
-import com.www.common.config.mvc.upload.IFileService;
+import com.www.common.config.file.FileProperties;
+import com.www.common.config.file.upload.IFileService;
 import com.www.common.data.constant.CharConstant;
 import com.www.common.data.enums.DateFormatEnum;
 import com.www.common.utils.DateUtils;
@@ -21,11 +21,9 @@ import java.io.IOException;
  */
 @Slf4j
 public class FileServiceImpl implements IFileService {
-    /** 图片类型  **/
-    private String[] imgType = {"BMP","JPG","JPEG","PNG","GIF"};
     /** mvc配置信息 **/
     @Autowired
-    private MyMvcProperties myMvcProperties;
+    private FileProperties myMvcProperties;
 
     /**
      * <p>@Description 构造方法 </p>
@@ -33,7 +31,7 @@ public class FileServiceImpl implements IFileService {
      * <p>@Date 2022/3/22 21:21 </p>
      */
     public FileServiceImpl(){
-        log.info("启动加载：自定义MVC配置类：配置文件上传下载");
+        log.info("启动加载>>>文件上传自动配置");
     }
 
     /**
@@ -65,7 +63,6 @@ public class FileServiceImpl implements IFileService {
         String url = this.uploadFileBackURL(file,prevPath,fileName);
         return StringUtils.isNotBlank(url) ? httpAddr + url : null;
     }
-
     /**
      * <p>@Description 上传文件并返回路径 </p>
      * <p>@Author www </p>
@@ -95,7 +92,6 @@ public class FileServiceImpl implements IFileService {
     public String[] uploadFile(MultipartFile file, String prevPath, String fileName) {
         return this.saveFileReturnPath(file,prevPath,fileName);
     }
-
     /**
      * <p>@Description 上传文件并返回文件访问的URL相对路径 </p>
      * <p>@Author www </p>

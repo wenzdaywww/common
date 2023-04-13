@@ -41,7 +41,7 @@ public class TransactionAdviceConfiguation {
      */
     @Bean
     public TransactionInterceptor txAdvice() {
-        log.info("启动加载：配置全局事物管理");
+        log.info("启动加载>>>配置全局事物管理");
         DefaultTransactionAttribute txAttr_REQUIRED = new DefaultTransactionAttribute();
         txAttr_REQUIRED.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         DefaultTransactionAttribute txAttr_REQUIRED_READONLY = new DefaultTransactionAttribute();

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>@Description mybatis结果集数量配置，未设置则默认不限制数量， </p>
+ * <p>@Description mybatis结果集数量配置，未设置则默认不限制数量，注解仅适用于mapper接口方法 </p>
  * <p>@Version 1.0 </p>
  * <p>@Author www </p>
  * <p>@Date 2023/3/27 18:57 </p>

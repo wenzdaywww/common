@@ -28,7 +28,7 @@ public class SecurityAuthRejectHandler implements AuthenticationEntryPoint {
      * @return
      */
     public SecurityAuthRejectHandler(){
-        log.info("启动加载：Security认证自动配置类：注册security配置认证失败时的异常处理");
+        log.info("启动加载>>>Security认证自动配置>>>配置认证失败处理");
     }
     /**
      * <p>@Description 认证失败时的异常处理 </p>

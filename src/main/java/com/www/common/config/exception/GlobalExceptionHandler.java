@@ -36,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * <p>@Date 2023/3/13 21:00 </p>
      */
     public GlobalExceptionHandler(){
-        log.info("启动配置：全局异常处理配置");
+        log.info("启动配置>>>全局异常处理配置");
     }
     /**
      * <p>@Description 设置所有异常捕获返回 </p>

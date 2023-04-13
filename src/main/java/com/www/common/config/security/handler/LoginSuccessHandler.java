@@ -31,8 +31,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private SecurityRedisHandler securityRedisHandler;
     /**  返回客户段cookie中的token的name **/
     public static final String COOKIE_TOKEN = "token";
-    /** 是否免登录 **/
-    private static final String IS_REMENMBER_ME = "1";
     /** Security认证配置属性 **/
     @Autowired
     private MySecurityProperties mySecurityProperties;
@@ -44,7 +42,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      * @return
      */
     public LoginSuccessHandler(){
-        log.info("启动加载：Security认证自动配置类：注册security配置登录认证成功处理");
+        log.info("启动加载>>>Security认证自动配置>>>配置登录认证成功处理");
     }
     /**
      * <p>@Description security登录认证成功处理 </p>

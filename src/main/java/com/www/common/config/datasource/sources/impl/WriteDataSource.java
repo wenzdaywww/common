@@ -3,7 +3,6 @@ package com.www.common.config.datasource.sources.impl;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.www.common.config.datasource.sources.IWriteDataSoure;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Primary;
 
@@ -25,6 +24,6 @@ public class WriteDataSource extends DruidDataSource implements IWriteDataSoure 
      */
     public WriteDataSource(){
         super();
-        log.info("启动加载：多数据源自动配置类：加载写权限数据源");
+        log.info("启动加载>>>多数据源自动配置>>>加载写权限数据源");
     }
 }

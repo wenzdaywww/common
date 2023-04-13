@@ -43,7 +43,7 @@ public class CodeDataWriteTask {
      * <p>@Date 2023/3/12 13:04 </p>
      */
     CodeDataWriteTask(){
-        log.info("启动加载：数据字典定时写入redis任务");
+        log.info("启动加载>>>开启数据字典定时重新写入到redis任务");
     }
     /**
      * <p>@Description 整点重新code数据写入redis </p>
@@ -53,7 +53,7 @@ public class CodeDataWriteTask {
      */
     @Scheduled(cron = "${com.www.common.code.write-scheduled}")
     public void reloadCodeData() {
-        log.info("定时任务:code数据重新写入redis");
+        log.info("定时任务>>>数据字典定时重新写入到redis");
         codeRedisWriteHandler.initCodeData();
     }
 }

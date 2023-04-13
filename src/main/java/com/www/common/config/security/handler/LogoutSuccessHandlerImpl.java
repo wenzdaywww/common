@@ -27,7 +27,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Autowired
     private SecurityRedisHandler securityRedisHandler;
 
-
     /**
      * <p>@Description 构造方法 </p>
      * <p>@Author www </p>
@@ -35,7 +34,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
      * @return
      */
     public LogoutSuccessHandlerImpl(){
-        log.info("启动加载：Security认证自动配置类：注册security配置退出成功的处理");
+        log.info("启动加载>>>Security认证自动配置>>>配置退出成功的处理");
     }
     /**
      * <p>@Description 退出成功处理 </p>

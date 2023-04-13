@@ -24,10 +24,10 @@ public class CodeDict {
     private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     /**
-     * <p>@Description 初始化数据字典数据 </p>
+     * <p>@Description 初始化数据字典数据，不建议直接使用 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/1 16:29 </p>
-     * @param codeMap
+     * @param codeMap 数据字典数据
      * @return void
      */
     public static void initCode(Map<String,Map<String, CodeDTO>> codeMap){
