@@ -1,7 +1,9 @@
 package com.www.common.config.oauth2.resource.meta;
 
 import com.www.common.config.oauth2.dto.ScopeDTO;
-import com.www.common.config.oauth2.resource.inf.IOauth2Service;
+import com.www.common.config.oauth2.resource.Oauth2Properties;
+import com.www.common.config.redis.RedisOperation;
+import com.www.common.data.constant.CharConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +28,7 @@ import java.util.List;
 @Slf4j
 public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSource {
     @Autowired
-    private IOauth2Service oauth2Service;
+    private Oauth2Properties oauth2Properties;
     /** 路径匹配器 **/
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -43,20 +45,20 @@ public class Oauth2MetadataSource implements FilterInvocationSecurityMetadataSou
      * <p>@Author www </p>
      * <p>@Date 2021/11/24 21:38 </p>
      * @param o
-     * @return java.util.Collection<org.springframework.security.access.ConfigAttribute>
+     * @return
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         log.debug("2、资源服务器配置URL可访问的scope范围");
         String requestURL = ((FilterInvocation)o).getRequestUrl();
-        //查询当前资源服务器的请求路径允许的scope范围
-        List<ScopeDTO> urlScopeList = oauth2Service.findUrlScope();
+        //从redis中查询当前资源服务器的请求路径允许的scope范围
+        List<ScopeDTO> urlScopeList = (List<ScopeDTO>) RedisOperation.listGet(oauth2Properties.getUrlScopePrefix() + CharConstant.COLON + oauth2Properties.getResourceId());
         //如果有数据，则添加对应的scope范围，如果没数据，则不限制scope
         if(CollectionUtils.isNotEmpty(urlScopeList)){
             List<String> roleList = new ArrayList<>();
             for (ScopeDTO dto : urlScopeList){
                 if(antPathMatcher.match(dto.getUrl(),requestURL) && StringUtils.isNotBlank(dto.getScope())){
-                    roleList.addAll(Arrays.asList(dto.getScope().split(",")));
+                    roleList.addAll(Arrays.asList(dto.getScope().split(CharConstant.COMMA)));
                 }
             }
             String[] roleArr = roleList.toArray(new String[roleList.size()]);

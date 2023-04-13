@@ -38,6 +38,7 @@
     </properties>
     <!-- 应用依赖  -->
     <dependencies>
+        <!-- 需要再次引入的依赖 -->
         <!-- springboot相关依赖 -->
         <!-- springboot框架web项目起步依赖 -->
         <dependency>
@@ -60,12 +61,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot-version}</version>
             <scope>provided</scope>
-        </dependency>
-        <!-- springboot框架web项目起步依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-            <version>${spring-boot-version}</version>
         </dependency>
         <!--AOP相关的依赖-->
         <dependency>
@@ -137,6 +132,15 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
             <version>${spring-cloud-version}</version>
             <scope>provided</scope>
+        </dependency>
+
+
+        <!-- 公开引入的依赖 -->
+        <!-- spring参数校验包 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${spring-boot-version}</version>
         </dependency>
         <!-- 工具包依赖  -->
         <!-- lombok链式编程依赖 -->

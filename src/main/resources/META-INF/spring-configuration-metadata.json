@@ -184,7 +184,13 @@
       "name": "com.www.common.oauth2.token-key-prefix",
       "type": "java.lang.String",
       "defaultValue": "oauth2_token:user_token:",
-      "description": "用户登录的token保存到redis中的key的前缀，需与uaa包的认证服务方应用保持一致，默认oauth2_token:user_token:"
+      "description": "用户登录的token保存到redis中的key的前缀，结尾不含冒号，需与uaa包的认证服务方应用保持一致，默认oauth2_token:user_token"
+    },
+    {
+      "name": "com.www.common.oauth2.url-scope-prefix",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "资源服务ID的url的scope的redis的key前缀,结尾不含冒号，格式如：oauth2:resource_id:url_scope"
     },
     {
       "name": "spring.application.name",

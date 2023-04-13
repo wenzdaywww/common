@@ -20,6 +20,7 @@ public class RedisTokenHandler {
      * <p>@Author www </p>
      * <p>@Date 2021/12/27 22:50 </p>
      * @param tokenInfo token信息
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀，结尾不含冒号
      * @return boolean true删除成功，false删除失败
      */
     public static boolean deleteUserIdToken(TokenInfoDTO tokenInfo,String redisKeyPrefix){
@@ -37,7 +38,7 @@ public class RedisTokenHandler {
      * @param tokenInfo token信息
      * @param token token值
      * @param expiresSeconds 令牌有效时间
-     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀，结尾不含冒号
      * @return boolean true保存成功，false保存失败
      */
     public static boolean setUserIdToken(TokenInfoDTO tokenInfo,String token,int expiresSeconds,String redisKeyPrefix){
@@ -56,7 +57,7 @@ public class RedisTokenHandler {
      * <p>@Date 2021/12/27 21:58 </p>
      * @param tokenInfo token信息
      * @param token token值
-     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀，结尾不含冒号
      * @return boolean true有效，false无效
      */
     public static boolean isEffectiveToken(TokenInfoDTO tokenInfo,String token,String redisKeyPrefix){
@@ -73,7 +74,7 @@ public class RedisTokenHandler {
      * <p>@Date 2021/12/27 21:58 </p>
      * @param tokenInfo token信息
      * @param token token值
-     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀，结尾不含冒号
      * @return boolean true无效，false有效
      */
     public static boolean isInvalidToken(TokenInfoDTO tokenInfo,String token,String redisKeyPrefix){
@@ -84,7 +85,7 @@ public class RedisTokenHandler {
      * <p>@Author www </p>
      * <p>@Date 2021/12/27 22:52 </p>
      * @param tokenInfo token信息
-     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀
+     * @param redisKeyPrefix 用户登录的token保存到redis中的key的前缀，结尾不含冒号
      * @return java.lang.String
      */
     private static String getUserIdTokenKey(TokenInfoDTO tokenInfo,String redisKeyPrefix){
@@ -92,6 +93,6 @@ public class RedisTokenHandler {
             return null;
         }
         //用户key格式：oauth2_token:客户端ID:用户ID
-        return redisKeyPrefix + tokenInfo.getClient_id() + CharConstant.COLON + tokenInfo.getUser_name();
+        return redisKeyPrefix + CharConstant.COLON + tokenInfo.getClient_id() + CharConstant.COLON + tokenInfo.getUser_name();
     }
 }
