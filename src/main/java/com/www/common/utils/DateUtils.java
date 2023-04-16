@@ -240,12 +240,31 @@ public class DateUtils {
         return startDate.compareTo(endDate) == -1 ? days : -1*days;
     }
     /**
+     * <p>@Description 根据2个日期返回相差的年月，如：1年2个月 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/16 15:53 </p>
+     * @param startDate 起始日期
+     * @param endDate 截止日期
+     * @return 相差的年月
+     */
+    public static String getYearsMonths(Date startDate, Date endDate) {
+        if(startDate == null || endDate == null){
+            return "0个月";
+        }
+        int months = Math.abs(getMonths(startDate, endDate));
+        if(months != -1){
+            return months/12 + "年" + months%12 + "个月";
+        }else {
+            return "1个月";
+        }
+    }
+    /**
      * <p>@Description 判断2个日期相差的月数 </p>
      * <p>@Author www </p>
      * <p>@Date 2023/4/16 15:53 </p>
      * @param startDate 起始日期
      * @param endDate 截止日期
-     * @return startDate大于或小于endDate返回正数月数，startDate等于endDate返回0天月数，startDate和endDate其中任一为null返回-1
+     * @return startDate大于或小于endDate返回正数月数，startDate等于endDate返回0月数，startDate和endDate其中任一为null返回-1
      */
     public static int getAbsMonths(Date startDate, Date endDate) {
         if(startDate == null || endDate == null){
