@@ -193,43 +193,98 @@ public class DateUtils {
         return c.getTime();
     }
     /**
+     * <p>@Description 判断2个日期相差的天数，不区分 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/16 15:53 </p>
+     * @param startDate 起始日期
+     * @param endDate 截止日期
+     * @return startDate大于或小于endDate返回正数天数，startDate等于endDate返回0天数，startDate和endDate其中任一为null返回-1
+     */
+    public static int getAbsDays(Date startDate, Date endDate) {
+        if(startDate == null || endDate == null){
+            return -1;
+        }
+        return Math.abs(getDays(startDate, endDate));
+    }
+    /**
+     * <p>@Description 判断2个日期相差的天数 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/16 15:53 </p>
+     * @param startDate 起始日期
+     * @param endDate 截止日期
+     * @return startDate小于endDate返回正数天数，startDate大于endDate返回负数天数，startDate等于endDate或其中任一为null返回0天数
+     */
+    public static int getDays(Date startDate, Date endDate) {
+        if(startDate == null || endDate == null){
+            return 0;
+        }
+        Calendar startCaledar = Calendar.getInstance();
+        Calendar endClaendar = Calendar.getInstance();
+        if(startDate.compareTo(endDate) == -1){
+            startCaledar.setTime(startDate);
+            endClaendar.setTime(endDate);
+        }else if(startDate.compareTo(endDate) == 1){
+            startCaledar.setTime(endDate);
+            endClaendar.setTime(startDate);
+        }else {
+            return 0;
+        }
+        int days = endClaendar.get(Calendar.DAY_OF_YEAR)-startCaledar.get(Calendar.DAY_OF_YEAR);
+        int y2 = endClaendar.get(Calendar.YEAR);
+        if (startCaledar.get(Calendar.YEAR) != y2) {
+            do {
+                days += startCaledar.getActualMaximum(Calendar.DAY_OF_YEAR);
+                startCaledar.add(Calendar.YEAR, 1);
+            } while (startCaledar.get(Calendar.YEAR) != y2);
+        }
+        return startDate.compareTo(endDate) == -1 ? days : -1*days;
+    }
+    /**
+     * <p>@Description 判断2个日期相差的月数 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/4/16 15:53 </p>
+     * @param startDate 起始日期
+     * @param endDate 截止日期
+     * @return startDate大于或小于endDate返回正数月数，startDate等于endDate返回0天月数，startDate和endDate其中任一为null返回-1
+     */
+    public static int getAbsMonths(Date startDate, Date endDate) {
+        if(startDate == null || endDate == null){
+            return -1;
+        }
+        return Math.abs(getMonths(startDate, endDate));
+    }
+    /**
      * <p>@Description 判断两个日期相差几个月 </p>
      * <p>@Author www </p>
      * <p>@Date 2022/1/23 16:17 </p>
-     * @param start 起始日期
-     * @param end 到期日期
-     * @return int -1为错误情况，其他为两日期的月份绝对值差
+     * @param startDate 起始日期
+     * @param endDate 到期日期
+     * @return startDate小于endDate返回正数月数，startDate大于endDate返回负数月数，startDate等于endDate或其中任一为null返回0月数
      */
-    public static int getMonths(Date start, Date end) {
-        if(start == null || end == null){
-            return -1;
+    public static int getMonths(Date startDate, Date endDate) {
+        if(startDate == null || endDate == null){
+            return 0;
         }
-        if (start.after(end)) {
-            Date t = start;
-            start = end;
-            end = t;
+        Calendar startCaledar = Calendar.getInstance();
+        Calendar endClaendar = Calendar.getInstance();
+        if(startDate.compareTo(endDate) == -1){
+            startCaledar.setTime(startDate);
+            endClaendar.setTime(endDate);
+        }else if(startDate.compareTo(endDate) == 1){
+            startCaledar.setTime(endDate);
+            endClaendar.setTime(startDate);
+        }else {
+            return 0;
         }
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(start);
-        Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTime(end);
-        Calendar temp = Calendar.getInstance();
-        temp.setTime(end);
-        temp.add(Calendar.DATE, 1);
-        int year = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
-        int month = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
-        if ((startCalendar.get(Calendar.DATE) == 1)
-                && (temp.get(Calendar.DATE) == 1)) {
-            return year * 12 + month + 1;
-        } else if ((startCalendar.get(Calendar.DATE) != 1)
-                && (temp.get(Calendar.DATE) == 1)) {
-            return year * 12 + month;
-        } else if ((startCalendar.get(Calendar.DATE) == 1)
-                && (temp.get(Calendar.DATE) != 1)) {
-            return year * 12 + month;
-        } else {
-            return (year * 12 + month - 1) < 0 ? 0 : (year * 12 + month);
+        int months = endClaendar.get(Calendar.MONTH) - startCaledar.get(Calendar.MONTH);
+        int y2 = endClaendar.get(Calendar.YEAR);
+        if (startCaledar.get(Calendar.YEAR) != y2) {
+            do {
+                months += 12;
+                startCaledar.add(Calendar.YEAR, 1);
+            } while (startCaledar.get(Calendar.YEAR) != y2);
         }
+        return startDate.compareTo(endDate) == -1 ? months : -1*months;
     }
     /**
      * <p>@Description 获取当前系统日期时间 </p>
