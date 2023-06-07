@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MyStringUtils {
     /**
-     * <p>@Description 字符串中的{}设置值 </p>
+     * <p>@Description 字符串中的{}设置值，按顺序依次替换为valArr的值 </p>
      * <p>@Author www </p>
      * <p>@Date 2023/6/7 21:25 </p>
      * @param msg    待设置的字符串
