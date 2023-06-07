@@ -208,7 +208,7 @@ public class ExcelUtils {
                                 cellValue = fieldValue != null ? fieldValue.toString() : "";
                             }else if(objArr.length == 2){//字段映射格式有二级属性，如： #{book.retainedProfits}
                                 //一级属性
-                                Field field1Level = tClass.getDeclaredField(objArr[0]);
+                                Field field1Level = ExcelUtils.getField(tClass,objArr[0]);
                                 field1Level.setAccessible(true);
                                 Object field1Value = field1Level.get(data);
                                 if(field1Value != null){
@@ -229,7 +229,7 @@ public class ExcelUtils {
                                         }
                                     }
                                     //二级属性
-                                    Field field2Level = fieldClass.getDeclaredField(objArr[1]);
+                                    Field field2Level = ExcelUtils.getField(fieldClass,objArr[1]);
                                     field2Level.setAccessible(true);
                                     Object field2Value = field2Level.get(field1Value);
                                     cellValue = field2Value != null ? field2Value.toString() : "";
@@ -245,7 +245,7 @@ public class ExcelUtils {
                     Object obj = rowList.get(i);
                     Class objClass = obj.getClass();
                     for (int cellIndex = 0; cellIndex < cellStyleList.size();cellIndex++){
-                        Field field = objClass.getDeclaredField(cellStyleList.get(cellIndex).getCellValue());
+                        Field field = ExcelUtils.getField(objClass,cellStyleList.get(cellIndex).getCellValue());
                         field.setAccessible(true);
                         Object fieldValue1 = field.get(obj);
                         String cellValue = fieldValue1 != null ? fieldValue1.toString() : "";
@@ -288,6 +288,28 @@ public class ExcelUtils {
                 }
             }
         }
+    }
+    /**
+     * <p>@Description 获取反射类的属性 </p>
+     * <p>@Author www </p>
+     * <p>@Date 2023/6/7 20:49 </p>
+     * @param cls 反射类
+     * @param name 属性名称
+     * @return 属对象
+     */
+    private static Field getField(Class cls,String name){
+        Field field = null;
+        try {
+            field = cls.getDeclaredField(name);
+        }catch (Exception e){
+            try {
+                field = cls.getSuperclass().getDeclaredField(name);
+            }catch (Exception e1){
+                log.error("获取反射类的属性失败，失败信息：",e1);
+                throw new BusinessException("获取反射类的属性失败");
+            }
+        }
+        return field;
     }
     /**
      * <p>@Description 写入excel数据，从第1个sheet页开始写入，如果文件已存在，则覆盖写入 </p>
